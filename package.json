@@ -6,7 +6,10 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint": "eslint --ext .js,.jsx .",
+    "lint:fix": "eslint --fix --ext .js,.jsx .",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "expo": "~47.0.12",
@@ -17,6 +20,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "eslint": "^8.32.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-native": "^4.0.0",
+    "prettier": "^2.8.3",
     "react-native-dotenv": "^3.4.7"
   },
   "private": true
