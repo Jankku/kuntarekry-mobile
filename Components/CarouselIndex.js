@@ -1,23 +1,19 @@
 import Carousel from 'simple-carousel-react-native';
 import { View, Text, StyleSheet } from 'react-native';
 
-function CarouselIndex({ carouselJobs, carouselJobs2, carouselJobs3 }) {
-  return (
+function CarouselIndex({ carouselJobs }) {
+  return carouselJobs > 0 ? (
+    <Text>No Jobs</Text>
+  ) : (
     <Carousel height={'15%'}>
-      <View>
-        <Text style={styles.text}>{carouselJobs.title}</Text>
-        <Text>{carouselJobs.organization}</Text>
-      </View>
-
-      <View>
-        <Text style={styles.text}>{carouselJobs2.title}</Text>
-        <Text>{carouselJobs.organization}</Text>
-      </View>
-
-      <View>
-        <Text style={styles.text}>{carouselJobs3.title}</Text>
-        <Text>{carouselJobs.organization}</Text>
-      </View>
+      {carouselJobs.map((Jobs, index) => {
+        return (
+          <View key={index}>
+            <Text style={styles.text}>{Jobs.title}</Text>
+            <Text>{Jobs.organization}</Text>
+          </View>
+        );
+      })}
     </Carousel>
   );
 }

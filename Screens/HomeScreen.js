@@ -3,11 +3,13 @@ import { API_URL, API_CLIENT } from '@env';
 import { useEffect, useMemo, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import Jobs from '../Components/Jobs';
+import CarouselIndex from '../Components/CarouselIndex';
 
 export default function HomeScreen() {
   const [jobs, setJobs] = useState([]);
   const jobCount = jobs.length;
   const [searchQuery, setSearchQuery] = useState('');
+  const [carouselJobs, setCarouselJobs] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -16,6 +18,7 @@ export default function HomeScreen() {
       const res = await fetch(url.toString());
       const json = await res.json();
       setJobs(json.jobAdvertisements);
+      setCarouselJobs(json.jobAdvertisements.slice(0, 3).map((job) => job.jobAdvertisement));
     })();
   }, []);
 
@@ -52,6 +55,7 @@ export default function HomeScreen() {
         </View>
         <Text>{jobCount} avointa työpaikkaa</Text>
       </View>
+      <CarouselIndex carouselJobs={carouselJobs} />
       <Jobs data={filteredJobs} />
     </SafeAreaView>
   );
