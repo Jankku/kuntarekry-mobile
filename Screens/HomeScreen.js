@@ -1,25 +1,47 @@
+import { Text, StyleSheet, View, TextInput, Button, SafeAreaView } from 'react-native';
+import { API_URL, API_CLIENT } from '@env';
+import { useEffect, useMemo, useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
 import Jobs from '../Components/Jobs';
-import Header from '../Components/Header';
-import { Text, StyleSheet, View, TextInput, Button } from 'react-native';
-import { useState } from 'react';
 
 export default function HomeScreen() {
-  const [text, onChangeText] = useState('Search');
-  const [openJobs, setOpenJobs] = useState(0);
+  const [jobs, setJobs] = useState([]);
+  const jobCount = jobs.length;
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const getJobs = (totalJobs) => {
-    setOpenJobs(totalJobs);
-  };
+  useEffect(() => {
+    (async () => {
+      const url = new URL('/portal-api/recruitment/open-jobs', API_URL);
+      url.searchParams.append('client', API_CLIENT);
+      const res = await fetch(url.toString());
+      const json = await res.json();
+      setJobs(json.jobAdvertisements);
+    })();
+  }, []);
+
+  const filteredJobs = useMemo(
+    () =>
+      jobs.length > 0
+        ? jobs.filter((j) =>
+            j.jobAdvertisement.title.toLowerCase().includes(searchQuery.toLocaleLowerCase())
+          )
+        : [],
+    [jobs, searchQuery]
+  );
 
   return (
-    <>
-      <Header />
+    <SafeAreaView>
+      <StatusBar style="auto" />
       <View style={styles.container}>
-        <Text style={styles.headertext}>Hae</Text>
-        <Text style={styles.headertext}>TYÖPAIKKAA</Text>
-        <TextInput style={styles.input} onChangeText={onChangeText} value={text} />
+        <Text style={styles.headertext}>Hae Työpaikkaa</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={setSearchQuery}
+          value={searchQuery}
+          placeholder="Search"
+        />
         <View style={styles.buttonrow}>
-          <Button m={2} title="Työpaikka" />
+          <Button title="Työpaikka" />
           <Button title="Keikkatyö" />
           <Button title="Kesätyö" />
         </View>
@@ -28,10 +50,10 @@ export default function HomeScreen() {
           <Button title="Keikkatyö" />
           <Button title="Kesätyö" />
         </View>
-        <Text>{openJobs} avointa työpaikkaa</Text>
+        <Text>{jobCount} avointa työpaikkaa</Text>
       </View>
-      <Jobs getJobs={getJobs} />
-    </>
+      <Jobs data={filteredJobs} />
+    </SafeAreaView>
   );
 }
 
@@ -39,12 +61,13 @@ const styles = StyleSheet.create({
   buttonrow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: 12,
+    margin: 8,
   },
   container: {
     alignItems: 'center',
     backgroundColor: 'lightblue',
     justifyContent: 'center',
+    paddingVertical: 16,
   },
   headertext: {
     color: 'white',
@@ -57,6 +80,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 40,
     margin: 12,
+    paddingLeft: 8,
     width: '80%',
   },
 });
