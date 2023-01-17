@@ -1,41 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
-import { FlatList, SafeAreaView, StyleSheet, Text } from 'react-native';
-import { API_URL, API_CLIENT } from '@env';
+import HomeScreen from './Screens/HomeScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  const [jobAds, setJobAds] = useState();
-
-  useEffect(() => {
-    (async () => {
-      const url = new URL('/portal-api/recruitment/open-jobs', API_URL);
-      url.searchParams.append('client', API_CLIENT);
-      const res = await fetch(url.toString());
-      const json = await res.json();
-      setJobAds(json.jobAdvertisements);
-    })();
-  }, []);
-
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="auto" />
-      {jobAds !== undefined ? (
-        <FlatList
-          data={jobAds}
-          renderItem={({ item }) => (
-            <Text key={item.jobAdvertisement.id}>
-              {item.jobAdvertisement.id} - {item.jobAdvertisement.title}
-            </Text>
-          )}
-        />
-      ) : null}
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
-    flex: 1,
-  },
-});
