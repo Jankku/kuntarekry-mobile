@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet, Text } from 'react-native';
 import { API_URL, API_CLIENT } from '@env';
 
-export default function Jobs({ getJobs }) {
+export default function Jobs({ getJobs, getCarousel }) {
   const [jobAds, setJobAds] = useState();
 
   useEffect(() => {
@@ -14,8 +14,10 @@ export default function Jobs({ getJobs }) {
       const json = await res.json();
       setJobAds(json.jobAdvertisements);
       getJobs(json.jobAdvertisements.length);
+      getCarousel(json.jobAdvertisements.slice(0, 3).map((job) => job.jobAdvertisement));
     })();
-  }, [getJobs]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
