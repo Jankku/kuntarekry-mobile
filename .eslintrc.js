@@ -25,6 +25,7 @@ module.exports = {
     'react/prop-types': 'off',
     'react-native/no-unused-styles': 'off',
     'react-native/no-color-literals': 'off',
+    'react-native/no-raw-text': 'off',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
   },
   settings: {
