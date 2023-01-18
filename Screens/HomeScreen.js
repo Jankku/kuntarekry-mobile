@@ -1,12 +1,4 @@
-import {
-  Text,
-  StyleSheet,
-  View,
-  TextInput,
-  Button,
-  SafeAreaView,
-  ImageBackground,
-} from 'react-native';
+import { Text, StyleSheet, View, SafeAreaView, ImageBackground } from 'react-native';
 import { API_URL, API_CLIENT } from '@env';
 import { useEffect, useMemo, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
@@ -14,7 +6,7 @@ import Jobs from '../Components/Jobs';
 import CarouselIndex from '../Components/CarouselIndex';
 import { Searchbar, Chip } from 'react-native-paper';
 
-export default function HomeScreen () {
+export default function HomeScreen() {
   const [jobs, setJobs] = useState([]);
   const jobCount = jobs.length;
   const [searchQuery, setSearchQuery] = useState('');
@@ -43,7 +35,7 @@ export default function HomeScreen () {
 
   return (
     <SafeAreaView>
-      <StatusBar style='auto' />
+      <StatusBar style="auto" />
       <ImageBackground
         source={require('../assets/sky-g79e40b0ac_1280.png')}
         style={styles.container}
@@ -56,7 +48,7 @@ export default function HomeScreen () {
           style={styles.input}
           onChangeText={setSearchQuery}
           value={searchQuery}
-          placeholder='Tehtävänimike, sijainti, työavain...'
+          placeholder="Tehtävänimike, sijainti, työavain..."
         />
         <View style={styles.buttonrow}>
           <Chip style={styles.chip}>Työpaikka</Chip>
@@ -65,7 +57,7 @@ export default function HomeScreen () {
         </View>
         <View style={styles.buttonrow}>
           <Chip style={styles.chip}>Hyvinvointialueet</Chip>
-          <Chip style={styles.chip} icon='filter'>
+          <Chip style={styles.chip} icon="filter">
             LISÄÄ
           </Chip>
         </View>
@@ -87,17 +79,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingTop: 5,
   },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
+  carouselheader: {
+    color: 'black',
+    fontSize: 24,
+    fontWeight: '400',
+  },
+  carouselheader2: {
+    color: '#35A9DB',
+    fontSize: 13,
+    fontWeight: '700',
   },
   chip: {
     //backgroundColor: colors.transparentButtonBackground,
-    marginHorizontal: '2%',
     borderWidth: 0,
-    width: 'auto',
+    marginHorizontal: '2%',
     margin: 5,
+    width: 'auto',
   },
   container: {
     alignItems: 'center',
@@ -120,16 +117,6 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 0, height: 4 },
     textShadowRadius: 1,
   },
-  carouselheader: {
-    color: 'black',
-    fontSize: 24,
-    fontWeight: '400',
-  },
-  carouselheader2: {
-    color: '#35A9DB',
-    fontSize: 13,
-    fontWeight: '700',
-  },
   input: {
     backgroundColor: 'white',
 
@@ -147,5 +134,10 @@ const styles = StyleSheet.create({
   },
   jobsTitle: {
     fontSize: 20,
+  },
+  row: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
   },
 });

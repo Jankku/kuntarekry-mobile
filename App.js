@@ -15,7 +15,7 @@ const theme = {
 
 const Stack = createStackNavigator();
 
-export default function App () {
+export default function App() {
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
@@ -24,7 +24,7 @@ export default function App () {
             header: (props) => <AppBar {...props} />,
           }}
         >
-          <Stack.Screen name='Home' component={HomeScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
