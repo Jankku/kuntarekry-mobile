@@ -5,7 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import Jobs from '../Components/Jobs';
 import CarouselIndex from '../Components/CarouselIndex';
 import { Searchbar, Chip } from 'react-native-paper';
-
+/*aa*/
 export default function HomeScreen() {
   const [jobs, setJobs] = useState([]);
   const jobCount = jobs.length;
