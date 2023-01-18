@@ -1,40 +1,26 @@
-import { Text, StyleSheet, View, SafeAreaView, ImageBackground } from 'react-native';
-import { API_URL, API_CLIENT } from '@env';
-import { useEffect, useMemo, useState } from 'react';
+import { Text, StyleSheet, View, ImageBackground } from 'react-native';
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import Jobs from '../Components/Jobs';
 import CarouselIndex from '../Components/CarouselIndex';
 import { Searchbar, Chip } from 'react-native-paper';
+import useJobAdvertisements from '../hooks/usejobadvertisements';
+import { ScrollView } from 'react-native-gesture-handler';
+import { colors } from '../styles/colors';
 
-export default function HomeScreen() {
-  const [jobs, setJobs] = useState([]);
-  const jobCount = jobs.length;
+export default function HomeScreen({ navigation }) {
+  const jobs = useJobAdvertisements();
+  const jobCount = jobs.length ?? 0;
   const [searchQuery, setSearchQuery] = useState('');
-  const [carouselJobs, setCarouselJobs] = useState([]);
+  const carouselJobs = jobs ? jobs.slice(0, 3).map((j) => j.jobAdvertisement) : [];
 
-  useEffect(() => {
-    (async () => {
-      const url = new URL('/portal-api/recruitment/open-jobs', API_URL);
-      url.searchParams.append('client', API_CLIENT);
-      const res = await fetch(url.toString());
-      const json = await res.json();
-      setJobs(json.jobAdvertisements);
-      setCarouselJobs(json.jobAdvertisements.slice(0, 3).map((job) => job.jobAdvertisement));
-    })();
-  }, []);
+  const onJobCountPress = () => {
+    navigation.navigate('Jobs');
+  };
 
-  const filteredJobs = useMemo(
-    () =>
-      jobs.length > 0
-        ? jobs.filter((j) =>
-            j.jobAdvertisement.title.toLowerCase().includes(searchQuery.toLocaleLowerCase())
-          )
-        : [],
-    [jobs, searchQuery]
-  );
+  const onSubmitSearch = () => navigation.navigate('Jobs', { searchQuery });
 
   return (
-    <SafeAreaView>
+    <ScrollView>
       <StatusBar style="auto" />
       <ImageBackground
         source={require('../assets/sky-g79e40b0ac_1280.png')}
@@ -44,9 +30,10 @@ export default function HomeScreen() {
         <Text style={styles.headertext2}>TYÖPAIKKAA</Text>
 
         <Searchbar
-          // icon={'target'}
           style={styles.input}
           onChangeText={setSearchQuery}
+          onSubmitEditing={onSubmitSearch}
+          onIconPress={onSubmitSearch}
           value={searchQuery}
           placeholder="Tehtävänimike, sijainti, työavain..."
         />
@@ -61,20 +48,56 @@ export default function HomeScreen() {
             LISÄÄ
           </Chip>
         </View>
-        <Text>{jobCount} avointa työpaikkaa</Text>
+        <Text onPress={onJobCountPress}>{jobCount} avointa työpaikkaa</Text>
       </ImageBackground>
       <View style={styles.row}>
         <Text style={styles.carouselheader}>Sinulle suositellut työpaikat</Text>
-        <Text style={styles.carouselheader2}>PAIKANNA</Text>
       </View>
-
       <CarouselIndex carouselJobs={carouselJobs} />
-      <Jobs data={filteredJobs} />
-    </SafeAreaView>
+      <ImageBackground source={{ uri: 'https://reactjs.org/logo-og.png' }} style={styles.imageBG}>
+        <View style={styles.centerText}>
+          <View style={styles.containerAdd}>
+            <Text style={{ color: colors.surface }}>Keikkatöihin</Text>
+          </View>
+          <View style={styles.containerAdd}>
+            <Text style={{ color: colors.surface }}>Avoin hakemus</Text>
+          </View>
+        </View>
+      </ImageBackground>
+      <View style={styles.containerNews}>
+        <Text>Uutiset ja Tapahtumat</Text>
+        <Text style={styles.heading}>Kuntarekryssä näkyy ja tapahtuu</Text>
+        <ImageBackground
+          source={{ uri: 'https://reactjs.org/logo-og.png' }}
+          style={styles.imageBG2}
+        ></ImageBackground>
+        <Text>Profiili kesäkuntoon</Text>
+        <Text>
+          Kesä ja helteet ovat löytäneet Suomen. Siksi voi olla vaikeaa asennoitua vaikkapa
+          työnhakuun...
+        </Text>
+        <View style={styles.buttonrow}>
+          <Chip style={styles.chip}>Ajankohtaista</Chip>
+          <Chip style={styles.chip}>Tapahtumat</Chip>
+        </View>
+        <View style={styles.buttonrow}>
+          <Chip style={styles.chip}>Työelämä</Chip>
+          <Chip style={styles.chip}>Töitä hakemassa</Chip>
+        </View>
+        <View style={styles.buttonrow}>
+          <Chip style={styles.chip}>Näytä kaikki uutiset</Chip>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  bgPicture: {
+    flex: 1,
+    justifyContent: 'center',
+    resizeMode: 'cover',
+  },
   buttonrow: {
     flexDirection: 'row',
     paddingTop: 5,
@@ -89,8 +112,16 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '700',
   },
+  centerText: {
+    alignItems: 'center',
+    bottom: 0,
+    justifyContent: 'center',
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  },
   chip: {
-    //backgroundColor: colors.transparentButtonBackground,
     borderWidth: 0,
     marginHorizontal: '2%',
     margin: 5,
@@ -101,6 +132,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightblue',
     justifyContent: 'center',
     paddingVertical: 16,
+  },
+  containerAdd: {
+    alignItems: 'center',
+    backgroundColor: colors.primary,
+    borderRadius: 10,
+    margin: 12,
+    padding: 12,
+    width: '88%',
+  },
+  containerNews: {
+    alignItems: 'center',
+    backgroundColor: colors.primary,
+    padding: 12,
   },
   headertext: {
     color: 'white',
@@ -116,6 +160,17 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.25)',
     textShadowOffset: { width: 0, height: 4 },
     textShadowRadius: 1,
+  },
+  heading: {
+    fontSize: 16,
+  },
+  imageBG: {
+    height: 400,
+    width: '100%',
+  },
+  imageBG2: {
+    height: 200,
+    width: '100%',
   },
   input: {
     backgroundColor: 'white',
