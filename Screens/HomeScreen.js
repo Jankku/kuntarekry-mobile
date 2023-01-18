@@ -1,37 +1,21 @@
 import { Text, StyleSheet, View, SafeAreaView, ImageBackground } from 'react-native';
-import { API_URL, API_CLIENT } from '@env';
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import Jobs from '../Components/Jobs';
 import CarouselIndex from '../Components/CarouselIndex';
 import { Searchbar, Chip } from 'react-native-paper';
+import useJobAdvertisements from '../hooks/usejobadvertisements';
 
-export default function HomeScreen() {
-  const [jobs, setJobs] = useState([]);
-  const jobCount = jobs.length;
+export default function HomeScreen({ navigation }) {
+  const jobs = useJobAdvertisements();
+  const jobCount = jobs.length ?? 0;
   const [searchQuery, setSearchQuery] = useState('');
-  const [carouselJobs, setCarouselJobs] = useState([]);
+  const carouselJobs = jobs ? jobs.slice(0, 3).map((j) => j.jobAdvertisement) : [];
 
-  useEffect(() => {
-    (async () => {
-      const url = new URL('/portal-api/recruitment/open-jobs', API_URL);
-      url.searchParams.append('client', API_CLIENT);
-      const res = await fetch(url.toString());
-      const json = await res.json();
-      setJobs(json.jobAdvertisements);
-      setCarouselJobs(json.jobAdvertisements.slice(0, 3).map((job) => job.jobAdvertisement));
-    })();
-  }, []);
+  const onJobCountPress = () => {
+    navigation.navigate('Jobs');
+  };
 
-  const filteredJobs = useMemo(
-    () =>
-      jobs.length > 0
-        ? jobs.filter((j) =>
-            j.jobAdvertisement.title.toLowerCase().includes(searchQuery.toLocaleLowerCase())
-          )
-        : [],
-    [jobs, searchQuery]
-  );
+  const onSubmitSearch = () => navigation.navigate('Jobs', { searchQuery });
 
   return (
     <SafeAreaView>
@@ -44,9 +28,10 @@ export default function HomeScreen() {
         <Text style={styles.headertext2}>TYÖPAIKKAA</Text>
 
         <Searchbar
-          // icon={'target'}
           style={styles.input}
           onChangeText={setSearchQuery}
+          onSubmitEditing={onSubmitSearch}
+          onIconPress={onSubmitSearch}
           value={searchQuery}
           placeholder="Tehtävänimike, sijainti, työavain..."
         />
@@ -61,15 +46,13 @@ export default function HomeScreen() {
             LISÄÄ
           </Chip>
         </View>
-        <Text>{jobCount} avointa työpaikkaa</Text>
+        <Text onPress={onJobCountPress}>{jobCount} avointa työpaikkaa</Text>
       </ImageBackground>
       <View style={styles.row}>
         <Text style={styles.carouselheader}>Sinulle suositellut työpaikat</Text>
-        <Text style={styles.carouselheader2}>PAIKANNA</Text>
       </View>
 
       <CarouselIndex carouselJobs={carouselJobs} />
-      <Jobs data={filteredJobs} />
     </SafeAreaView>
   );
 }
@@ -90,7 +73,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   chip: {
-    //backgroundColor: colors.transparentButtonBackground,
     borderWidth: 0,
     marginHorizontal: '2%',
     margin: 5,

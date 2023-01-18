@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { colors } from './styles/colors';
 import AppBar from './Components/AppBar';
+import JobListScreen from './Screens/JobListScreen';
 
 const theme = {
   ...DefaultTheme,
@@ -25,6 +26,7 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Jobs" component={JobListScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
