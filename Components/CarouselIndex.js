@@ -5,7 +5,7 @@ function CarouselIndex({ carouselJobs }) {
   return carouselJobs > 0 ? (
     <Text>No Jobs</Text>
   ) : (
-    <Carousel height={'15%'}>
+    <Carousel height={120}>
       {carouselJobs.map((Jobs, index) => {
         return (
           <View key={index}>
