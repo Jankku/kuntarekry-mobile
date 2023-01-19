@@ -2,12 +2,12 @@ import { Text, StyleSheet, View, ImageBackground } from 'react-native';
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import CarouselIndex from '../Components/CarouselIndex';
-import { Searchbar, Chip } from 'react-native-paper';
+import { Searchbar, Chip, Button } from 'react-native-paper';
 import useJobAdvertisements from '../hooks/usejobadvertisements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../styles/colors';
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen ({ navigation }) {
   const jobs = useJobAdvertisements();
   const jobCount = jobs.length ?? 0;
   const [searchQuery, setSearchQuery] = useState('');
@@ -21,7 +21,7 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <ScrollView>
-      <StatusBar style="auto" />
+      <StatusBar style='auto' />
       <ImageBackground
         source={require('../assets/sky-g79e40b0ac_1280.png')}
         style={styles.container}
@@ -35,23 +35,26 @@ export default function HomeScreen({ navigation }) {
           onSubmitEditing={onSubmitSearch}
           onIconPress={onSubmitSearch}
           value={searchQuery}
-          placeholder="Tehtävänimike, sijainti, työavain..."
+          placeholder='Tehtävänimike, sijainti, työavain...'
         />
         <View style={styles.buttonrow}>
           <Chip
             onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Kokoaikatyö' })}
+            compact
             style={styles.chip}
           >
             Kokoaikatyö
           </Chip>
           <Chip
             onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Osa-aikatyö' })}
+            compact
             style={styles.chip}
           >
             Osa-aikatyö
           </Chip>
           <Chip
             onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Kesätyö' })}
+            compact
             style={styles.chip}
           >
             Kesätyö
@@ -61,17 +64,37 @@ export default function HomeScreen({ navigation }) {
           <Chip
             onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Harjoittelu' })}
             style={styles.chip}
+            compact
           >
             Harjoittelu
           </Chip>
-          <Chip style={styles.chip} icon="filter">
-            LISÄÄ
+          <Chip
+            compact
+            contentStyle={{ flexDirection: 'row-reverse' }}
+            style={styles.chip}
+            icon='filter'
+          >
+            LISÄÄ RAJAUKSIA
           </Chip>
         </View>
-        <Text onPress={onJobCountPress}>{jobCount} avointa työpaikkaa</Text>
+        <Text compact style={styles.chip2} onPress={onJobCountPress}>
+          <Text style={{ fontWeight: '700' }}>{jobCount}</Text> avointa työpaikkaa
+        </Text>
+        <Text style={styles.circle}></Text>
       </ImageBackground>
       <View style={styles.row}>
-        <Text style={styles.carouselheader}>Sinulle suositellut työpaikat</Text>
+        <View>
+          <Text style={styles.carouselheader}>Sinulle suositellut</Text>
+          <Text style={styles.carouselheader}>työpaikat</Text>
+        </View>
+        <Button
+          contentStyle={{ flexDirection: 'row-reverse' }}
+          mode='text'
+          style={styles.chip}
+          icon='target'
+        >
+          PAIKANNA
+        </Button>
       </View>
       <CarouselIndex carouselJobs={carouselJobs} />
       <ImageBackground source={{ uri: 'https://reactjs.org/logo-og.png' }} style={styles.imageBG}>
@@ -142,16 +165,36 @@ const styles = StyleSheet.create({
     top: 0,
   },
   chip: {
-    borderWidth: 0,
     marginHorizontal: '2%',
     margin: 5,
-    width: 'auto',
   },
+  chip2: {
+    fontSize: 16,
+    color: '#006B96',
+    backgroundColor: colors.background,
+    padding: 14,
+    marginTop: 40,
+    borderTopLeftRadius: 9,
+    borderTopRightRadius: 9,
+    zIndex: 1,
+  },
+  circle: {
+    overflow: 'hidden',
+    backgroundColor: colors.background,
+    width: 42,
+    height: 21,
+    position: 'absolute',
+    top: 360,
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
+    transform: [{ scaleX: 10 }],
+  },
+
   container: {
     alignItems: 'center',
     backgroundColor: 'lightblue',
     justifyContent: 'center',
-    paddingVertical: 16,
+    paddingTop: 16,
   },
   containerAdd: {
     alignItems: 'center',
@@ -194,13 +237,13 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: 'white',
-
+    marginTop: 38,
     height: 45,
     margin: 12,
     width: '88%',
   },
   jobsContainer: {
-    backgroundColor: 'white',
+    backgroundColor: colors.background,
     padding: 12,
   },
   jobsOrganisation: {
@@ -212,7 +255,8 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+    padding: 26,
+    backgroundColor: colors.background,
+    alignItems: 'baseline',
   },
 });
