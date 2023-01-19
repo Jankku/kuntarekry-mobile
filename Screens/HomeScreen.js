@@ -38,8 +38,18 @@ export default function HomeScreen({ navigation }) {
           placeholder="Tehtävänimike, sijainti, työavain..."
         />
         <View style={styles.buttonrow}>
-          <Chip style={styles.chip}>Työpaikka</Chip>
-          <Chip style={styles.chip}>Keikkatyö</Chip>
+          <Chip
+            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Kokoaikatyö' })}
+            style={styles.chip}
+          >
+            Kokoaikatyö
+          </Chip>
+          <Chip
+            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Osa-aikatyö' })}
+            style={styles.chip}
+          >
+            Osa-aikatyö
+          </Chip>
           <Chip
             onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Kesätyö' })}
             style={styles.chip}
@@ -48,7 +58,12 @@ export default function HomeScreen({ navigation }) {
           </Chip>
         </View>
         <View style={styles.buttonrow}>
-          <Chip style={styles.chip}>Hyvinvointialueet</Chip>
+          <Chip
+            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Harjoittelu' })}
+            style={styles.chip}
+          >
+            Harjoittelu
+          </Chip>
           <Chip style={styles.chip} icon="filter">
             LISÄÄ
           </Chip>
