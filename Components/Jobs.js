@@ -1,6 +1,7 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
+import { Card } from 'react-native-paper';
 
 export default function Jobs({ data }) {
   const [minIndex, setMinIndex] = useState(0);
@@ -40,11 +41,28 @@ export default function Jobs({ data }) {
 }
 
 function JobItem({ item }) {
+  if (item.jobAdvertisement.jobDesc && item.jobAdvertisement.jobDesc.length > 200) {
+    let truncationIndex = item.jobAdvertisement.jobDesc.substring(0, 200).lastIndexOf(' ');
+    item.jobAdvertisement.jobDesc = (
+      // eslint-disable-next-line react-native/no-inline-styles
+      <Text style={{ flexDirection: 'row' }}>
+        {item.jobAdvertisement.jobDesc.substring(0, truncationIndex)}
+        <Text style={styles.blueText}>...Lue lisää</Text>
+      </Text>
+    );
+  }
   return (
-    <View style={styles.item}>
-      <Text style={styles.itemTitle}>{item.jobAdvertisement.title}</Text>
-      <Text>{item.jobAdvertisement.jobDesc ?? 'Ei kuvausta'}</Text>
-    </View>
+    <>
+      <Card style={styles.item}>
+        <Card.Title
+          title={item.jobAdvertisement.title}
+          subtitle={item.jobAdvertisement.organization}
+        />
+        <Card.Content>
+          <Text variant="bodyMedium">{item.jobAdvertisement.jobDesc ?? 'Ei kuvausta'}</Text>
+        </Card.Content>
+      </Card>
+    </>
   );
 }
 
@@ -53,6 +71,10 @@ function ListItemSeparator(height) {
 }
 
 const styles = StyleSheet.create({
+  blueText: {
+    color: 'blue',
+    fontWeight: 'bold',
+  },
   footerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
