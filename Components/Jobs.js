@@ -28,12 +28,12 @@ export default function Jobs({ data }) {
         keyExtractor={(_, index) => index}
         ItemSeparatorComponent={ListItemSeparator(16)}
       />
-      <View>
+      <View style={styles.footerContainer}>
         <Text>
-          Page {1 + minIndex / 10} / {Maxpages}
+          Sivu {1 + minIndex / 10} / {Maxpages}
         </Text>
-        <Text onPress={onPageForward}>Seuraava</Text>
         <Text onPress={onPageBack}>Takaisin</Text>
+        <Text onPress={onPageForward}>Seuraava</Text>
       </View>
     </>
   );
@@ -53,6 +53,11 @@ function ListItemSeparator(height) {
 }
 
 const styles = StyleSheet.create({
+  footerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+  },
   item: {
     backgroundColor: '#b2d9f7',
     padding: 8,

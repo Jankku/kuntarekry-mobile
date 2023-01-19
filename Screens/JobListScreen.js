@@ -5,6 +5,7 @@ import useJobAdvertisements from '../hooks/usejobadvertisements';
 
 export default function JobsListScreen({ route }) {
   const searchQuery = route.params?.searchQuery ?? '';
+  const buttonJobQuery = route.params?.buttonJobQuery ?? '';
   const jobs = useJobAdvertisements();
 
   const filteredJobs = useMemo(
@@ -16,13 +17,25 @@ export default function JobsListScreen({ route }) {
         : [],
     [jobs, searchQuery]
   );
+  const filteredButtonJobs = useMemo(
+    () =>
+      jobs.filter(
+        (j) =>
+          j.jobAdvertisement.employment && j.jobAdvertisement.employment.includes(buttonJobQuery)
+      ),
+    [buttonJobQuery, jobs]
+  );
 
   return (
     <>
       <Title>
-        {searchQuery ? `Ilmoitukset hakusanalla: ${searchQuery}` : 'Kaikki ilmoitukset'}
+        {searchQuery
+          ? `Ilmoitukset hakusanalla: ${searchQuery}`
+          : buttonJobQuery
+          ? `Ilmoitukset kategorialla: ${buttonJobQuery}`
+          : 'Kaikki ilmoitukset'}
       </Title>
-      <Jobs data={searchQuery ? filteredJobs : jobs} />
+      <Jobs data={searchQuery ? filteredJobs : buttonJobQuery ? filteredButtonJobs : jobs} />
     </>
   );
 }

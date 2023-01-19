@@ -38,19 +38,35 @@ export default function HomeScreen ({ navigation }) {
           placeholder='Tehtävänimike, sijainti, työavain...'
         />
         <View style={styles.buttonrow}>
-          <Chip compact style={styles.chip}>
-            Työpaikka
+          <Chip
+            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Kokoaikatyö' })}
+            compact
+            style={styles.chip}
+          >
+            Kokoaikatyö
           </Chip>
-          <Chip compact style={styles.chip}>
-            Keikkatyö
+          <Chip
+            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Osa-aikatyö' })}
+            compact
+            style={styles.chip}
+          >
+            Osa-aikatyö
           </Chip>
-          <Chip compact style={styles.chip}>
+          <Chip
+            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Kesätyö' })}
+            compact
+            style={styles.chip}
+          >
             Kesätyö
           </Chip>
         </View>
         <View style={styles.buttonrow}>
-          <Chip compact style={styles.chip}>
-            Hyvinvointialueet
+          <Chip
+            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Harjoittelu' })}
+            style={styles.chip}
+            compact
+          >
+            Harjoittelu
           </Chip>
           <Chip
             compact
