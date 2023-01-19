@@ -1,6 +1,6 @@
 export const colors = {
   primary: '#4486D0',
-  onPrimary: 'rgb(255, 255, 255)',
+  onPrimary: '#167FAC',
   primaryContainer: 'rgb(255, 215, 245)',
   onPrimaryContainer: 'rgb(56, 0, 56)',
   secondary: 'rgb(109, 88, 105)',
@@ -15,7 +15,7 @@ export const colors = {
   onError: 'rgb(255, 255, 255)',
   errorContainer: 'rgb(255, 218, 214)',
   onErrorContainer: 'rgb(65, 0, 2)',
-  background: 'rgb(255, 251, 255)',
+  background: '#F8FAFC',
   onBackground: 'rgb(30, 26, 29)',
   surface: 'rgb(255, 251, 255)',
   onSurface: 'rgb(30, 26, 29)',
