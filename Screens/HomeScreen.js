@@ -40,7 +40,12 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.buttonrow}>
           <Chip style={styles.chip}>Työpaikka</Chip>
           <Chip style={styles.chip}>Keikkatyö</Chip>
-          <Chip style={styles.chip}>Kesätyö</Chip>
+          <Chip
+            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Kesätyö' })}
+            style={styles.chip}
+          >
+            Kesätyö
+          </Chip>
         </View>
         <View style={styles.buttonrow}>
           <Chip style={styles.chip}>Hyvinvointialueet</Chip>
