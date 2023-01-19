@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import { Card } from 'react-native-paper';
+import { Card, Button } from 'react-native-paper';
 
 export default function Jobs({ data }) {
   const [minIndex, setMinIndex] = useState(0);
@@ -27,7 +27,6 @@ export default function Jobs({ data }) {
         ListEmptyComponent={<Text>Ei työpaikkailmoituksia</Text>}
         renderItem={JobItem}
         keyExtractor={(_, index) => index}
-        ItemSeparatorComponent={ListItemSeparator(16)}
       />
       <View style={styles.footerContainer}>
         <Text>
@@ -41,51 +40,63 @@ export default function Jobs({ data }) {
 }
 
 function JobItem({ item }) {
-  if (item.jobAdvertisement.jobDesc && item.jobAdvertisement.jobDesc.length > 200) {
-    let truncationIndex = item.jobAdvertisement.jobDesc.substring(0, 200).lastIndexOf(' ');
-    item.jobAdvertisement.jobDesc = (
-      // eslint-disable-next-line react-native/no-inline-styles
-      <Text style={{ flexDirection: 'row' }}>
-        {item.jobAdvertisement.jobDesc.substring(0, truncationIndex)}
-        <Text style={styles.blueText}>...Lue lisää</Text>
-      </Text>
-    );
+  if (item.jobAdvertisement.title && item.jobAdvertisement.title.length > 50) {
+    item.jobAdvertisement.title = item.jobAdvertisement.title.substring(0, 50) + '...';
+  }
+  if (item.jobAdvertisement.organization && item.jobAdvertisement.organization.length > 40) {
+    item.jobAdvertisement.organization =
+      item.jobAdvertisement.organization.substring(0, 40) + '...';
   }
   return (
     <>
-      <Card style={styles.item}>
-        <Card.Title
-          title={item.jobAdvertisement.title}
-          subtitle={item.jobAdvertisement.organization}
-        />
-        <Card.Content>
-          <Text variant="bodyMedium">{item.jobAdvertisement.jobDesc ?? 'Ei kuvausta'}</Text>
+      <Card style={styles.border}>
+        <Card.Content style={styles.container}>
+          <View style={styles.container}>
+            <Button style={styles.button} icon="heart-outline"></Button>
+            <View style={styles.column}>
+              <Text style={styles.header}>{item.jobAdvertisement.title}</Text>
+              <View style={styles.heightTen} />
+              <Text style={styles.text2}>{item.jobAdvertisement.organization}</Text>
+            </View>
+          </View>
         </Card.Content>
       </Card>
     </>
   );
 }
 
-function ListItemSeparator(height) {
-  return <View style={{ height: height }}></View>;
-}
-
 const styles = StyleSheet.create({
-  blueText: {
-    color: 'blue',
-    fontWeight: 'bold',
+  border: {
+    borderColor: 'lightgrey',
+    borderStyle: 'solid',
+    borderWidth: 1,
+  },
+  button: {
+    justifyContent: 'center',
+  },
+  column: {
+    flexDirection: 'column',
+  },
+  container: {
+    flexDirection: 'row',
+    paddingVertical: 15,
+    width: '92%',
   },
   footerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
   },
-  item: {
-    backgroundColor: '#b2d9f7',
-    padding: 8,
+  header: {
+    fontSize: 16,
   },
-  itemTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+  heightTen: {
+    height: 10,
+  },
+  text: {
+    fontSize: 13,
+  },
+  text2: {
+    fontSize: 14,
   },
 });

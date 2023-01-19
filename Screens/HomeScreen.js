@@ -7,7 +7,7 @@ import useJobAdvertisements from '../hooks/usejobadvertisements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../styles/colors';
 
-export default function HomeScreen ({ navigation }) {
+export default function HomeScreen({ navigation }) {
   const jobs = useJobAdvertisements();
   const jobCount = jobs.length ?? 0;
   const [searchQuery, setSearchQuery] = useState('');
@@ -21,7 +21,7 @@ export default function HomeScreen ({ navigation }) {
 
   return (
     <ScrollView>
-      <StatusBar style='auto' />
+      <StatusBar style="auto" />
       <ImageBackground
         source={require('../assets/sky-g79e40b0ac_1280.png')}
         style={styles.container}
@@ -35,7 +35,7 @@ export default function HomeScreen ({ navigation }) {
           onSubmitEditing={onSubmitSearch}
           onIconPress={onSubmitSearch}
           value={searchQuery}
-          placeholder='Tehtävänimike, sijainti, työavain...'
+          placeholder="Tehtävänimike, sijainti, työavain..."
         />
         <View style={styles.buttonrow}>
           <Chip
@@ -72,7 +72,7 @@ export default function HomeScreen ({ navigation }) {
             compact
             contentStyle={{ flexDirection: 'row-reverse' }}
             style={styles.chip}
-            icon='filter'
+            icon="filter"
           >
             LISÄÄ RAJAUKSIA
           </Chip>
@@ -89,9 +89,9 @@ export default function HomeScreen ({ navigation }) {
         </View>
         <Button
           contentStyle={{ flexDirection: 'row-reverse' }}
-          mode='text'
+          mode="text"
           style={styles.chip}
-          icon='target'
+          icon="target"
         >
           PAIKANNA
         </Button>
@@ -169,25 +169,25 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   chip2: {
-    fontSize: 16,
-    color: '#006B96',
     backgroundColor: colors.background,
-    padding: 14,
-    marginTop: 40,
     borderTopLeftRadius: 9,
     borderTopRightRadius: 9,
+    color: '#006B96',
+    fontSize: 16,
+    marginTop: 40,
+    padding: 14,
     zIndex: 1,
   },
   circle: {
-    overflow: 'hidden',
     backgroundColor: colors.background,
-    width: 42,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
     height: 21,
+    overflow: 'hidden',
     position: 'absolute',
     top: 360,
-    borderTopRightRadius: 25,
-    borderTopLeftRadius: 25,
     transform: [{ scaleX: 10 }],
+    width: 42,
   },
 
   container: {
@@ -237,8 +237,8 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: 'white',
-    marginTop: 38,
     height: 45,
+    marginTop: 38,
     margin: 12,
     width: '88%',
   },
@@ -254,9 +254,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   row: {
+    alignItems: 'baseline',
+    backgroundColor: colors.background,
     flexDirection: 'row',
     padding: 26,
-    backgroundColor: colors.background,
-    alignItems: 'baseline',
   },
 });
