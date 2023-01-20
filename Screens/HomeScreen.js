@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import CarouselIndex from '../Components/CarouselIndex';
 import { Searchbar, Chip, Button } from 'react-native-paper';
-import useJobAdvertisements from '../hooks/usejobadvertisements';
+import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../styles/colors';
 
 export default function HomeScreen({ navigation }) {
-  const jobs = useJobAdvertisements();
+  const { jobs } = useJobAdvertisements();
   const jobCount = jobs.length ?? 0;
   const [searchQuery, setSearchQuery] = useState('');
   const carouselJobs = jobs ? jobs.slice(0, 3).map((j) => j.jobAdvertisement) : [];
