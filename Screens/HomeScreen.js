@@ -12,6 +12,11 @@ export default function HomeScreen({ navigation }) {
   const jobCount = jobs.length ?? 0;
   const [searchQuery, setSearchQuery] = useState('');
   const carouselJobs = jobs ? jobs.slice(0, 3).map((j) => j.jobAdvertisement) : [];
+  const [hidden, setHidden] = useState(true);
+
+  const onMoreLimitationPress = () => {
+    setHidden(!hidden);
+  };
 
   const onJobCountPress = () => {
     navigation.navigate('Jobs');
@@ -73,10 +78,18 @@ export default function HomeScreen({ navigation }) {
             contentStyle={{ flexDirection: 'row-reverse' }}
             style={styles.chip}
             icon="filter"
+            onPress={onMoreLimitationPress}
           >
             LISÄÄ RAJAUKSIA
           </Chip>
         </View>
+        {!hidden ? (
+          <View style={styles.buttonrow}>
+            <Chip onPress={() => navigation.navigate('Organizations')} compact style={styles.chip}>
+              Näytä kaikki työnantajat
+            </Chip>
+          </View>
+        ) : null}
         <Text compact style={styles.chip2} onPress={onJobCountPress}>
           <Text style={{ fontWeight: '700' }}>{jobCount}</Text> avointa työpaikkaa
         </Text>
