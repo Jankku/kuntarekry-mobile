@@ -96,7 +96,7 @@ export default function HomeScreen({ navigation }) {
           PAIKANNA
         </Button>
       </View>
-      <CarouselIndex carouselJobs={carouselJobs} />
+      <CarouselIndex navigation={navigation} carouselJobs={carouselJobs} />
       <ImageBackground source={{ uri: 'https://reactjs.org/logo-og.png' }} style={styles.imageBG}>
         <View style={styles.centerText}>
           <View style={styles.containerAdd}>

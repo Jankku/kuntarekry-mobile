@@ -2,8 +2,9 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { Card, Button } from 'react-native-paper';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function Jobs({ data }) {
+export default function Jobs({ navigation, data }) {
   const [minIndex, setMinIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(10);
   const Maxpages = Math.ceil(data.length / 10);
@@ -25,7 +26,7 @@ export default function Jobs({ data }) {
       <FlatList
         data={data.slice(minIndex, maxIndex)}
         ListEmptyComponent={<Text>Ei työpaikkailmoituksia</Text>}
-        renderItem={JobItem}
+        renderItem={({ item }) => <JobItem navigation={navigation} item={item} />}
         keyExtractor={(_, index) => index}
       />
       <View style={styles.footerContainer}>
@@ -39,7 +40,7 @@ export default function Jobs({ data }) {
   );
 }
 
-function JobItem({ item }) {
+function JobItem({ navigation, item }) {
   if (item.jobAdvertisement.title && item.jobAdvertisement.title.length > 50) {
     item.jobAdvertisement.title = item.jobAdvertisement.title.substring(0, 50) + '...';
   }
@@ -49,18 +50,20 @@ function JobItem({ item }) {
   }
   return (
     <>
-      <Card style={styles.border}>
-        <Card.Content style={styles.container}>
-          <View style={styles.container}>
-            <Button style={styles.button} icon="heart-outline"></Button>
-            <View style={styles.column}>
-              <Text style={styles.header}>{item.jobAdvertisement.title}</Text>
-              <View style={styles.heightTen} />
-              <Text style={styles.text2}>{item.jobAdvertisement.organization}</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Job', { job: item.jobAdvertisement })}>
+        <Card style={styles.border}>
+          <Card.Content style={styles.container}>
+            <View style={styles.container}>
+              <Button style={styles.button} icon="heart-outline"></Button>
+              <View style={styles.column}>
+                <Text style={styles.header}>{item.jobAdvertisement.title}</Text>
+                <View style={styles.heightTen} />
+                <Text style={styles.text2}>{item.jobAdvertisement.organization}</Text>
+              </View>
             </View>
-          </View>
-        </Card.Content>
-      </Card>
+          </Card.Content>
+        </Card>
+      </TouchableOpacity>
     </>
   );
 }
