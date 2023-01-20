@@ -5,6 +5,8 @@ import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-
 import { colors } from './styles/colors';
 import AppBar from './Components/AppBar';
 import JobListScreen from './Screens/JobListScreen';
+import JobScreen from './Screens/JobScreen';
+import { JobAdvertisementProvider } from './hooks/usejobadvertisements';
 
 const theme = {
   ...DefaultTheme,
@@ -18,17 +20,20 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <PaperProvider theme={theme}>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            header: (props) => <AppBar {...props} />,
-          }}
-        >
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Jobs" component={JobListScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <JobAdvertisementProvider>
+      <PaperProvider theme={theme}>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              header: (props) => <AppBar {...props} />,
+            }}
+          >
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Jobs" component={JobListScreen} />
+            <Stack.Screen name="Job" component={JobScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </JobAdvertisementProvider>
   );
 }

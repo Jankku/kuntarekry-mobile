@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import { Title } from 'react-native-paper';
 import Jobs from '../Components/Jobs';
-import useJobAdvertisements from '../hooks/usejobadvertisements';
+import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 
-export default function JobsListScreen ({ route }) {
+export default function JobsListScreen ({ navigation, route }) {
   const searchQuery = route.params?.searchQuery ?? '';
   const buttonJobQuery = route.params?.buttonJobQuery ?? '';
-  const jobs = useJobAdvertisements();
+  const { jobs } = useJobAdvertisements();
 
   const filteredJobs = useMemo(
     () =>
@@ -35,7 +35,10 @@ export default function JobsListScreen ({ route }) {
           ? `Ilmoitukset kategorialla: ${buttonJobQuery}`
           : 'Kaikki ilmoitukset'}
       </Title>
-      <Jobs data={searchQuery ? filteredJobs : buttonJobQuery ? filteredButtonJobs : jobs} />
+      <Jobs
+        navigation={navigation}
+        data={searchQuery ? filteredJobs : buttonJobQuery ? filteredButtonJobs : jobs}
+      />
     </>
   );
 }
