@@ -1,9 +1,9 @@
 export const colors = {
   primary: '#4486D0',
-  onPrimary: '#167FAC',
-  primaryContainer: 'rgb(255, 215, 245)',
+  onPrimary: 'white',
+  primaryContainer: '#35a9db',
   onPrimaryContainer: 'rgb(56, 0, 56)',
-  secondary: 'rgb(109, 88, 105)',
+  secondary: '#35A9DB',
   onSecondary: 'rgb(255, 255, 255)',
   secondaryContainer: '#1D847E',
   onSecondaryContainer: '#FFFFFF',

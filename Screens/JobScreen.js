@@ -4,7 +4,6 @@ import { Divider } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 export default function JobScreen({ route }) {
   const job = route.params?.job ?? '';
-  console.log(job);
   const formattedEndDate = new Date(job.publicationEnds).toLocaleDateString();
   return (
     <>
