@@ -8,6 +8,7 @@ import JobListScreen from './Screens/JobListScreen';
 import JobScreen from './Screens/JobScreen';
 import { JobAdvertisementProvider } from './hooks/usejobadvertisements';
 import OrganizationsListScreen from './Screens/OrganizationsListScreen';
+import OrganizationScreen from './Screens/OrganizationScreen';
 
 const theme = {
   ...DefaultTheme,
@@ -33,6 +34,7 @@ export default function App() {
             <Stack.Screen name="Jobs" component={JobListScreen} />
             <Stack.Screen name="Job" component={JobScreen} />
             <Stack.Screen name="Organizations" component={OrganizationsListScreen} />
+            <Stack.Screen name="Organization" component={OrganizationScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
