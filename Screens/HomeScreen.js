@@ -7,7 +7,7 @@ import useJobAdvertisements from '../hooks/usejobadvertisements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../styles/colors';
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen ({ navigation }) {
   const jobs = useJobAdvertisements();
   const jobCount = jobs.length ?? 0;
   const [searchQuery, setSearchQuery] = useState('');
@@ -21,7 +21,7 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <ScrollView>
-      <StatusBar style="auto" />
+      <StatusBar style='auto' />
       <ImageBackground
         source={require('../assets/sky-g79e40b0ac_1280.png')}
         style={styles.container}
@@ -35,7 +35,7 @@ export default function HomeScreen({ navigation }) {
           onSubmitEditing={onSubmitSearch}
           onIconPress={onSubmitSearch}
           value={searchQuery}
-          placeholder="Tehtävänimike, sijainti, työavain..."
+          placeholder='Tehtävänimike, sijainti, työavain...'
         />
         <View style={styles.buttonrow}>
           <Chip
@@ -72,7 +72,7 @@ export default function HomeScreen({ navigation }) {
             compact
             contentStyle={{ flexDirection: 'row-reverse' }}
             style={styles.chip}
-            icon="filter"
+            icon='filter'
           >
             LISÄÄ RAJAUKSIA
           </Chip>
@@ -89,24 +89,48 @@ export default function HomeScreen({ navigation }) {
         </View>
         <Button
           contentStyle={{ flexDirection: 'row-reverse' }}
-          mode="text"
+          mode='text'
           style={styles.chip}
-          icon="target"
+          icon='target'
         >
           PAIKANNA
         </Button>
       </View>
       <CarouselIndex carouselJobs={carouselJobs} />
-      <ImageBackground source={{ uri: 'https://reactjs.org/logo-og.png' }} style={styles.imageBG}>
+      <View style={styles.imageBG}>
         <View style={styles.centerText}>
-          <View style={styles.containerAdd}>
-            <Text style={{ color: colors.surface }}>Keikkatöihin</Text>
-          </View>
-          <View style={styles.containerAdd}>
-            <Text style={{ color: colors.surface }}>Avoin hakemus</Text>
-          </View>
+          <ImageBackground
+            source={require('../assets/sky-g79e40b0ac_1280.png')}
+            style={styles.containerAdd}
+          >
+            <Text style={styles.Add}>Avoin hakemus</Text>
+            <Text style={styles.AddText}>Haluatko jättää avoimen hakemuksen? Klikkaa alta</Text>
+            <Button
+              contentStyle={{ flexDirection: 'row-reverse' }}
+              icon='chevron-right'
+              style={styles.addButton}
+              mode={'contained'}
+            >
+              AVOIN HAKEMUS
+            </Button>
+          </ImageBackground>
+          <ImageBackground
+            source={require('../assets/sky-g79e40b0ac_1280.png')}
+            style={styles.containerAdd}
+          >
+            <Text style={styles.Add}>Keikkatöihin</Text>
+            <Text style={styles.AddText}>Kiinnostaako keikkatyö? Klikkaa alta.</Text>
+            <Button
+              contentStyle={{ flexDirection: 'row-reverse' }}
+              icon='chevron-right'
+              style={styles.addButton}
+              mode={'contained'}
+            >
+              KEIKKATÖIHIN
+            </Button>
+          </ImageBackground>
         </View>
-      </ImageBackground>
+      </View>
       <View style={styles.containerNews}>
         <Text>Uutiset ja Tapahtumat</Text>
         <Text style={styles.heading}>Kuntarekryssä näkyy ja tapahtuu</Text>
@@ -197,12 +221,28 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   containerAdd: {
-    alignItems: 'center',
-    backgroundColor: colors.primary,
-    borderRadius: 10,
-    margin: 12,
-    padding: 12,
-    width: '88%',
+    height: 250,
+    paddingVertical: 32,
+    paddingHorizontal: 70,
+    flex: 1,
+    marginBottom: 4,
+    marginHorizontal: 3,
+    borderRadius: 3,
+    overflow: 'hidden',
+  },
+  Add: {
+    fontSize: 24,
+    color: 'white',
+    marginBottom: 8,
+  },
+  AddText: {
+    fontSize: 19,
+    color: 'white',
+    marginBottom: 24,
+  },
+  addButton: {
+    color: 'white',
+    backgroundColor: colors.secondary,
   },
   containerNews: {
     alignItems: 'center',
@@ -228,8 +268,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   imageBG: {
-    height: 400,
+    height: 470,
     width: '100%',
+    backgroundColor: colors.background,
   },
   imageBG2: {
     height: 200,
