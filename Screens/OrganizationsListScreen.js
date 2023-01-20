@@ -20,9 +20,7 @@ export default function OrganizationsListScreen({ navigation }) {
       <ScrollView>
         <Title>kaikki työnantajat</Title>
         {uniqueOrganizations.map((org, index) => (
-          <Card key={index}
-          onPress={() => navigation.navigate('Organization', { org: org })}
-          >
+          <Card key={index} onPress={() => navigation.navigate('Organization', { org: org })}>
             <Card.Content>
               <Text>{org}</Text>
             </Card.Content>
