@@ -7,7 +7,7 @@ import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../styles/colors';
 
-export default function HomeScreen ({ navigation }) {
+export default function HomeScreen({ navigation }) {
   const { jobs } = useJobAdvertisements();
   const jobCount = jobs.length ?? 0;
   const [searchQuery, setSearchQuery] = useState('');
@@ -26,7 +26,7 @@ export default function HomeScreen ({ navigation }) {
 
   return (
     <ScrollView>
-      <StatusBar style='auto' />
+      <StatusBar style="auto" />
       <ImageBackground
         source={require('../assets/sky-g79e40b0ac_1280.png')}
         style={styles.container}
@@ -40,7 +40,7 @@ export default function HomeScreen ({ navigation }) {
           onSubmitEditing={onSubmitSearch}
           onIconPress={onSubmitSearch}
           value={searchQuery}
-          placeholder='Tehtävänimike, sijainti, työavain...'
+          placeholder="Tehtävänimike, sijainti, työavain..."
         />
         <View style={styles.buttonrow}>
           <Chip
@@ -102,9 +102,9 @@ export default function HomeScreen ({ navigation }) {
         </View>
         <Button
           contentStyle={{ flexDirection: 'row-reverse' }}
-          mode='text'
+          mode="text"
           style={styles.chip}
-          icon='target'
+          icon="target"
         >
           PAIKANNA
         </Button>
@@ -120,7 +120,7 @@ export default function HomeScreen ({ navigation }) {
             <Text style={styles.AddText}>Haluatko jättää avoimen hakemuksen? Klikkaa alta</Text>
             <Button
               contentStyle={{ flexDirection: 'row-reverse' }}
-              icon='chevron-right'
+              icon="chevron-right"
               style={styles.addButton}
               mode={'contained'}
             >
@@ -135,7 +135,7 @@ export default function HomeScreen ({ navigation }) {
             <Text style={styles.AddText}>Kiinnostaako keikkatyö? Klikkaa alta.</Text>
             <Button
               contentStyle={{ flexDirection: 'row-reverse' }}
-              icon='chevron-right'
+              icon="chevron-right"
               style={styles.addButton}
               mode={'contained'}
             >
@@ -173,6 +173,20 @@ export default function HomeScreen ({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  Add: {
+    color: 'white',
+    fontSize: 24,
+    marginBottom: 8,
+  },
+  AddText: {
+    color: 'white',
+    fontSize: 19,
+    marginBottom: 24,
+  },
+  addButton: {
+    backgroundColor: colors.secondary,
+    color: 'white',
+  },
   bgPicture: {
     flex: 1,
     justifyContent: 'center',
@@ -201,6 +215,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
   },
+
   chip: {
     marginHorizontal: '2%',
     margin: 5,
@@ -226,7 +241,6 @@ const styles = StyleSheet.create({
     transform: [{ scaleX: 10 }],
     width: 42,
   },
-
   container: {
     alignItems: 'center',
     backgroundColor: 'lightblue',
@@ -234,28 +248,14 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   containerAdd: {
-    height: 250,
-    paddingVertical: 32,
-    paddingHorizontal: 70,
+    borderRadius: 3,
     flex: 1,
+    height: 250,
     marginBottom: 4,
     marginHorizontal: 3,
-    borderRadius: 3,
     overflow: 'hidden',
-  },
-  Add: {
-    fontSize: 24,
-    color: 'white',
-    marginBottom: 8,
-  },
-  AddText: {
-    fontSize: 19,
-    color: 'white',
-    marginBottom: 24,
-  },
-  addButton: {
-    color: 'white',
-    backgroundColor: colors.secondary,
+    paddingHorizontal: 70,
+    paddingVertical: 32,
   },
   containerNews: {
     alignItems: 'center',
@@ -281,9 +281,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   imageBG: {
+    backgroundColor: colors.background,
     height: 470,
     width: '100%',
-    backgroundColor: colors.background,
   },
   imageBG2: {
     height: 200,

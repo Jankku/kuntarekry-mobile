@@ -14,7 +14,6 @@ export default function OrganizationsListScreen() {
   const uniqueOrganizations = cleanedOrganizations.filter(
     (item, index, self) => self.indexOf(item) === index
   );
-  console.log(uniqueOrganizations);
 
   return (
     <>

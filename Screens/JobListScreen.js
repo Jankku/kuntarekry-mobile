@@ -3,7 +3,7 @@ import { Title } from 'react-native-paper';
 import Jobs from '../Components/Jobs';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 
-export default function JobsListScreen ({ navigation, route }) {
+export default function JobsListScreen({ navigation, route }) {
   const searchQuery = route.params?.searchQuery ?? '';
   const buttonJobQuery = route.params?.buttonJobQuery ?? '';
   const { jobs } = useJobAdvertisements();
