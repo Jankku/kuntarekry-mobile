@@ -1,17 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { Avatar, Button } from 'react-native-paper';
-import { Divider } from 'react-native-paper';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Avatar, Button, List, Divider } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 export default function JobScreen({ route }) {
   const job = route.params?.job ?? '';
+  const formattedStartDate = new Date(job.publicationStarts).toLocaleDateString();
   const formattedEndDate = new Date(job.publicationEnds).toLocaleDateString();
+  console.log(job);
   return (
-    <>
+    <ScrollView>
       <LinearGradient
         style={styles.backgroundTop}
-        colors={['#33cc80', '#0a8bc2']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0.6, y: 0.5 }}
+        colors={['#0a8bc2', '#33cc80']}
+        start={{ x: 0.35, y: 0.45 }}
+        end={{ x: 0, y: 0 }}
       >
         <View style={styles.container}>
           <Text style={styles.organization}>{job.organization}</Text>
@@ -37,9 +38,86 @@ export default function JobScreen({ route }) {
       </LinearGradient>
       <View>
         <Text style={styles.desc}>{job.jobDesc}</Text>
-        <Divider></Divider>
+        <View style={styles.jobDetailList}>
+          <Divider></Divider>
+          <List.Item
+            description={() => <Text style={styles.detailText}>{job.organization}</Text>}
+            color="#35a9db"
+            left={() => (
+              <List.Icon style={styles.detailIcon} size={30} color="#35a9db" icon="sitemap" />
+            )}
+          />
+          <Divider></Divider>
+          <List.Item
+            description={() => <Text style={styles.detailText}>Tunnisteet</Text>}
+            color="#35a9db"
+            left={() => (
+              <List.Icon
+                style={styles.detailIcon}
+                size={30}
+                color="#35a9db"
+                icon="file-document-multiple"
+              />
+            )}
+          />
+          <Divider></Divider>
+          <List.Item
+            description={() => <Text style={styles.detailText}>{job.id}</Text>}
+            color="#35a9db"
+            left={() => (
+              <List.Icon style={styles.detailIcon} size={30} color="#35a9db" icon="key" />
+            )}
+          />
+          <Divider></Divider>
+          <List.Item
+            description={() => <Text style={styles.detailText}>Aloitusaika</Text>}
+            color="#35a9db"
+            left={() => (
+              <List.Icon
+                style={styles.detailIcon}
+                size={30}
+                color="#35a9db"
+                icon="play-circle-outline"
+              />
+            )}
+          />
+          <Divider></Divider>
+          <List.Item
+            description={() => <Text style={styles.detailText}>{job.salary}</Text>}
+            color="#35a9db"
+            left={() => (
+              <List.Icon style={styles.detailIcon} size={30} color="#35a9db" icon="currency-eur" />
+            )}
+          />
+          <Divider></Divider>
+          <List.Item
+            description={() => (
+              <Text style={styles.detailText}>
+                {formattedStartDate} - {formattedEndDate}
+              </Text>
+            )}
+            color="#35a9db"
+            left={() => (
+              <List.Icon style={styles.detailIcon} size={30} color="#35a9db" icon="calendar" />
+            )}
+          />
+          <Divider></Divider>
+          <List.Item
+            description={() => <Text style={styles.detailText}>Lisätunnisteet</Text>}
+            color="#35a9db"
+            left={() => (
+              <List.Icon
+                style={styles.detailIcon}
+                size={30}
+                color="#35a9db"
+                icon="tag-multiple-outline"
+              />
+            )}
+          />
+          <Divider></Divider>
+        </View>
       </View>
-    </>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
@@ -66,6 +144,15 @@ const styles = StyleSheet.create({
   desc: {
     fontSize: 20,
     fontWeight: '400',
+    marginHorizontal: 15,
+    textAlign: 'left',
+  },
+  detailIcon: {
+    paddingHorizontal: 15,
+  },
+  detailText: {
+    fontSize: 20,
+    fontWeight: '400',
     textAlign: 'left',
   },
   h3: {
@@ -73,8 +160,14 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
   },
+  jobDetail: {
+    marginHorizontal: 50,
+  },
+  jobDetailList: {
+    backgroundColor: 'white',
+  },
   organization: {
-    color: 'white',
+    color: '#ffffffb3',
     fontSize: 12,
     fontWeight: '400',
     textAlign: 'center',
