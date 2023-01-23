@@ -19,9 +19,7 @@ export default function HomeScreen({ navigation }) {
     setHidden(!hidden);
   };
 
-  const onJobCountPress = () => {
-    navigation.navigate('Jobs');
-  };
+  const onJobCountPress = () => navigation.navigate('Jobs');
 
   const onSubmitSearch = () => navigation.navigate('Jobs', { searchQuery });
 
@@ -100,7 +98,7 @@ export default function HomeScreen({ navigation }) {
           value={searchQuery}
           placeholder="Tehtävänimike, sijainti, ..."
         />
-        <Button textColor="white" style={styles.search}>
+        <Button textColor="white" style={styles.search} onPress={() => onSubmitSearch()}>
           ETSI
         </Button>
         {hidden ? <Text style={styles.circle}></Text> : null}
@@ -144,12 +142,7 @@ export default function HomeScreen({ navigation }) {
           >
             <Text style={styles.Add}>Keikkatöihin</Text>
             <Text style={styles.AddText}>Kiinnostaako keikkatyö? Klikkaa alta.</Text>
-            <Button
-              contentStyle={{ flexDirection: 'row-reverse' }}
-              icon="chevron-right"
-              style={styles.addButton}
-              mode={'contained'}
-            >
+            <Button icon="chevron-right" style={styles.addButton} mode={'contained'}>
               KEIKKATÖIHIN
             </Button>
           </ImageBackground>
