@@ -3,10 +3,6 @@ import { API_URL, API_CLIENT } from '@env';
 import * as FileSystem from 'expo-file-system';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone';
-
-dayjs.extend(timezone);
-dayjs.tz.setDefault('Europe/Helsinki');
 
 const JOBS_URI = FileSystem.cacheDirectory + 'jobs';
 const JOBS_LAST_UPDATED_KEY = 'jobs_last_updated';

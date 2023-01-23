@@ -9,6 +9,14 @@ import JobScreen from './Screens/JobScreen';
 import { JobAdvertisementProvider } from './hooks/usejobadvertisements';
 import JobFilterScreen from './Screens/JobFilterScreen';
 import JobFilterListScreen from './Screens/JobFilterListScreen';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+
+dayjs.extend(localizedFormat);
+dayjs.extend(timezone);
+dayjs.locale('fi');
+dayjs.tz.setDefault('Europe/Helsinki');
 
 const theme = {
   ...DefaultTheme,

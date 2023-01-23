@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, Button } from 'react-native-paper';
+import dayjs from 'dayjs';
 
 export default function Jobs({ navigation, data }) {
   const [minIndex, setMinIndex] = useState(0);
@@ -53,13 +53,15 @@ function JobItem({ navigation, item }) {
         style={styles.border}
         onPress={() => navigation.navigate('Job', { job: item.jobAdvertisement })}
       >
-        <Card.Content style={styles.container}>
+        <Card.Content>
           <View style={styles.container}>
             <Button style={styles.button} icon="heart-outline"></Button>
-            <View style={styles.column}>
-              <Text style={styles.header}>{item.jobAdvertisement.title}</Text>
-              <View style={styles.heightTen} />
-              <Text style={styles.text2}>{item.jobAdvertisement.organization}</Text>
+            <View>
+              <Text style={styles.itemHeaderText}>{item.jobAdvertisement.title}</Text>
+              <Text style={styles.itemText}>{item.jobAdvertisement.organization}</Text>
+              <Text style={styles.itemText}>
+                Hakuaika päättyy {dayjs(item.jobAdvertisement.publicationEnds).format('l LT')}
+              </Text>
             </View>
           </View>
         </Card.Content>
@@ -77,12 +79,9 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: 'center',
   },
-  column: {
-    flexDirection: 'column',
-  },
   container: {
     flexDirection: 'row',
-    paddingVertical: 15,
+    paddingVertical: 8,
     width: '92%',
   },
   footerContainer: {
@@ -90,16 +89,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 16,
   },
-  header: {
+  itemHeaderText: {
     fontSize: 16,
+    fontWeight: '500',
   },
-  heightTen: {
-    height: 10,
-  },
-  text: {
-    fontSize: 13,
-  },
-  text2: {
+  itemText: {
     fontSize: 14,
+    paddingVertical: 2,
   },
 });

@@ -1,6 +1,8 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Avatar, Button, List, Divider, Chip } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
+import dayjs from 'dayjs';
+
 export default function JobScreen({ route, navigation }) {
   const job = route.params?.job ?? '';
   return (
@@ -17,7 +19,7 @@ export default function JobScreen({ route, navigation }) {
           <View style={styles.dateContainer}>
             <Text style={styles.h3}>Hakuaika päättyy</Text>
             <Avatar.Icon style={styles.h3} size={30} color="white" icon="calendar" />
-            <Text style={styles.h3}>end date</Text>
+            <Text style={styles.h3}>{dayjs(job.publicationEnds).format('l LT')}</Text>
           </View>
         </View>
         <Button style={styles.button} buttonColor="white" textColor="#009978" icon="chevron-right">
@@ -102,7 +104,12 @@ export default function JobScreen({ route, navigation }) {
           />
           <Divider></Divider>
           <List.Item
-            title={() => <Text style={styles.detailText}>startdate - enddate</Text>}
+            title={() => (
+              <Text style={styles.detailText}>
+                {dayjs(job.publicationStarts).format('l')} -{' '}
+                {dayjs(job.publicationEnds).format('l LT')}
+              </Text>
+            )}
             color="#35a9db"
             left={() => (
               <List.Icon style={styles.detailIcon} size={30} color="#35a9db" icon="calendar" />
