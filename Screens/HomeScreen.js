@@ -8,7 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../styles/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function HomeScreen ({ navigation }) {
+export default function HomeScreen({ navigation }) {
   const { jobs } = useJobAdvertisements();
   const jobCount = jobs.length ?? 0;
   const [searchQuery, setSearchQuery] = useState('');
@@ -27,7 +27,7 @@ export default function HomeScreen ({ navigation }) {
 
   return (
     <ScrollView>
-      <StatusBar style='auto' />
+      <StatusBar style="auto" />
       <LinearGradient
         colors={['#0a8bc2', '#33cc80']}
         start={{ x: 0, y: 0 }}
@@ -72,10 +72,10 @@ export default function HomeScreen ({ navigation }) {
             Harjoittelu
           </Chip>
           <Button
-            textColor='white'
+            textColor="white"
             compact
             contentStyle={{ flexDirection: 'row-reverse' }}
-            icon='filter'
+            icon="filter"
             style={styles.chip}
             onPress={onMoreLimitationPress}
           >
@@ -95,9 +95,9 @@ export default function HomeScreen ({ navigation }) {
           onSubmitEditing={onSubmitSearch}
           onIconPress={onSubmitSearch}
           value={searchQuery}
-          placeholder='Tehtävänimike, sijainti, ...'
+          placeholder="Tehtävänimike, sijainti, ..."
         />
-        <Button textColor='white' style={styles.search}>
+        <Button textColor="white" style={styles.search}>
           ETSI
         </Button>
         {hidden ? <Text style={styles.circle}></Text> : null}
@@ -110,9 +110,9 @@ export default function HomeScreen ({ navigation }) {
         </View>
         <Button
           contentStyle={{ flexDirection: 'row-reverse' }}
-          mode='text'
+          mode="text"
           style={styles.chip1}
-          icon='target'
+          icon="target"
         >
           PAIKANNA
         </Button>
@@ -128,7 +128,7 @@ export default function HomeScreen ({ navigation }) {
             <Text style={styles.AddText}>Haluatko jättää avoimen hakemuksen? Klikkaa alta</Text>
             <Button
               contentStyle={{ flexDirection: 'row-reverse' }}
-              icon='chevron-right'
+              icon="chevron-right"
               style={styles.addButton}
               mode={'contained'}
             >
@@ -143,7 +143,7 @@ export default function HomeScreen ({ navigation }) {
             <Text style={styles.AddText}>Kiinnostaako keikkatyö? Klikkaa alta.</Text>
             <Button
               contentStyle={{ flexDirection: 'row-reverse' }}
-              icon='chevron-right'
+              icon="chevron-right"
               style={styles.addButton}
               mode={'contained'}
             >
@@ -225,10 +225,10 @@ const styles = StyleSheet.create({
   },
 
   chip: {
-    marginHorizontal: '2%',
-    margin: 5,
     backgroundColor: colors.Chip,
     borderRadius: 8,
+    marginHorizontal: '2%',
+    margin: 5,
   },
   chip1: {
     marginHorizontal: '2%',
@@ -287,6 +287,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     padding: 12,
   },
+  headerCount: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: '400',
+    marginBottom: 28,
+    textAlign: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 9,
+  },
   headertext: {
     color: 'white',
     fontSize: 28,
@@ -300,16 +310,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 36,
     fontWeight: '700',
-    textAlign: 'center',
-    textShadowColor: 'rgba(0, 0, 0, 0.25)',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 9,
-  },
-  headerCount: {
-    marginBottom: 28,
-    color: 'white',
-    fontSize: 20,
-    fontWeight: '400',
     textAlign: 'center',
     textShadowColor: 'rgba(0, 0, 0, 0.25)',
     textShadowOffset: { width: 0, height: 0 },
@@ -332,14 +332,6 @@ const styles = StyleSheet.create({
     marginVertical: 12,
     width: '88%',
   },
-  search: {
-    width: '88%',
-    height: 52,
-    backgroundColor: '#009978',
-    zIndex: 1,
-    borderRadius: 5,
-    justifyContent: 'center',
-  },
   jobsContainer: {
     backgroundColor: colors.background,
     padding: 12,
@@ -356,5 +348,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     flexDirection: 'row',
     padding: 26,
+  },
+  search: {
+    backgroundColor: '#009978',
+    borderRadius: 5,
+    height: 52,
+    justifyContent: 'center',
+    width: '88%',
+    zIndex: 1,
   },
 });

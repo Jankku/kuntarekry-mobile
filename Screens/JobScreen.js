@@ -3,9 +3,6 @@ import { Avatar, Button, List, Divider } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 export default function JobScreen({ route }) {
   const job = route.params?.job ?? '';
-  const formattedStartDate = new Date(job.publicationStarts).toLocaleDateString();
-  const formattedEndDate = new Date(job.publicationEnds).toLocaleDateString();
-  console.log(job);
   return (
     <ScrollView>
       <LinearGradient
@@ -20,7 +17,7 @@ export default function JobScreen({ route }) {
           <View style={styles.dateContainer}>
             <Text style={styles.h3}>Hakuaika päättyy</Text>
             <Avatar.Icon style={styles.h3} size={30} color="white" icon="calendar" />
-            <Text style={styles.h3}>{formattedEndDate}</Text>
+            <Text style={styles.h3}>end date</Text>
           </View>
         </View>
         <View style={styles.buttons}>
@@ -91,11 +88,7 @@ export default function JobScreen({ route }) {
           />
           <Divider></Divider>
           <List.Item
-            description={() => (
-              <Text style={styles.detailText}>
-                {formattedStartDate} - {formattedEndDate}
-              </Text>
-            )}
+            description={() => <Text style={styles.detailText}>startdate - enddate</Text>}
             color="#35a9db"
             left={() => (
               <List.Icon style={styles.detailIcon} size={30} color="#35a9db" icon="calendar" />
