@@ -3,26 +3,26 @@ import { Title, Text } from 'react-native-paper';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { Card } from 'react-native-paper';
 
-export default function OrganizationsListScreen({ navigation }) {
+export default function RegionListScreen({ navigation }) {
   const { jobs } = useJobAdvertisements();
-  const organizations = jobs
-    .filter((jobAd) => jobAd.jobAdvertisement.profitCenter)
-    .map((jobAd) => jobAd.jobAdvertisement.profitCenter);
-  const cleanedOrganizations = organizations
+  const regions = jobs
+    .filter((jobAd) => jobAd.jobAdvertisement.region)
+    .map((jobAd) => jobAd.jobAdvertisement.region);
+  const cleanedRegions = regions
     .filter((org) => org) // remove elements that are undefined or null
     .map((org) => org.split(',')[0].trim());
-  const uniqueOrganizations = cleanedOrganizations
+  const uniqueRegions = cleanedRegions
     .filter((item, index, self) => self.indexOf(item) === index)
     .sort();
 
   return (
     <>
       <ScrollView>
-        <Title>kaikki työnantajat</Title>
-        {uniqueOrganizations.map((org, index) => (
-          <Card key={index} onPress={() => navigation.navigate('Organization', { org: org })}>
+        <Title>kaikki maakunnat</Title>
+        {uniqueRegions.map((reg, index) => (
+          <Card key={index} onPress={() => navigation.navigate('Region', { reg: reg })}>
             <Card.Content>
-              <Text>{org}</Text>
+              <Text>{reg}</Text>
             </Card.Content>
           </Card>
         ))}

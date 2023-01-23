@@ -3,9 +3,6 @@ import { Avatar, Button, List, Divider, Chip } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 export default function JobScreen({ route, navigation }) {
   const job = route.params?.job ?? '';
-  const formattedStartDate = new Date(job.publicationStarts).toLocaleDateString();
-  const formattedEndDate = new Date(job.publicationEnds).toLocaleDateString();
-  console.log(job);
   return (
     <ScrollView>
       <LinearGradient
@@ -20,7 +17,7 @@ export default function JobScreen({ route, navigation }) {
           <View style={styles.dateContainer}>
             <Text style={styles.h3}>Hakuaika päättyy</Text>
             <Avatar.Icon style={styles.h3} size={30} color="white" icon="calendar" />
-            <Text style={styles.h3}>{formattedEndDate}</Text>
+            <Text style={styles.h3}>end date</Text>
           </View>
         </View>
         <Button style={styles.button} buttonColor="white" textColor="#009978" icon="chevron-right">
@@ -36,8 +33,7 @@ export default function JobScreen({ route, navigation }) {
         <View style={styles.jobDetailList}>
           <Divider></Divider>
           <List.Item
-            title=""
-            description={() => <Text style={styles.detailText}>{job.organization}</Text>}
+            title={() => <Text style={styles.detailText}>{job.organization}</Text>}
             color="#35a9db"
             left={() => (
               <List.Icon style={styles.detailIcon} size={30} color="#35a9db" icon="sitemap" />
@@ -106,11 +102,7 @@ export default function JobScreen({ route, navigation }) {
           />
           <Divider></Divider>
           <List.Item
-            title={() => (
-              <Text style={styles.detailText}>
-                {formattedStartDate} - {formattedEndDate}
-              </Text>
-            )}
+            title={() => <Text style={styles.detailText}>startdate - enddate</Text>}
             color="#35a9db"
             left={() => (
               <List.Icon style={styles.detailIcon} size={30} color="#35a9db" icon="calendar" />

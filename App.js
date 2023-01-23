@@ -9,6 +9,8 @@ import JobScreen from './Screens/JobScreen';
 import { JobAdvertisementProvider } from './hooks/usejobadvertisements';
 import OrganizationsListScreen from './Screens/OrganizationsListScreen';
 import OrganizationScreen from './Screens/OrganizationScreen';
+import RegionListScreen from './Screens/RegionListScreen';
+import RegionScreen from './Screens/RegionScreen';
 
 const theme = {
   ...DefaultTheme,
@@ -35,6 +37,8 @@ export default function App() {
             <Stack.Screen name="Job" component={JobScreen} />
             <Stack.Screen name="Organizations" component={OrganizationsListScreen} />
             <Stack.Screen name="Organization" component={OrganizationScreen} />
+            <Stack.Screen name="Regions" component={RegionListScreen} />
+            <Stack.Screen name="Region" component={RegionScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>

@@ -3,14 +3,14 @@ import { Title, Text } from 'react-native-paper';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { Card } from 'react-native-paper';
 
-export default function OrganizationScreen({ route, navigation }) {
+export default function RegionScreen({ route, navigation }) {
   const { jobs } = useJobAdvertisements();
-  const organization = route.params?.org ?? '';
-  const filteredJobs = jobs.filter((job) => job.jobAdvertisement.profitCenter === organization);
+  const region = route.params?.reg ?? '';
+  const filteredJobs = jobs.filter((job) => job.jobAdvertisement.region === region);
   return (
     <>
       <ScrollView>
-        <Title>kaikki työpaikat {organization}</Title>
+        <Title>kaikki työpaikat {region}</Title>
         {filteredJobs.map((job, index) => (
           <Card
             key={index}
