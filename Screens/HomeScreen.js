@@ -86,8 +86,8 @@ export default function HomeScreen({ navigation }) {
               työnantajat
             </Chip>
             <Chip onPress={() => navigation.navigate('Regions')} compact style={styles.chip}>
-            maakunnat
-          </Chip>
+              maakunnat
+            </Chip>
           </View>
         ) : null}
         <Searchbar
