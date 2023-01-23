@@ -82,10 +82,18 @@ export default function HomeScreen({ navigation }) {
         </View>
         {!hidden ? (
           <View style={styles.buttonrow}>
-            <Chip onPress={() => navigation.navigate('Organizations')} compact style={styles.chip}>
+            <Chip
+              onPress={() => navigation.navigate('Filter', { list: 'organizations' })}
+              compact
+              style={styles.chip}
+            >
               työnantajat
             </Chip>
-            <Chip onPress={() => navigation.navigate('Regions')} compact style={styles.chip}>
+            <Chip
+              onPress={() => navigation.navigate('Filter', { list: 'regions' })}
+              compact
+              style={styles.chip}
+            >
               maakunnat
             </Chip>
           </View>

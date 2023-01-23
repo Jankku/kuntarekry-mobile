@@ -7,10 +7,8 @@ import AppBar from './Components/AppBar';
 import JobListScreen from './Screens/JobListScreen';
 import JobScreen from './Screens/JobScreen';
 import { JobAdvertisementProvider } from './hooks/usejobadvertisements';
-import OrganizationsListScreen from './Screens/OrganizationsListScreen';
-import OrganizationScreen from './Screens/OrganizationScreen';
-import RegionListScreen from './Screens/RegionListScreen';
-import RegionScreen from './Screens/RegionScreen';
+import JobFilterScreen from './Screens/JobFilterScreen';
+import JobFilterListScreen from './Screens/JobFilterListScreen';
 
 const theme = {
   ...DefaultTheme,
@@ -35,10 +33,8 @@ export default function App() {
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Jobs" component={JobListScreen} />
             <Stack.Screen name="Job" component={JobScreen} />
-            <Stack.Screen name="Organizations" component={OrganizationsListScreen} />
-            <Stack.Screen name="Organization" component={OrganizationScreen} />
-            <Stack.Screen name="Regions" component={RegionListScreen} />
-            <Stack.Screen name="Region" component={RegionScreen} />
+            <Stack.Screen name="Filter" component={JobFilterScreen} />
+            <Stack.Screen name="FilterList" component={JobFilterListScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
