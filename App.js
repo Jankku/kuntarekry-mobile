@@ -12,6 +12,8 @@ import JobFilterListScreen from './Screens/JobFilterListScreen';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+// eslint-disable-next-line no-unused-vars
+import fi from 'dayjs/locale/fi';
 
 dayjs.extend(localizedFormat);
 dayjs.extend(timezone);

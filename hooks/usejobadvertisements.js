@@ -22,13 +22,14 @@ export function JobAdvertisementProvider({ children }) {
       };
 
       const fetchUpdatedJobs = async (storedJobs) => {
-        const currentTimestamp = dayjs().format('YYYY-MM-DDTHH:mm:ss');
-        const updatedJobs = await fetchJobAdvertisements(currentTimestamp);
+        const lastUpdated = await AsyncStorage.getItem(JOBS_LAST_UPDATED_KEY);
+        const timestamp = dayjs(lastUpdated).format('YYYY-MM-DDTHH:mm:ss');
+        const updatedJobs = await fetchJobAdvertisements(timestamp);
         if (!updatedJobs) return;
 
-        const newJobs = mergeJobs(storedJobs, updatedJobs);
-        setJobs(newJobs);
-        await writeJobsToStorage(newJobs);
+        const mergedJobs = mergeJobs(storedJobs, updatedJobs);
+        setJobs(mergedJobs);
+        await writeJobsToStorage(mergedJobs);
         await updateJobLastUpdatedTimestamp();
       };
 
@@ -89,7 +90,6 @@ async function fetchJobAdvertisements(timestamp) {
     url.searchParams.append('timestamp', timestamp);
   }
   const res = await fetch(url.toString());
-  console.log(`Fetch jobs status: ${res.status}`);
   const jobsJson = await res.json();
   return jobsJson.jobAdvertisements;
 }
