@@ -11,9 +11,9 @@ export default function OrganizationsListScreen({ navigation }) {
   const cleanedOrganizations = organizations
     .filter((org) => org) // remove elements that are undefined or null
     .map((org) => org.split(',')[0].trim());
-  const uniqueOrganizations = cleanedOrganizations.filter(
-    (item, index, self) => self.indexOf(item) === index
-  );
+  const uniqueOrganizations = cleanedOrganizations
+    .filter((item, index, self) => self.indexOf(item) === index)
+    .sort();
 
   return (
     <>
