@@ -6,8 +6,9 @@ import { Searchbar, Chip, Button } from 'react-native-paper';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../styles/colors';
+import { LinearGradient } from 'expo-linear-gradient';
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen ({ navigation }) {
   const { jobs } = useJobAdvertisements();
   const jobCount = jobs.length ?? 0;
   const [searchQuery, setSearchQuery] = useState('');
@@ -26,22 +27,19 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <ScrollView>
-      <StatusBar style="auto" />
-      <ImageBackground
-        source={require('../assets/sky-g79e40b0ac_1280.png')}
+      <StatusBar style='auto' />
+      <LinearGradient
+        colors={['#0a8bc2', '#33cc80']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0.0, y: 1.3 }}
         style={styles.container}
       >
-        <Text style={styles.headertext}>Hae</Text>
-        <Text style={styles.headertext2}>TYÖPAIKKAA</Text>
+        <Text style={styles.headertext}>Avoimet</Text>
+        <Text style={styles.headertext2}>TYÖPAIKAT</Text>
+        <Text style={styles.headerCount} onPress={onJobCountPress}>
+          <Text style={{ fontWeight: '700' }}>{jobCount}</Text> avointa työpaikkaa
+        </Text>
 
-        <Searchbar
-          style={styles.input}
-          onChangeText={setSearchQuery}
-          onSubmitEditing={onSubmitSearch}
-          onIconPress={onSubmitSearch}
-          value={searchQuery}
-          placeholder="Tehtävänimike, sijainti, työavain..."
-        />
         <View style={styles.buttonrow}>
           <Chip
             onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Kokoaikatyö' })}
@@ -73,15 +71,16 @@ export default function HomeScreen({ navigation }) {
           >
             Harjoittelu
           </Chip>
-          <Chip
+          <Button
+            textColor='white'
             compact
             contentStyle={{ flexDirection: 'row-reverse' }}
+            icon='filter'
             style={styles.chip}
-            icon="filter"
             onPress={onMoreLimitationPress}
           >
-            LISÄÄ RAJAUKSIA
-          </Chip>
+            Lisää rajauksia
+          </Button>
         </View>
         {!hidden ? (
           <View style={styles.buttonrow}>
@@ -90,11 +89,20 @@ export default function HomeScreen({ navigation }) {
             </Chip>
           </View>
         ) : null}
-        <Text compact style={styles.chip2} onPress={onJobCountPress}>
-          <Text style={{ fontWeight: '700' }}>{jobCount}</Text> avointa työpaikkaa
-        </Text>
-        <Text style={styles.circle}></Text>
-      </ImageBackground>
+        <Searchbar
+          style={styles.input}
+          onChangeText={setSearchQuery}
+          onSubmitEditing={onSubmitSearch}
+          onIconPress={onSubmitSearch}
+          value={searchQuery}
+          placeholder='Tehtävänimike, sijainti, ...'
+        />
+        <Button textColor='white' style={styles.search}>
+          ETSI
+        </Button>
+        {hidden ? <Text style={styles.circle}></Text> : null}
+        {!hidden ? <Text style={styles.circle2}></Text> : null}
+      </LinearGradient>
       <View style={styles.row}>
         <View>
           <Text style={styles.carouselheader}>Sinulle suositellut</Text>
@@ -102,9 +110,9 @@ export default function HomeScreen({ navigation }) {
         </View>
         <Button
           contentStyle={{ flexDirection: 'row-reverse' }}
-          mode="text"
-          style={styles.chip}
-          icon="target"
+          mode='text'
+          style={styles.chip1}
+          icon='target'
         >
           PAIKANNA
         </Button>
@@ -120,7 +128,7 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.AddText}>Haluatko jättää avoimen hakemuksen? Klikkaa alta</Text>
             <Button
               contentStyle={{ flexDirection: 'row-reverse' }}
-              icon="chevron-right"
+              icon='chevron-right'
               style={styles.addButton}
               mode={'contained'}
             >
@@ -135,7 +143,7 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.AddText}>Kiinnostaako keikkatyö? Klikkaa alta.</Text>
             <Button
               contentStyle={{ flexDirection: 'row-reverse' }}
-              icon="chevron-right"
+              icon='chevron-right'
               style={styles.addButton}
               mode={'contained'}
             >
@@ -219,6 +227,12 @@ const styles = StyleSheet.create({
   chip: {
     marginHorizontal: '2%',
     margin: 5,
+    backgroundColor: colors.Chip,
+    borderRadius: 8,
+  },
+  chip1: {
+    marginHorizontal: '2%',
+    margin: 5,
   },
   chip2: {
     backgroundColor: colors.background,
@@ -237,7 +251,18 @@ const styles = StyleSheet.create({
     height: 21,
     overflow: 'hidden',
     position: 'absolute',
-    top: 360,
+    top: 364,
+    transform: [{ scaleX: 9 }],
+    width: 42,
+  },
+  circle2: {
+    backgroundColor: colors.background,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    height: 21,
+    overflow: 'hidden',
+    position: 'absolute',
+    top: 411,
     transform: [{ scaleX: 10 }],
     width: 42,
   },
@@ -267,6 +292,9 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: '400',
     textAlign: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 9,
   },
   headertext2: {
     color: 'white',
@@ -274,8 +302,18 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
     textShadowColor: 'rgba(0, 0, 0, 0.25)',
-    textShadowOffset: { width: 0, height: 4 },
-    textShadowRadius: 1,
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 9,
+  },
+  headerCount: {
+    marginBottom: 28,
+    color: 'white',
+    fontSize: 20,
+    fontWeight: '400',
+    textAlign: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 9,
   },
   heading: {
     fontSize: 16,
@@ -291,10 +329,16 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: 'white',
-    height: 45,
-    marginTop: 38,
-    margin: 12,
+    marginVertical: 12,
     width: '88%',
+  },
+  search: {
+    width: '88%',
+    height: 52,
+    backgroundColor: '#009978',
+    zIndex: 1,
+    borderRadius: 5,
+    justifyContent: 'center',
   },
   jobsContainer: {
     backgroundColor: colors.background,
