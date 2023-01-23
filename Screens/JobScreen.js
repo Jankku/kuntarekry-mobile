@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Avatar, Button, List, Divider } from 'react-native-paper';
+import { Avatar, Button, List, Divider, Chip } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
-export default function JobScreen({ route }) {
+export default function JobScreen({ route, navigation }) {
   const job = route.params?.job ?? '';
   const formattedStartDate = new Date(job.publicationStarts).toLocaleDateString();
   const formattedEndDate = new Date(job.publicationEnds).toLocaleDateString();
@@ -23,15 +23,10 @@ export default function JobScreen({ route }) {
             <Text style={styles.h3}>{formattedEndDate}</Text>
           </View>
         </View>
+        <Button style={styles.button} buttonColor="white" textColor="#009978" icon="chevron-right">
+          Hae työpaikkaa
+        </Button>
         <View style={styles.buttons}>
-          <Button
-            style={styles.button}
-            buttonColor="white"
-            textColor="#009978"
-            icon="chevron-right"
-          >
-            Hae työpaikkaa
-          </Button>
           <Button buttonColor="transparent" textColor="white" icon="heart-outline"></Button>
           <Button buttonColor="transparent" textColor="white" icon="share-variant"></Button>
         </View>
@@ -41,6 +36,7 @@ export default function JobScreen({ route }) {
         <View style={styles.jobDetailList}>
           <Divider></Divider>
           <List.Item
+            title=""
             description={() => <Text style={styles.detailText}>{job.organization}</Text>}
             color="#35a9db"
             left={() => (
@@ -49,7 +45,24 @@ export default function JobScreen({ route }) {
           />
           <Divider></Divider>
           <List.Item
-            description={() => <Text style={styles.detailText}>Tunnisteet</Text>}
+            title={() => (
+              <View style={styles.tagRow}>
+                <Chip
+                  style={styles.tag}
+                  onPress={() => navigation.navigate('Jobs', { buttonJobQuery: job.employment })}
+                >
+                  {job.employment}
+                </Chip>
+                <Chip
+                  style={styles.tag}
+                  onPress={() =>
+                    navigation.navigate('Jobs', { buttonJobQuery: job.employmentType })
+                  }
+                >
+                  {job.employmentType}
+                </Chip>
+              </View>
+            )}
             color="#35a9db"
             left={() => (
               <List.Icon
@@ -62,7 +75,7 @@ export default function JobScreen({ route }) {
           />
           <Divider></Divider>
           <List.Item
-            description={() => <Text style={styles.detailText}>{job.id}</Text>}
+            title={() => <Text style={styles.detailText}>{job.id}</Text>}
             color="#35a9db"
             left={() => (
               <List.Icon style={styles.detailIcon} size={30} color="#35a9db" icon="key" />
@@ -70,7 +83,7 @@ export default function JobScreen({ route }) {
           />
           <Divider></Divider>
           <List.Item
-            description={() => <Text style={styles.detailText}>Aloitusaika</Text>}
+            title={() => <Text style={styles.detailText}>Aloitusaika</Text>}
             color="#35a9db"
             left={() => (
               <List.Icon
@@ -83,7 +96,9 @@ export default function JobScreen({ route }) {
           />
           <Divider></Divider>
           <List.Item
-            description={() => <Text style={styles.detailText}>{job.salary}</Text>}
+            title={() => (
+              <Text style={styles.detailText}>{job.salary ? job.salary : 'Ei ilmoitettu'} </Text>
+            )}
             color="#35a9db"
             left={() => (
               <List.Icon style={styles.detailIcon} size={30} color="#35a9db" icon="currency-eur" />
@@ -91,7 +106,7 @@ export default function JobScreen({ route }) {
           />
           <Divider></Divider>
           <List.Item
-            description={() => (
+            title={() => (
               <Text style={styles.detailText}>
                 {formattedStartDate} - {formattedEndDate}
               </Text>
@@ -103,7 +118,7 @@ export default function JobScreen({ route }) {
           />
           <Divider></Divider>
           <List.Item
-            description={() => <Text style={styles.detailText}>Lisätunnisteet</Text>}
+            title={() => <Text style={styles.detailText}>Lisätunnisteet</Text>}
             color="#35a9db"
             left={() => (
               <List.Icon
@@ -125,12 +140,12 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   button: {
-    marginHorizontal: 30,
+    marginHorizontal: '25%',
   },
   buttons: {
-    alignItems: 'center',
+    flexDirection: 'row',
     justifyContent: 'center',
-    paddingTop: 16,
+    paddingVertical: '2%',
   },
   container: {
     alignItems: 'center',
@@ -171,6 +186,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '400',
     textAlign: 'center',
+  },
+  tag: {
+    marginHorizontal: '2%',
+  },
+  tagRow: {
+    flex: 1,
+    flexDirection: 'row',
   },
   title: {
     color: 'white',
