@@ -18,7 +18,7 @@ export default function OrganizationScreen({ route, navigation }) {
         <Card>
           <Card.Content>
             <Text>{organizationDesc}</Text>
-            <Chip onPress={() => navigation.navigate('FilterList', { org: organization })}>
+            <Chip onPress={() => navigation.navigate('Jobs', { buttonJobQuery: organization, filter: 'organization' })}>
               {jobCount} Avointa työpaikkaa
             </Chip>
           </Card.Content>

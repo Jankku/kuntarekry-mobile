@@ -40,21 +40,21 @@ export default function HomeScreen({ navigation }) {
 
         <View style={styles.buttonrow}>
           <Chip
-            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Kokoaikatyö' })}
+            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Kokoaikatyö', filter: 'employment' })}
             compact
             style={styles.chip}
           >
             Kokoaikatyö
           </Chip>
           <Chip
-            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Osa-aikatyö' })}
+            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Osa-aikatyö', filter: 'employment' })}
             compact
             style={styles.chip}
           >
             Osa-aikatyö
           </Chip>
           <Chip
-            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Kesätyö' })}
+            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Kesätyö', filter : 'employment' })}
             compact
             style={styles.chip}
           >
@@ -63,7 +63,7 @@ export default function HomeScreen({ navigation }) {
         </View>
         <View style={styles.buttonrow}>
           <Chip
-            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Harjoittelu' })}
+            onPress={() => navigation.navigate('Jobs', { buttonJobQuery: 'Harjoittelu', filter : 'employment' })}
             style={styles.chip}
             compact
           >

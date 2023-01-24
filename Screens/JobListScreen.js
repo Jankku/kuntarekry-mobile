@@ -6,8 +6,8 @@ import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 export default function JobsListScreen({ navigation, route }) {
   const searchQuery = route.params?.searchQuery ?? '';
   const buttonJobQuery = route.params?.buttonJobQuery ?? '';
+  const filter = route.params?.filter ?? '';
   const { jobs } = useJobAdvertisements();
-
   const filteredJobs = useMemo(
     () =>
       searchQuery
@@ -21,9 +21,9 @@ export default function JobsListScreen({ navigation, route }) {
     () =>
       jobs.filter(
         (j) =>
-          j.jobAdvertisement.employment && j.jobAdvertisement.employment.includes(buttonJobQuery)
+          j.jobAdvertisement[filter] && j.jobAdvertisement[filter].includes(buttonJobQuery)
       ),
-    [buttonJobQuery, jobs]
+    [filter, buttonJobQuery, jobs]
   );
 
   return (
