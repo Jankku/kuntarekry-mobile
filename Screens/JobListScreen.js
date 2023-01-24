@@ -20,8 +20,7 @@ export default function JobsListScreen({ navigation, route }) {
   const filteredButtonJobs = useMemo(
     () =>
       jobs.filter(
-        (j) =>
-          j.jobAdvertisement[filter] && j.jobAdvertisement[filter].includes(buttonJobQuery)
+        (j) => j.jobAdvertisement[filter] && j.jobAdvertisement[filter].includes(buttonJobQuery)
       ),
     [filter, buttonJobQuery, jobs]
   );
