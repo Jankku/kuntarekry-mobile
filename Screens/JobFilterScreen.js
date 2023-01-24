@@ -33,7 +33,7 @@ export default function JobFilterScreen({ navigation, route }) {
             key={index}
             onPress={() => {
               if (route.params.list === 'regions') {
-                navigation.navigate('FilterList', { reg: item });
+                navigation.navigate('Jobs', { buttonJobQuery: item, filter: 'region' });
               } else {
                 navigation.navigate('Organization', { org: item });
               }

@@ -8,7 +8,6 @@ import JobListScreen from './Screens/JobListScreen';
 import JobScreen from './Screens/JobScreen';
 import { JobAdvertisementProvider } from './hooks/usejobadvertisements';
 import JobFilterScreen from './Screens/JobFilterScreen';
-import JobFilterListScreen from './Screens/JobFilterListScreen';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
@@ -45,7 +44,6 @@ export default function App() {
             <Stack.Screen name="Jobs" component={JobListScreen} />
             <Stack.Screen name="Job" component={JobScreen} />
             <Stack.Screen name="Filter" component={JobFilterScreen} />
-            <Stack.Screen name="FilterList" component={JobFilterListScreen} />
             <Stack.Screen name="Organization" component={OrganizationScreen} />
           </Stack.Navigator>
         </NavigationContainer>

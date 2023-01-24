@@ -1,29 +1,22 @@
 import { useMemo } from 'react';
 import { Title } from 'react-native-paper';
 import Jobs from '../Components/Jobs';
+import useFilterJobs from '../hooks/usefilterjobs';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 
 export default function JobsListScreen({ navigation, route }) {
   const searchQuery = route.params?.searchQuery ?? '';
   const buttonJobQuery = route.params?.buttonJobQuery ?? '';
+  const filter = route.params?.filter ?? '';
   const { jobs } = useJobAdvertisements();
+  const filteredJobs = useFilterJobs(jobs, searchQuery);
 
-  const filteredJobs = useMemo(
-    () =>
-      searchQuery
-        ? jobs.filter((j) =>
-            j.jobAdvertisement.title.toLowerCase().includes(searchQuery.toLocaleLowerCase())
-          )
-        : [],
-    [jobs, searchQuery]
-  );
   const filteredButtonJobs = useMemo(
     () =>
       jobs.filter(
-        (j) =>
-          j.jobAdvertisement.employment && j.jobAdvertisement.employment.includes(buttonJobQuery)
+        (j) => j.jobAdvertisement[filter] && j.jobAdvertisement[filter].includes(buttonJobQuery)
       ),
-    [buttonJobQuery, jobs]
+    [filter, buttonJobQuery, jobs]
   );
 
   return (
