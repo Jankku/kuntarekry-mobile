@@ -17,7 +17,6 @@ export default function useFilterJobs(jobs, searchQuery) {
 
 const filterFields = [
   { name: 'title', rank: 20 },
-  { name: 'jobDesc', rank: 5 },
   { name: 'location', rank: 20 },
   { name: 'organization', rank: 20 },
   { name: 'employment', rank: 15 },

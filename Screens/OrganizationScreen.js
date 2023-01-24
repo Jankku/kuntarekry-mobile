@@ -26,14 +26,6 @@ export default function OrganizationScreen({ route, navigation }) {
         </Chip>
         <Text style={styles.Desc}>{organizationDesc}</Text>
         {filteredJobs.slice(0, 4).map((job, index) => {
-          if (job.jobAdvertisement.title && job.jobAdvertisement.title.length > 50) {
-            job.jobAdvertisement.title = job.jobAdvertisement.title.substring(0, 50) + '...';
-          }
-          if (job.jobAdvertisement.organization && job.jobAdvertisement.organization.length > 40) {
-            job.jobAdvertisement.organization =
-              job.jobAdvertisement.organization.substring(0, 40) + '...';
-          }
-
           return (
             <View style={styles.container} key={index}>
               <Button style={styles.button} icon="heart-outline"></Button>

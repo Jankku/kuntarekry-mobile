@@ -40,13 +40,6 @@ export default function Jobs({ navigation, data }) {
 }
 
 function JobItem({ navigation, item }) {
-  if (item.jobAdvertisement.title && item.jobAdvertisement.title.length > 50) {
-    item.jobAdvertisement.title = item.jobAdvertisement.title.substring(0, 50) + '...';
-  }
-  if (item.jobAdvertisement.organization && item.jobAdvertisement.organization.length > 40) {
-    item.jobAdvertisement.organization =
-      item.jobAdvertisement.organization.substring(0, 40) + '...';
-  }
   return (
     <>
       <Card
@@ -82,7 +75,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     paddingVertical: 8,
-    width: '92%',
+    width: '80%',
   },
   footerContainer: {
     flexDirection: 'row',
