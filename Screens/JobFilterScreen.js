@@ -31,11 +31,13 @@ export default function JobFilterScreen({ navigation, route }) {
         {list.map((item, index) => (
           <Card
             key={index}
-            onPress={() =>
-              navigation.navigate('FilterList', {
-                [route.params.list === 'regions' ? 'reg' : 'org']: item,
-              })
-            }
+            onPress={() => {
+              if (route.params.list === 'regions') {
+                navigation.navigate('FilterList', { reg: item });
+              } else {
+                navigation.navigate('Organization', { org: item });
+              }
+            }}
           >
             <Card.Content>
               <Text>{item}</Text>
