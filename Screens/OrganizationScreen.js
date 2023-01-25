@@ -27,17 +27,19 @@ export default function OrganizationScreen({ route, navigation }) {
         <Text style={styles.Desc}>{organizationDesc}</Text>
         {filteredJobs.slice(0, 4).map((job, index) => {
           return (
-            <View style={styles.container} key={index}>
-              <Button style={styles.button} icon="heart-outline"></Button>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Job', { job: job.jobAdvertisement })}
-              >
-                <View>
-                  <Text style={styles.text}>Sijainti</Text>
-                  <Text style={styles.header}>{job.jobAdvertisement.title}</Text>
-                  <Text style={styles.text2}>{job.jobAdvertisement.organization}</Text>
-                </View>
-              </TouchableOpacity>
+            <View style={styles.bgColor} key={index}>
+              <View style={styles.container}>
+                <Button style={styles.button} icon="heart-outline"></Button>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Job', { job: job.jobAdvertisement })}
+                >
+                  <View>
+                    <Text style={styles.text}>Sijainti</Text>
+                    <Text style={styles.header}>{job.jobAdvertisement.title}</Text>
+                    <Text style={styles.text2}>{job.jobAdvertisement.organization}</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           );
         })}
@@ -60,13 +62,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginVertical: 10,
   },
+  bgColor: {
+    backgroundColor: '#f5f5f5',
+  },
   button: {
     justifyContent: 'center',
   },
   container: {
-    backgroundColor: 'white',
     flexDirection: 'row',
-    paddingVertical: 15,
+    paddingVertical: 8,
+    width: '80%',
   },
   header: {
     fontSize: 20,
