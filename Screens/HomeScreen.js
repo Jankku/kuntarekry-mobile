@@ -1,5 +1,5 @@
 import { Text, StyleSheet, View, ImageBackground } from 'react-native';
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import CarouselIndex from '../Components/CarouselIndex';
 import { Searchbar, Chip, Button } from 'react-native-paper';
@@ -12,12 +12,8 @@ export default function HomeScreen({ navigation }) {
   const { jobs } = useJobAdvertisements();
   const jobCount = jobs.length ?? 0;
   const [searchQuery, setSearchQuery] = useState('');
+  const [filtersHidden, toggleFilters] = useReducer((prev) => !prev, true);
   const carouselJobs = jobs ? jobs.slice(0, 3).map((j) => j.jobAdvertisement) : [];
-  const [hidden, setHidden] = useState(true);
-
-  const onMoreLimitationPress = () => {
-    setHidden(!hidden);
-  };
 
   const onJobCountPress = () => navigation.navigate('Jobs');
 
@@ -83,12 +79,12 @@ export default function HomeScreen({ navigation }) {
             contentStyle={{ flexDirection: 'row-reverse' }}
             icon="filter"
             style={styles.chip}
-            onPress={onMoreLimitationPress}
+            onPress={toggleFilters}
           >
             Lisää rajauksia
           </Button>
         </View>
-        {!hidden ? (
+        {!filtersHidden ? (
           <View style={styles.buttonrow}>
             <Chip
               onPress={() => navigation.navigate('Filter', { list: 'organizations' })}
@@ -117,8 +113,6 @@ export default function HomeScreen({ navigation }) {
         <Button textColor="white" style={styles.search} onPress={() => onSubmitSearch()}>
           ETSI
         </Button>
-        {hidden ? <Text style={styles.circle}></Text> : null}
-        {!hidden ? <Text style={styles.circle2}></Text> : null}
       </LinearGradient>
       <View style={styles.row}>
         <View>
@@ -282,7 +276,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'lightblue',
     justifyContent: 'center',
-    paddingTop: 16,
+    paddingVertical: 16,
   },
   containerAdd: {
     borderRadius: 3,
