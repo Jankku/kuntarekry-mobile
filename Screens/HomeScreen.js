@@ -7,6 +7,7 @@ import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../styles/colors';
 import { LinearGradient } from 'expo-linear-gradient';
+import OrganizationIntroduction from '../Components/OrganizationIntroduction';
 
 export default function HomeScreen({ navigation }) {
   const { jobs } = useJobAdvertisements();
@@ -182,6 +183,7 @@ export default function HomeScreen({ navigation }) {
           <Chip style={styles.chip}>Näytä kaikki uutiset</Chip>
         </View>
       </View>
+      <OrganizationIntroduction navigation={navigation} />
     </ScrollView>
   );
 }

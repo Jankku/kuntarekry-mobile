@@ -19,7 +19,7 @@ export default function OrganizationScreen({ route, navigation }) {
         <Chip
           style={styles.Chip}
           onPress={() =>
-            navigation.navigate('Jobs', { buttonJobQuery: organization, filter: 'organization' })
+            navigation.navigate('Jobs', { buttonJobQuery: organization, filter: 'profitCenter' })
           }
         >
           {jobCount} Avointa työpaikkaa
