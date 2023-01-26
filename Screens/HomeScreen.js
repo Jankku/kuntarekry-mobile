@@ -93,14 +93,14 @@ export default function HomeScreen({ navigation }) {
               compact
               style={styles.chip}
             >
-              työnantajat
+              Työnantajat
             </Chip>
             <Chip
               onPress={() => navigation.navigate('Filter', { list: 'regions' })}
               compact
               style={styles.chip}
             >
-              maakunnat
+              Maakunnat
             </Chip>
           </View>
         ) : null}
@@ -133,10 +133,7 @@ export default function HomeScreen({ navigation }) {
       <CarouselIndex navigation={navigation} carouselJobs={carouselJobs} />
       <ImageBackground source={kuvaPng} style={styles.imageBG}>
         <View style={styles.centerText}>
-          <ImageBackground
-           
-            style={styles.containerAdd}
-          >
+          <ImageBackground style={styles.containerAdd}>
             <Text style={styles.Add}>Avoin hakemus</Text>
             <Text style={styles.AddText}>Haluatko jättää avoimen hakemuksen? Klikkaa alta</Text>
             <Button
@@ -148,10 +145,7 @@ export default function HomeScreen({ navigation }) {
               AVOIN HAKEMUS
             </Button>
           </ImageBackground>
-          <ImageBackground
-          
-            style={styles.containerAdd}
-          >
+          <ImageBackground style={styles.containerAdd}>
             <Text style={styles.Add}>Keikkatöihin</Text>
             <Text style={styles.AddText}>Kiinnostaako keikkatyö? Klikkaa alta.</Text>
             <Button icon="chevron-right" style={styles.addButton} mode={'contained'}>
@@ -197,7 +191,6 @@ const styles = StyleSheet.create({
   AddText: {
     color: 'black',
     fontSize: 17,
-
   },
   addButton: {
     backgroundColor: colors.secondary,
@@ -364,5 +357,4 @@ const styles = StyleSheet.create({
     width: '88%',
     zIndex: 1,
   },
-  
 });

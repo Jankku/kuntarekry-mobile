@@ -13,7 +13,9 @@ export default function JobScreen({ route, navigation }) {
       return;
     }
     const tags = tag.split(/\s*,\s*/);
-    return tags.map((tagInfo) => (
+    const filteredTags = tags.filter((tag) => tag.length > 0);
+
+    return filteredTags.map((tagInfo) => (
       <Chip
         key={tagInfo}
         style={style}
@@ -102,7 +104,7 @@ export default function JobScreen({ route, navigation }) {
             <View style={styles.tagRow}>
               <Tags style={styles.tagEmployment} tag={job.employment} />
               <Tags style={styles.tagEmploymentType} tag={job.employmentType} />
-              <Tags style={styles.tag} tag={job.employmentCategory} />
+              <Tags style={styles.tagEmploymentCategory} tag={job.employmentCategory} />
             </View>
           )}
           color={colors.detail}
@@ -205,9 +207,17 @@ export default function JobScreen({ route, navigation }) {
           {'\n\n'}
           {job.organizationDesc}
         </Text>
-        <Text style={styles.address}>
-          Osoite: {job.address}, {job.postalCode} {job.postalArea}
-        </Text>
+        {job.address ? (
+          <Text style={styles.address}>
+            Osoite: {job.address}, {job.postalCode} {job.postalArea}
+          </Text>
+        ) : job.postalCode ? (
+          <Text style={styles.address}>
+            Osoite: {job.postalCode} {job.postalArea}
+          </Text>
+        ) : (
+          <></>
+        )}
       </View>
     </ScrollView>
   );
@@ -290,6 +300,10 @@ const styles = StyleSheet.create({
   },
   tagEmployment: {
     backgroundColor: '#fad6d4',
+    margin: '2%',
+  },
+  tagEmploymentCategory: {
+    backgroundColor: '#faeee3',
     margin: '2%',
   },
   tagEmploymentType: {
