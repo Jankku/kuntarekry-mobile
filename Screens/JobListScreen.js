@@ -51,7 +51,7 @@ export default function JobsListScreen({ route }) {
     const list3 = list2.filter((item, index, self) => self.indexOf(item) === index).sort();
     setOrganizations(list3);
   };
- 
+
   return (
     <>
       <Title>
@@ -63,7 +63,6 @@ export default function JobsListScreen({ route }) {
           ? `Ilmoitukset kategorialla: ${buttonJobQuery}`
           : 'Kaikki ilmoitukset'}
       </Title>
-<<<<<<< HEAD
       <Title onPress={() => filterAgain()}>Rajaa</Title>
       <ScrollView>
         {organizations.map((org, index) => (
@@ -82,12 +81,8 @@ export default function JobsListScreen({ route }) {
       </ScrollView>
 
       <Jobs
-        navigation={navigation}
         data={searchQuery ? filteredSearchJobs : buttonJobQuery ? filteredButtonJobs : jobs}
       />
-=======
-      <Jobs data={searchQuery ? filteredJobs : buttonJobQuery ? filteredButtonJobs : jobs} />
->>>>>>> 5dfac7f4ffb0f4006114378089a4e5e57a4e9a7d
     </>
   );
 }
