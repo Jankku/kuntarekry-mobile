@@ -6,7 +6,7 @@ import Jobs from '../Components/Jobs';
 import useFilterJobs from '../hooks/usefilterjobs';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 
-export default function JobsListScreen({ navigation, route }) {
+export default function JobsListScreen({ route }) {
   const searchQuery = route.params?.searchQuery ?? '';
   const buttonJobQuery = route.params?.buttonJobQuery ?? '';
   const filter = route.params?.filter ?? '';
@@ -63,6 +63,7 @@ export default function JobsListScreen({ navigation, route }) {
           ? `Ilmoitukset kategorialla: ${buttonJobQuery}`
           : 'Kaikki ilmoitukset'}
       </Title>
+<<<<<<< HEAD
       <Title onPress={() => filterAgain()}>Rajaa</Title>
       <ScrollView>
         {organizations.map((org, index) => (
@@ -84,6 +85,9 @@ export default function JobsListScreen({ navigation, route }) {
         navigation={navigation}
         data={searchQuery ? filteredSearchJobs : buttonJobQuery ? filteredButtonJobs : jobs}
       />
+=======
+      <Jobs data={searchQuery ? filteredJobs : buttonJobQuery ? filteredButtonJobs : jobs} />
+>>>>>>> 5dfac7f4ffb0f4006114378089a4e5e57a4e9a7d
     </>
   );
 }

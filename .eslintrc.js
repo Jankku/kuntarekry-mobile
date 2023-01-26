@@ -12,7 +12,6 @@ module.exports = {
     'plugin:react-native/all',
   ],
   plugins: ['react', 'react-hooks', 'react-native', 'prettier'],
-  parser: '',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
