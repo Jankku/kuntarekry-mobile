@@ -1,16 +1,16 @@
 import { ScrollView } from 'react-native-gesture-handler';
 import { Title, Text } from 'react-native-paper';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
-import { Chip, Button } from 'react-native-paper';
-import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
+import { Chip } from 'react-native-paper';
+import { StyleSheet, View, Image } from 'react-native';
 import { API_URL } from '@env';
+import OrganizationJobItem from '../Components/OrganizationJobItem';
 
 export default function OrganizationScreen({ route, navigation }) {
   const { jobs } = useJobAdvertisements();
   const organization = route.params?.org ?? '';
   const filteredJobs = jobs.filter((job) => job.jobAdvertisement.profitCenter === organization);
   const organizationDesc = filteredJobs[0].jobAdvertisement.organizationDesc;
-  //how many jobs are there in this organization?
   const jobCount = filteredJobs.length;
   //find logo for this organization
   const logo = filteredJobs[0].jobAdvertisement.logo;
@@ -18,74 +18,51 @@ export default function OrganizationScreen({ route, navigation }) {
   return (
     <>
       <ScrollView>
-        <Title style={styles.Title}>{organization}</Title>
+        <Title style={styles.title}>{organization}</Title>
         <Chip
-          style={styles.Chip}
+          style={styles.chip}
+          ellipsizeMode="tail"
           onPress={() =>
             navigation.navigate('Jobs', { buttonJobQuery: organization, filter: 'profitCenter' })
           }
         >
-          {jobCount} Avointa työpaikkaa
+          {jobCount} avointa työpaikkaa
         </Chip>
-        <View style={{ width: '100%', height: 200 }}>
-          <Image source={{ uri: API_URL + logo }} style={{ width: '100%', height: '100%' }} />
+
+        {logo ? (
+          <View style={styles.imageContainer}>
+            <Image source={{ uri: new URL(logo, API_URL).toString() }} style={styles.image} />
+          </View>
+        ) : null}
+
+        <Text style={styles.desc}>{organizationDesc}</Text>
+        <Title style={styles.jobsOpenTitle}>Avoimet työpaikkamme</Title>
+        <View>
+          {filteredJobs.slice(0, 4).map((job, index) => (
+            <OrganizationJobItem key={index} job={job.jobAdvertisement} style={styles.jobItem} />
+          ))}
         </View>
-        <Text style={styles.Desc}>{organizationDesc}</Text>
-        {filteredJobs.slice(0, 4).map((job, index) => {
-          return (
-            <View style={styles.bgColor} key={index}>
-              <View style={styles.container}>
-                <Button style={styles.button} icon="heart-outline"></Button>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('Job', { job: job.jobAdvertisement })}
-                >
-                  <View>
-                    <Text style={styles.text}>Sijainti</Text>
-                    <Text style={styles.header}>{job.jobAdvertisement.title}</Text>
-                    <Text style={styles.text2}>{job.jobAdvertisement.organization}</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
-          );
-        })}
       </ScrollView>
     </>
   );
 }
 const styles = StyleSheet.create({
-  Chip: {
-    marginHorizontal: 10,
-    marginVertical: 10,
+  chip: {
+    margin: 8,
     width: 200,
   },
-  Desc: {
-    marginHorizontal: 10,
-    marginLeft: 15,
+  desc: {
+    marginHorizontal: 16,
+    marginVertical: 8,
   },
-  Title: {
+  image: { height: '100%', width: '100%' },
+  imageContainer: { height: 200, width: '100%' },
+  jobItem: { paddingBottom: 16 },
+  jobsOpenTitle: { paddingBottom: 8, paddingHorizontal: 16 },
+  title: {
     fontSize: 24,
-    marginHorizontal: 10,
-    marginVertical: 10,
-  },
-  bgColor: {
-    backgroundColor: '#f5f5f5',
-  },
-  button: {
-    justifyContent: 'center',
-  },
-  container: {
-    flexDirection: 'row',
+    fontWeight: '500',
+    paddingHorizontal: 16,
     paddingVertical: 8,
-    width: '80%',
-  },
-  header: {
-    fontSize: 20,
-  },
-  text: {
-    fontSize: 13,
-  },
-  text2: {
-    fontSize: 14,
   },
 });
