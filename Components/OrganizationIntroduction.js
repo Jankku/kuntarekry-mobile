@@ -1,4 +1,3 @@
-import { transformIncludesAndExcludes } from 'babel-preset-env';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
@@ -20,7 +19,8 @@ export default function OrganizationIntroduction({ navigation }) {
           <Image source={kuvaPng} />
           <Text style={styles.intro}>Tutustu työnantajiin</Text>
           <Text style={styles.title}>
-            Kuntarekryssä on yli 300 työnantajaa. <Text style={styles.bold}>{randomJob.jobAdvertisement.profitCenter}</Text> on yksi
+            Kuntarekryssä on yli 300 työnantajaa.{' '}
+            <Text style={styles.bold}>{randomJob.jobAdvertisement.profitCenter}</Text> on yksi
             heistä
           </Text>
           <Text>{randomJob.jobAdvertisement.organizationDesc}</Text>
@@ -42,26 +42,26 @@ export default function OrganizationIntroduction({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 22,
-    fontWeight: 'normal',
+  bold: {
+    fontWeight: 'bold',
+  },
+  container: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 10,
+    padding: 10,
   },
   intro: {
     fontSize: 14,
     fontWeight: 'normal',
     textTransform: 'uppercase',
   },
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    padding: 10,
-    margin: 10,
-    borderRadius: 10,
-  },
-  bold: {
-    fontWeight: 'bold',
+  title: {
+    fontSize: 22,
+    fontWeight: 'normal',
   },
 });
