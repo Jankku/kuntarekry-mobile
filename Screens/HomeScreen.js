@@ -8,6 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../styles/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import OrganizationIntroduction from '../Components/OrganizationIntroduction';
+import kuvaPng from '../assets/Rectangle90.png';
 
 export default function HomeScreen({ navigation }) {
   const { jobs } = useJobAdvertisements();
@@ -130,10 +131,10 @@ export default function HomeScreen({ navigation }) {
         </Button>
       </View>
       <CarouselIndex navigation={navigation} carouselJobs={carouselJobs} />
-      <View style={styles.imageBG}>
+      <ImageBackground source={kuvaPng} style={styles.imageBG}>
         <View style={styles.centerText}>
           <ImageBackground
-            source={require('../assets/sky-g79e40b0ac_1280.png')}
+           
             style={styles.containerAdd}
           >
             <Text style={styles.Add}>Avoin hakemus</Text>
@@ -148,7 +149,7 @@ export default function HomeScreen({ navigation }) {
             </Button>
           </ImageBackground>
           <ImageBackground
-            source={require('../assets/sky-g79e40b0ac_1280.png')}
+          
             style={styles.containerAdd}
           >
             <Text style={styles.Add}>Keikkatöihin</Text>
@@ -158,7 +159,7 @@ export default function HomeScreen({ navigation }) {
             </Button>
           </ImageBackground>
         </View>
-      </View>
+      </ImageBackground>
       <View style={styles.containerNews}>
         <Text>Uutiset ja Tapahtumat</Text>
         <Text style={styles.heading}>Kuntarekryssä näkyy ja tapahtuu</Text>
@@ -190,14 +191,13 @@ export default function HomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   Add: {
-    color: 'white',
-    fontSize: 24,
-    marginBottom: 8,
+    color: 'black',
+    fontSize: 22,
   },
   AddText: {
-    color: 'white',
-    fontSize: 19,
-    marginBottom: 24,
+    color: 'black',
+    fontSize: 17,
+
   },
   addButton: {
     backgroundColor: colors.secondary,
@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: 0,
+    marginTop: 100,
   },
 
   chip: {
@@ -281,18 +282,16 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   containerAdd: {
-    borderRadius: 3,
-    flex: 1,
-    height: 250,
-    marginBottom: 4,
-    marginHorizontal: 3,
-    overflow: 'hidden',
-    paddingHorizontal: 70,
-    paddingVertical: 32,
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    margin: 12,
+    padding: 12,
+    width: '88%',
   },
   containerNews: {
     alignItems: 'center',
-    backgroundColor: colors.primary,
+    backgroundColor: '#EEFAFF',
     padding: 12,
   },
   headerCount: {
@@ -365,4 +364,5 @@ const styles = StyleSheet.create({
     width: '88%',
     zIndex: 1,
   },
+  
 });

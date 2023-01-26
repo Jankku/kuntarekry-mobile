@@ -2,7 +2,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Title, Text } from 'react-native-paper';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { Chip, Button } from 'react-native-paper';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
+import { API_URL } from '@env';
 
 export default function OrganizationScreen({ route, navigation }) {
   const { jobs } = useJobAdvertisements();
@@ -11,6 +12,8 @@ export default function OrganizationScreen({ route, navigation }) {
   const organizationDesc = filteredJobs[0].jobAdvertisement.organizationDesc;
   //how many jobs are there in this organization?
   const jobCount = filteredJobs.length;
+  //find logo for this organization
+  const logo = filteredJobs[0].jobAdvertisement.logo;
 
   return (
     <>
@@ -24,6 +27,9 @@ export default function OrganizationScreen({ route, navigation }) {
         >
           {jobCount} Avointa työpaikkaa
         </Chip>
+        <View style={{ width: '100%', height: 200 }}>
+          <Image source={{ uri: API_URL + logo }} style={{ width: '100%', height: '100%' }} />
+        </View>
         <Text style={styles.Desc}>{organizationDesc}</Text>
         {filteredJobs.slice(0, 4).map((job, index) => {
           return (
