@@ -220,10 +220,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     left: 0,
+    marginTop: 100,
     position: 'absolute',
     right: 0,
     top: 0,
-    marginTop: 100,
   },
 
   chip: {

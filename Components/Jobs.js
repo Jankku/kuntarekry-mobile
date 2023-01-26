@@ -1,9 +1,8 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { useState } from 'react';
-import { Card, Button } from 'react-native-paper';
-import dayjs from 'dayjs';
+import JobListItem from './JobListItem';
 
-export default function Jobs({ navigation, data }) {
+export default function Jobs({ data }) {
   const [minIndex, setMinIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(10);
   const Maxpages = Math.ceil(data.length / 10);
@@ -25,7 +24,7 @@ export default function Jobs({ navigation, data }) {
       <FlatList
         data={data.slice(minIndex, maxIndex)}
         ListEmptyComponent={<Text>Ei työpaikkailmoituksia</Text>}
-        renderItem={({ item }) => <JobItem navigation={navigation} item={item} />}
+        renderItem={({ item }) => <JobListItem job={item.jobAdvertisement} />}
         keyExtractor={(_, index) => index}
       />
       <View style={styles.footerContainer}>
@@ -39,55 +38,10 @@ export default function Jobs({ navigation, data }) {
   );
 }
 
-function JobItem({ navigation, item }) {
-  return (
-    <>
-      <Card
-        style={styles.border}
-        onPress={() => navigation.navigate('Job', { job: item.jobAdvertisement })}
-      >
-        <Card.Content>
-          <View style={styles.container}>
-            <Button style={styles.button} icon="heart-outline"></Button>
-            <View>
-              <Text style={styles.itemHeaderText}>{item.jobAdvertisement.title}</Text>
-              <Text style={styles.itemText}>{item.jobAdvertisement.organization}</Text>
-              <Text style={styles.itemText}>
-                Hakuaika päättyy {dayjs(item.jobAdvertisement.publicationEnds).format('l LT')}
-              </Text>
-            </View>
-          </View>
-        </Card.Content>
-      </Card>
-    </>
-  );
-}
-
 const styles = StyleSheet.create({
-  border: {
-    borderColor: 'lightgrey',
-    borderStyle: 'solid',
-    borderWidth: 1,
-  },
-  button: {
-    justifyContent: 'center',
-  },
-  container: {
-    flexDirection: 'row',
-    paddingVertical: 8,
-    width: '80%',
-  },
   footerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
-  },
-  itemHeaderText: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  itemText: {
-    fontSize: 14,
-    paddingVertical: 2,
   },
 });

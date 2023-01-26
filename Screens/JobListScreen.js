@@ -4,7 +4,7 @@ import Jobs from '../Components/Jobs';
 import useFilterJobs from '../hooks/usefilterjobs';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 
-export default function JobsListScreen({ navigation, route }) {
+export default function JobsListScreen({ route }) {
   const searchQuery = route.params?.searchQuery ?? '';
   const buttonJobQuery = route.params?.buttonJobQuery ?? '';
   const filter = route.params?.filter ?? '';
@@ -28,10 +28,7 @@ export default function JobsListScreen({ navigation, route }) {
           ? `Ilmoitukset kategorialla: ${buttonJobQuery}`
           : 'Kaikki ilmoitukset'}
       </Title>
-      <Jobs
-        navigation={navigation}
-        data={searchQuery ? filteredJobs : buttonJobQuery ? filteredButtonJobs : jobs}
-      />
+      <Jobs data={searchQuery ? filteredJobs : buttonJobQuery ? filteredButtonJobs : jobs} />
     </>
   );
 }
