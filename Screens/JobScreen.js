@@ -7,7 +7,23 @@ import OpenURLButton from '../Components/OpenURLButton';
 
 export default function JobScreen({ route, navigation }) {
   const job = route.params?.job ?? '';
-  const employmentTags = job.employment.split(/\s*,\s*/);
+
+  function Tags({ style, tag }) {
+    if (tag == null) {
+      return;
+    }
+    const tags = tag.split(/\s*,\s*/);
+    return tags.map((tagInfo) => (
+      <Chip
+        key={tagInfo}
+        style={style}
+        textStyle={styles.tagText}
+        onPress={() => navigation.navigate('Jobs', { buttonJobQuery: tagInfo })}
+      >
+        {tagInfo}
+      </Chip>
+    ));
+  }
 
   return (
     <ScrollView>
@@ -49,7 +65,30 @@ export default function JobScreen({ route, navigation }) {
         </Button>
       </View>
       <View style={styles.jobDetailList}>
-        <Divider></Divider>
+        {job.anonymous == 1 && (
+          <>
+            <Divider />
+            <List.Item
+              title={() => (
+                <View style={styles.tagRow}>
+                  <Chip style={styles.tagProfession} textStyle={styles.tagText}>
+                    Anonyymi Rekrytointi
+                  </Chip>
+                </View>
+              )}
+              color={colors.detail}
+              left={() => (
+                <List.Icon
+                  style={styles.detailIcon}
+                  size={30}
+                  color={colors.detail}
+                  icon="account"
+                />
+              )}
+            />
+          </>
+        )}
+        <Divider />
         <List.Item
           title={() => <Text style={styles.detailText}>{job.organization}</Text>}
           color={colors.detail}
@@ -57,27 +96,13 @@ export default function JobScreen({ route, navigation }) {
             <List.Icon style={styles.detailIcon} size={30} color={colors.detail} icon="sitemap" />
           )}
         />
-        <Divider></Divider>
+        <Divider />
         <List.Item
           title={() => (
             <View style={styles.tagRow}>
-              {employmentTags.map((employment) => (
-                <Chip
-                  key={employment}
-                  style={styles.tagEmployment}
-                  textStyle={styles.tagText}
-                  onPress={() => navigation.navigate('Jobs', { buttonJobQuery: employment })}
-                >
-                  {employment}
-                </Chip>
-              ))}
-              <Chip
-                style={styles.tagEmploymentType}
-                textStyle={styles.tagText}
-                onPress={() => navigation.navigate('Jobs', { buttonJobQuery: job.employmentType })}
-              >
-                {job.employmentType}
-              </Chip>
+              <Tags style={styles.tagEmployment} tag={job.employment} />
+              <Tags style={styles.tagEmploymentType} tag={job.employmentType} />
+              <Tags style={styles.tag} tag={job.employmentCategory} />
             </View>
           )}
           color={colors.detail}
@@ -90,7 +115,7 @@ export default function JobScreen({ route, navigation }) {
             />
           )}
         />
-        <Divider></Divider>
+        <Divider />
         <List.Item
           title={() => <Text style={styles.detailText}>{job.id}</Text>}
           color={colors.detail}
@@ -98,7 +123,7 @@ export default function JobScreen({ route, navigation }) {
             <List.Icon style={styles.detailIcon} size={30} color={colors.detail} icon="key" />
           )}
         />
-        <Divider></Divider>
+        <Divider />
         <List.Item
           title={() => (
             <Text style={styles.detailText}>
@@ -115,7 +140,7 @@ export default function JobScreen({ route, navigation }) {
             />
           )}
         />
-        <Divider></Divider>
+        <Divider />
         <List.Item
           title={() => (
             <Text style={styles.detailText}>{job.salary ? job.salary : 'Ei ilmoitettu'} </Text>
@@ -130,7 +155,7 @@ export default function JobScreen({ route, navigation }) {
             />
           )}
         />
-        <Divider></Divider>
+        <Divider />
         <List.Item
           title={() => (
             <Text style={styles.detailText}>
@@ -143,9 +168,15 @@ export default function JobScreen({ route, navigation }) {
             <List.Icon style={styles.detailIcon} size={30} color={colors.detail} icon="calendar" />
           )}
         />
-        <Divider></Divider>
+        <Divider />
         <List.Item
-          title={() => <Text style={styles.detailText}>Lisätunnisteet</Text>}
+          title={() => (
+            <View style={styles.tagRow}>
+              <Tags style={styles.tagProfession} tag={job.taskArea} />
+              <Tags style={styles.tagLocation} tag={job.location} />
+              <Tags style={styles.tagLocation} tag={job.region} />
+            </View>
+          )}
           color={colors.detail}
           left={() => (
             <List.Icon
@@ -156,12 +187,36 @@ export default function JobScreen({ route, navigation }) {
             />
           )}
         />
-        <Divider></Divider>
+        <Divider />
+      </View>
+      <View style={styles.content}>
+        <View style={styles.descContainer}>
+          <Avatar.Icon style={styles.h3} size={50} color={colors.detail} icon="email-outline" />
+          <Text style={styles.desc}>Yhteystietomme</Text>
+        </View>
+        <Text style={styles.desc}>{job.contacts}</Text>
+        <Divider />
+        <View style={styles.descContainer}>
+          <Avatar.Icon style={styles.h3} size={50} color={colors.detail} icon="briefcase-variant" />
+          <Text style={styles.desc}>Lisätietoja</Text>
+        </View>
+        <Text style={styles.desc}>
+          {job.organization}
+          {'\n\n'}
+          {job.organizationDesc}
+        </Text>
+        <Text style={styles.address}>
+          Osoite: {job.address}, {job.postalCode} {job.postalArea}
+        </Text>
       </View>
     </ScrollView>
   );
 }
+
 const styles = StyleSheet.create({
+  address: {
+    color: colors.detail,
+  },
   backgroundTop: {
     alignSelf: 'stretch',
   },
@@ -195,6 +250,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '400',
     marginVertical: 10,
+  },
+  descContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginHorizontal: -15,
   },
   detailIcon: {
     paddingHorizontal: 15,
@@ -234,6 +294,14 @@ const styles = StyleSheet.create({
   },
   tagEmploymentType: {
     backgroundColor: '#f1f5f8',
+    margin: '2%',
+  },
+  tagLocation: {
+    backgroundColor: '#d4effa',
+    margin: '2%',
+  },
+  tagProfession: {
+    backgroundColor: '#d0f5dc',
     margin: '2%',
   },
   tagRow: {
