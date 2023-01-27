@@ -1,7 +1,6 @@
 import { ScrollView } from 'react-native-gesture-handler';
-import { Title, Text } from 'react-native-paper';
+import { Title, Text, Chip, Avatar } from 'react-native-paper';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
-import { Chip } from 'react-native-paper';
 import { StyleSheet, View, Image } from 'react-native';
 import { API_URL } from '@env';
 import OrganizationJobItem from '../Components/OrganizationJobItem';
@@ -17,25 +16,28 @@ export default function OrganizationScreen({ route, navigation }) {
 
   return (
     <>
-      <ScrollView>
-        <Title style={styles.title}>{organization}</Title>
-        <Chip
-          style={styles.chip}
-          ellipsizeMode="tail"
-          onPress={() =>
-            navigation.navigate('Jobs', { buttonJobQuery: organization, filter: 'profitCenter' })
-          }
-        >
-          {jobCount} avointa työpaikkaa
-        </Chip>
-
-        {logo ? (
-          <View style={styles.imageContainer}>
-            <Image source={{ uri: new URL(logo, API_URL).toString() }} style={styles.image} />
-          </View>
-        ) : null}
-
-        <Text style={styles.desc}>{organizationDesc}</Text>
+      <ScrollView style={styles.body}>
+        <View style={styles.introduction}>
+          <Title style={styles.title}>{organization}</Title>
+          <Chip
+            style={styles.chip}
+            ellipsizeMode="tail"
+            onPress={() =>
+              navigation.navigate('Jobs', { buttonJobQuery: organization, filter: 'profitCenter' })
+            }
+          >
+            <View style={styles.button}>
+              <Text style={styles.chipText}>{jobCount} avointa työpaikkaa</Text>
+              <Avatar.Icon style={styles.icon} size={30} color="#0590c7" icon="chevron-right" />
+            </View>
+          </Chip>
+          {logo ? (
+            <View style={styles.imageContainer}>
+              <Image source={{ uri: new URL(logo, API_URL).toString() }} style={styles.image} />
+            </View>
+          ) : null}
+          <Text style={styles.desc}>{organizationDesc}</Text>
+        </View>
         <Title style={styles.jobsOpenTitle}>Avoimet työpaikkamme</Title>
         <View>
           {filteredJobs.slice(0, 4).map((job, index) => (
@@ -47,21 +49,42 @@ export default function OrganizationScreen({ route, navigation }) {
   );
 }
 const styles = StyleSheet.create({
-  chip: {
-    margin: 8,
-    width: 200,
+  body: {
+    backgroundColor: 'white',
   },
-  desc: {
+  button: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  chip: {
+    backgroundColor: '#a9d9eb',
+    borderRadius: 20,
     marginHorizontal: 16,
     marginVertical: 8,
+    width: 190,
   },
-  image: { height: '100%', width: '100%' },
-  imageContainer: { height: 200, width: '100%' },
+  chipText: {
+    color: '#0590c7',
+  },
+  desc: {
+    fontSize: 18,
+    marginBottom: 16,
+    marginHorizontal: 16,
+    marginTop: 8,
+  },
+  icon: {
+    backgroundColor: '#a9d9eb',
+  },
+  image: { height: '90%', width: '90%' },
+  imageContainer: { alignItems: 'center', height: 200, width: '100%' },
+  introduction: {
+    backgroundColor: '#f8fafc',
+  },
   jobItem: { paddingBottom: 16 },
-  jobsOpenTitle: { paddingBottom: 8, paddingHorizontal: 16 },
+  jobsOpenTitle: { paddingHorizontal: 16, paddingVertical: 8 },
   title: {
     fontSize: 24,
-    fontWeight: '500',
+    fontWeight: '600',
     paddingHorizontal: 16,
     paddingVertical: 8,
   },

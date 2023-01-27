@@ -44,7 +44,12 @@ export default function JobScreen({ route, navigation }) {
             <Text style={styles.h3}>{dayjs(job.publicationEnds).format('l LT')}</Text>
           </View>
         </View>
-        <Button style={styles.button} buttonColor="white" textColor="#009978" icon="chevron-right">
+        <Button
+          style={styles.button}
+          buttonColor="white"
+          textColor={colors.detailGreen}
+          icon="chevron-right"
+        >
           Hae työpaikkaa
         </Button>
         <View style={styles.buttons}>

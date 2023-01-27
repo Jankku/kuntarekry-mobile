@@ -41,4 +41,5 @@ export const colors = {
   backdrop: 'rgba(55, 46, 52, 0.4)',
   Chip: 'rgba(0, 86, 68, 0.6)',
   detail: '#35a9db',
+  detailGreen: '#009978',
 };
