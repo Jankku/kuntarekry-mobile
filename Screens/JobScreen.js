@@ -8,7 +8,7 @@ import OpenURLButton from '../Components/OpenURLButton';
 export default function JobScreen({ route, navigation }) {
   const job = route.params?.job ?? '';
 
-  function Tags({ style, tag }) {
+  function Tags({ style, tag, filter }) {
     if (tag == null) {
       return;
     }
@@ -21,7 +21,7 @@ export default function JobScreen({ route, navigation }) {
         key={tagInfo}
         style={style}
         textStyle={styles.tagText}
-        onPress={() => navigation.navigate('Jobs', { buttonJobQuery: tagInfo })}
+        onPress={() => navigation.navigate('Jobs', { buttonJobQuery: tagInfo, filter: filter })}
       >
         {tagInfo}
       </Chip>
@@ -103,9 +103,17 @@ export default function JobScreen({ route, navigation }) {
         <List.Item
           title={() => (
             <View style={styles.tagRow}>
-              <Tags style={styles.tagEmployment} tag={job.employment} />
-              <Tags style={styles.tagEmploymentType} tag={job.employmentType} />
-              <Tags style={styles.tagEmploymentCategory} tag={job.employmentCategory} />
+              <Tags style={styles.tagEmployment} tag={job.employment} filter={'employment'} />
+              <Tags
+                style={styles.tagEmploymentType}
+                tag={job.employmentType}
+                filter={'employmentType'}
+              />
+              <Tags
+                style={styles.tagEmploymentCategory}
+                tag={job.employmentCategory}
+                filter={'employmentCategory'}
+              />
             </View>
           )}
           color={colors.detail}
@@ -175,9 +183,9 @@ export default function JobScreen({ route, navigation }) {
         <List.Item
           title={() => (
             <View style={styles.tagRow}>
-              <Tags style={styles.tagProfession} tag={job.taskArea} />
-              <Tags style={styles.tagLocation} tag={job.location} />
-              <Tags style={styles.tagLocation} tag={job.region} />
+              <Tags style={styles.tagProfession} tag={job.taskArea} filter={'taskArea'} />
+              <Tags style={styles.tagLocation} tag={job.location} filter={'location'} />
+              <Tags style={styles.tagLocation} tag={job.region} filter={'region'} />
             </View>
           )}
           color={colors.detail}
