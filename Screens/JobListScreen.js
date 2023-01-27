@@ -5,7 +5,6 @@ import { Title, Button, Text } from 'react-native-paper';
 import Jobs from '../Components/Jobs';
 import useFilterJobs from '../hooks/usefilterjobs';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
-
 export default function JobsListScreen({ route }) {
   const searchQuery = route.params?.searchQuery ?? '';
   const buttonJobQuery = route.params?.buttonJobQuery ?? '';
@@ -16,6 +15,9 @@ export default function JobsListScreen({ route }) {
   const [filter2, setFilter2] = useState('');
   const [buttonJobQuery2, setButtonJobQuery2] = useState('');
   const [organizations, setOrganizations] = useState([]);
+  const [options, setOptions] = useState([]);
+  const [option, setOption] = useState('');
+
   const filteredButtonJobs = useMemo(() => {
     if (!isFilteredAgain) {
       return jobs.filter(
@@ -29,7 +31,7 @@ export default function JobsListScreen({ route }) {
           j.jobAdvertisement[filter2] == buttonJobQuery2
       );
     }
-  }, [filter, buttonJobQuery, jobs, isFilteredAgain]);
+  }, [filter, buttonJobQuery, jobs, isFilteredAgain, filter2, buttonJobQuery2]);
 
   const filteredSearchJobs = useMemo(() => {
     if (searchQuery && buttonJobQuery2 && filter2) {
@@ -41,15 +43,32 @@ export default function JobsListScreen({ route }) {
     }
   }, [searchQuery, filteredJobs, filter2, buttonJobQuery2]);
 
-  const filterAgain = () => {
+  const filterAgain = (option) => {
+    setOptions([]);
     const list = jobs
-      .filter((jobAd) => jobAd.jobAdvertisement.profitCenter)
-      .map((jobAd) => jobAd.jobAdvertisement.profitCenter);
+      .filter((jobAd) => jobAd.jobAdvertisement[option])
+      .map((jobAd) => jobAd.jobAdvertisement[option]);
     const list2 = list
       .filter((org) => org) // remove elements that are undefined or null
       .map((org) => org.split(',')[0].trim());
     const list3 = list2.filter((item, index, self) => self.indexOf(item) === index).sort();
     setOrganizations(list3);
+  };
+
+  const selectFilter = () => {
+    if (filter === 'employment') {
+      setOptions(['profitCenter', 'region']);
+    } else if (filter === 'profitCenter') {
+      setOptions(['employment', 'region']);
+    } else if (filter === 'region') {
+      setOptions(['employment', 'profitCenter']);
+    } else {
+      setOptions(['employment', 'profitCenter', 'region']);
+    }
+  };
+  const selectButtons = (option) => {
+    setOption(option);
+    filterAgain(option);
   };
 
   return (
@@ -63,13 +82,23 @@ export default function JobsListScreen({ route }) {
           ? `Ilmoitukset kategorialla: ${buttonJobQuery}`
           : 'Kaikki ilmoitukset'}
       </Title>
-      <Title onPress={() => filterAgain()}>Rajaa</Title>
+      <Title onPress={() => selectFilter()}>Rajaa</Title>
       <ScrollView>
+        {options.map((option, index) => (
+          <Button
+            key={index}
+            onPress={() => {
+              selectButtons(option);
+            }}
+          >
+            <Text>{option}</Text>
+          </Button>
+        ))}
         {organizations.map((org, index) => (
           <Button
             key={index}
             onPress={() => {
-              setFilter2('profitCenter');
+              setFilter2(option);
               setButtonJobQuery2(org);
               setIsFilteredAgain(true);
               setOrganizations([]);
@@ -80,9 +109,7 @@ export default function JobsListScreen({ route }) {
         ))}
       </ScrollView>
 
-      <Jobs
-        data={searchQuery ? filteredSearchJobs : buttonJobQuery ? filteredButtonJobs : jobs}
-      />
+      <Jobs data={searchQuery ? filteredSearchJobs : buttonJobQuery ? filteredButtonJobs : jobs} />
     </>
   );
 }

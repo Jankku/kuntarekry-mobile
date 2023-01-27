@@ -14,6 +14,7 @@ export default function JobScreen({ route, navigation }) {
     }
     const tags = tag.split(/\s*,\s*/);
     const filteredTags = tags.filter((tag) => tag.length > 0);
+    console.log(filteredTags);
 
     return filteredTags.map((tagInfo) => (
       <Chip
