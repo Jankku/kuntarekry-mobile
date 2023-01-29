@@ -1,115 +1,144 @@
-import { useState } from 'react';
 import { useMemo } from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Title, Button, Text } from 'react-native-paper';
+import { Title, Text, Chip } from 'react-native-paper';
 import Jobs from '../Components/Jobs';
 import useFilterJobs from '../hooks/usefilterjobs';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
-export default function JobsListScreen({ route }) {
-  const searchQuery = route.params?.searchQuery ?? '';
-  const buttonJobQuery = route.params?.buttonJobQuery ?? '';
-  const filter = route.params?.filter ?? '';
+import { useState } from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet } from 'react-native';
+
+export default function JobsListScreen({ route, navigation }) {
+  const {
+    buttonJobQuery = '',
+    filter = '',
+    buttonJobQuery2 = '',
+    filter2 = '',
+    buttonJobQuery3 = '',
+    filter3 = '',
+    searchQuery = '',
+  } = route.params || {};
   const { jobs } = useJobAdvertisements();
   const filteredJobs = useFilterJobs(jobs, searchQuery);
-  const [isFilteredAgain, setIsFilteredAgain] = useState(false);
-  const [filter2, setFilter2] = useState('');
-  const [buttonJobQuery2, setButtonJobQuery2] = useState('');
-  const [organizations, setOrganizations] = useState([]);
   const [options, setOptions] = useState([]);
   const [option, setOption] = useState('');
+  const [organizations, setOrganizations] = useState([]);
+
+  const matchFilter = (job, filter, query) => {
+    return job.jobAdvertisement[filter] && job.jobAdvertisement[filter].includes(query);
+  };
 
   const filteredButtonJobs = useMemo(() => {
-    if (!isFilteredAgain) {
-      return jobs.filter(
-        (j) => j.jobAdvertisement[filter] && j.jobAdvertisement[filter].includes(buttonJobQuery)
-      );
-    } else {
-      return jobs.filter(
-        (j) =>
-          j.jobAdvertisement[filter] &&
-          j.jobAdvertisement[filter].includes(buttonJobQuery) &&
-          j.jobAdvertisement[filter2] == buttonJobQuery2
-      );
-    }
-  }, [filter, buttonJobQuery, jobs, isFilteredAgain, filter2, buttonJobQuery2]);
+    return jobs.filter((j) => {
+      let match = matchFilter(j, filter, buttonJobQuery);
+      if (buttonJobQuery2) match &= j.jobAdvertisement[filter2] === buttonJobQuery2;
+      if (buttonJobQuery3) match &= j.jobAdvertisement[filter3] === buttonJobQuery3;
+      return match;
+    });
+  }, [filter, buttonJobQuery, jobs, filter2, buttonJobQuery2, filter3, buttonJobQuery3]);
+  const selectFilter = () => {
+    const filteredOptions = ['employment', 'profitCenter', 'region'].filter(
+      (o) => ![filter, filter2, filter3].includes(o)
+    );
+    setOptions(filteredOptions);
+  };
+
+  const filterAgain = (option) => {
+    setOptions([]);
+    setOrganizations(
+      [
+        ...new Set(
+          jobs
+            .filter((j) => j.jobAdvertisement[option])
+            .map((j) => j.jobAdvertisement[option].split(',')[0].trim())
+        ),
+      ].sort()
+    );
+  };
+  const navigatetoPage = (org) => {
+    setOrganizations([]);
+    const params = {
+      buttonJobQuery: buttonJobQuery || org,
+      filter: filter || option,
+      buttonJobQuery2,
+      filter2,
+      buttonJobQuery3,
+      filter3,
+      searchQuery,
+    };
+    const filterCount = [buttonJobQuery, buttonJobQuery2, buttonJobQuery3].filter(Boolean).length;
+    const [bq, f] = [`buttonJobQuery${filterCount + 1}`, `filter${filterCount + 1}`];
+    params[bq] = org;
+    params[f] = option;
+    navigation.navigate('Jobs', params);
+  };
 
   const filteredSearchJobs = useMemo(() => {
-    if (searchQuery && buttonJobQuery2 && filter2) {
+    if (searchQuery && buttonJobQuery3 && filter3) {
+      return filteredJobs.filter(
+        (j) =>
+          j.jobAdvertisement[filter2] &&
+          j.jobAdvertisement[filter2].includes(buttonJobQuery2) &&
+          j.jobAdvertisement[filter3] &&
+          j.jobAdvertisement[filter3].includes(buttonJobQuery3)
+      );
+    } else if (searchQuery && buttonJobQuery2 && filter2) {
       return filteredJobs.filter(
         (j) => j.jobAdvertisement[filter2] && j.jobAdvertisement[filter2].includes(buttonJobQuery2)
       );
     } else {
       return filteredJobs;
     }
-  }, [searchQuery, filteredJobs, filter2, buttonJobQuery2]);
-
-  const filterAgain = (option) => {
-    setOptions([]);
-    const list = jobs
-      .filter((jobAd) => jobAd.jobAdvertisement[option])
-      .map((jobAd) => jobAd.jobAdvertisement[option]);
-    const list2 = list
-      .filter((org) => org) // remove elements that are undefined or null
-      .map((org) => org.split(',')[0].trim());
-    const list3 = list2.filter((item, index, self) => self.indexOf(item) === index).sort();
-    setOrganizations(list3);
-  };
-
-  const selectFilter = () => {
-    if (filter === 'employment') {
-      setOptions(['profitCenter', 'region']);
-    } else if (filter === 'profitCenter') {
-      setOptions(['employment', 'region']);
-    } else if (filter === 'region') {
-      setOptions(['employment', 'profitCenter']);
-    } else {
-      setOptions(['employment', 'profitCenter', 'region']);
-    }
-  };
-  const selectButtons = (option) => {
-    setOption(option);
-    filterAgain(option);
-  };
+  }, [searchQuery, filteredJobs, filter2, buttonJobQuery2, filter3, buttonJobQuery3]);
 
   return (
     <>
       <Title>
         {searchQuery
-          ? `Ilmoitukset hakusanalla: ${searchQuery}  ${buttonJobQuery2}`
-          : buttonJobQuery && buttonJobQuery2
-          ? `Ilmoitukset kategorialla: ${buttonJobQuery} / ${buttonJobQuery2}`
+          ? `Ilmoitukset hakusanalla: ${searchQuery} ${buttonJobQuery2} ${buttonJobQuery3}`
           : buttonJobQuery
-          ? `Ilmoitukset kategorialla: ${buttonJobQuery}`
+          ? `Ilmoitukset kategorialla: ${buttonJobQuery} ${buttonJobQuery2} ${buttonJobQuery3}`
           : 'Kaikki ilmoitukset'}
       </Title>
-      <Title onPress={() => selectFilter()}>Rajaa</Title>
-      <ScrollView>
+      {options.length > 0 || organizations.length > 0 ? null : (
+        <Chip onPress={() => selectFilter()}>Rajaa</Chip>
+      )}
+      <ScrollView style={options.length > 0 || organizations.length > 0 ? styles.container : null}>
         {options.map((option, index) => (
-          <Button
+          <Chip
+            style={styles.chip}
             key={index}
             onPress={() => {
-              selectButtons(option);
+              setOption(option);
+              filterAgain(option);
             }}
           >
             <Text>{option}</Text>
-          </Button>
+          </Chip>
         ))}
         {organizations.map((org, index) => (
-          <Button
+          <Chip
+            style={styles.chip}
             key={index}
             onPress={() => {
-              setFilter2(option);
-              setButtonJobQuery2(org);
-              setIsFilteredAgain(true);
-              setOrganizations([]);
+              navigatetoPage(org);
             }}
           >
             <Text>{org}</Text>
-          </Button>
+          </Chip>
         ))}
       </ScrollView>
-
       <Jobs data={searchQuery ? filteredSearchJobs : buttonJobQuery ? filteredButtonJobs : jobs} />
     </>
   );
 }
+const styles = StyleSheet.create({
+  chip: {
+    backgroundColor: 'lightgreen',
+    margin: 5,
+    padding: 5,
+  },
+  container: {
+    height: 'auto',
+    minHeight: 150,
+  },
+});
