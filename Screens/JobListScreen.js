@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
-import { Title } from 'react-native-paper';
+import { Title, Chip } from 'react-native-paper';
 import Jobs from '../Components/Jobs';
 import useFilterJobs from '../hooks/usefilterjobs';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { useState } from 'react';
-import { View, Button, Text } from 'react-native';
+import { View, Button, Text, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function JobsListScreen({ navigation, route }) {
@@ -15,6 +15,7 @@ export default function JobsListScreen({ navigation, route }) {
   const filteredJobs = useFilterJobs(jobs, searchQuery);
   const [userFilters, setUserFilters] = useState([]);
   const [newFilterKey, setNewFilterKey] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [newFilterValue, setNewFilterValue] = useState('');
   const [newFilterOptions, setNewFilterOptions] = useState([]);
   const [showOptions, setShowOptions] = useState(true);
@@ -72,43 +73,49 @@ export default function JobsListScreen({ navigation, route }) {
           : buttonJobQuery
           ? `Ilmoitukset kategorialla: `
           : 'Kaikki ilmoitukset'}{' '}
-        {userFilters.length > 0 && `(${userFilters.map((f) => `${f.value}`).join(', ')})`}
       </Title>
-      {userFilters.length > 0 &&
-        userFilters.map((f, i) => (
-          <View key={(f, i)} style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text>{`${f.key}: ${f.value}`}</Text>
-            <Button title="Delete" onPress={() => deleteFilter(i)} />
-          </View>
-        ))}
-      <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+      <View style={styles.containerFilters}>
+        {userFilters.length > 0 &&
+          userFilters.map((f, i) => (
+            <Chip key={(f, i)} style={styles.redButton} onPress={() => deleteFilter(i)}>
+              {`${f.value} X`}
+            </Chip>
+          ))}
+      </View>
+
+      <View style={styles.containerOptions}>
         {!filterKeyInUse('employment') && (
-          <Button
+          <Chip
             title="employment"
             onPress={() => {
               setShowOptions(true);
               setNewFilterKey('employment');
             }}
-          />
+          >
+            <Text>Tyyppi</Text>
+          </Chip>
         )}
         {!filterKeyInUse('profitCenter') && (
-          <Button
+          <Chip
             title="profitCenter"
             onPress={() => {
               setShowOptions(true);
               setNewFilterKey('profitCenter');
             }}
-          />
+          >
+            <Text>Työnantaja</Text>
+          </Chip>
         )}
         {!filterKeyInUse('region') && (
-          <Button
-            title="region"
+          <Chip
             // eslint-disable-next-line prettier/prettier
   onPress={() => {
               setShowOptions(true);
               setNewFilterKey('region');
             }}
-          />
+          >
+            <Text>Sijainti</Text>
+          </Chip>
         )}
       </View>
       <ScrollView>
@@ -133,3 +140,18 @@ export default function JobsListScreen({ navigation, route }) {
     </>
   );
 }
+const styles = StyleSheet.create({
+  containerFilters: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginBottom: 15,
+  },
+  containerOptions: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 10,
+  },
+  redButton: {
+    backgroundColor: 'red',
+  },
+});
