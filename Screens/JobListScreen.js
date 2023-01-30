@@ -4,7 +4,7 @@ import Jobs from '../Components/Jobs';
 import useFilterJobs from '../hooks/usefilterjobs';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { useState } from 'react';
-import { View, Button } from 'react-native';
+import { View, Button, Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function JobsListScreen({ navigation, route }) {
@@ -51,6 +51,19 @@ export default function JobsListScreen({ navigation, route }) {
     [filteredJobs, userFilters]
   );
 
+  const filterKeyInUse = (key) => userFilters.some((f) => f.key === key);
+
+  const submitFilter = (o) => {
+    console.log(newFilterKey, o);
+    if (newFilterKey && o) {
+      addFilter({ key: newFilterKey, value: o });
+    }
+  };
+
+  const deleteFilter = (index) => {
+    setUserFilters(userFilters.filter((f, i) => i !== index));
+  };
+
   return (
     <>
       <Title>
@@ -61,29 +74,42 @@ export default function JobsListScreen({ navigation, route }) {
           : 'Kaikki ilmoitukset'}{' '}
         {userFilters.length > 0 && `(${userFilters.map((f) => `${f.value}`).join(', ')})`}
       </Title>
+      {userFilters.length > 0 &&
+        userFilters.map((f, i) => (
+          <View key={(f, i)} style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text>{`${f.key}: ${f.value}`}</Text>
+            <Button title="Delete" onPress={() => deleteFilter(i)} />
+          </View>
+        ))}
       <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-        <Button
-          title="employment"
-          onPress={() => {
-            setShowOptions(true);
-            setNewFilterKey('employment');
-          }}
-        />
-        <Button
-          title="profitCenter"
-          onPress={() => {
-            setShowOptions(true);
-            setNewFilterKey('profitCenter');
-          }}
-        />
-        <Button
-          title="region"
-          // eslint-disable-next-line prettier/prettier
+        {!filterKeyInUse('employment') && (
+          <Button
+            title="employment"
+            onPress={() => {
+              setShowOptions(true);
+              setNewFilterKey('employment');
+            }}
+          />
+        )}
+        {!filterKeyInUse('profitCenter') && (
+          <Button
+            title="profitCenter"
+            onPress={() => {
+              setShowOptions(true);
+              setNewFilterKey('profitCenter');
+            }}
+          />
+        )}
+        {!filterKeyInUse('region') && (
+          <Button
+            title="region"
+            // eslint-disable-next-line prettier/prettier
   onPress={() => {
-            setShowOptions(true);
-            setNewFilterKey('region');
-          }}
-        />
+              setShowOptions(true);
+              setNewFilterKey('region');
+            }}
+          />
+        )}
       </View>
       <ScrollView>
         {showOptions &&
@@ -95,18 +121,11 @@ export default function JobsListScreen({ navigation, route }) {
               onPress={() => {
                 setNewFilterValue(o);
                 setShowOptions(false);
+                submitFilter(o);
               }}
             />
           ))}
       </ScrollView>
-      <View>
-        <Button
-          title="Add filter"
-          onPress={() => {
-            addFilter({ key: newFilterKey, value: newFilterValue });
-          }}
-        />
-      </View>
       <Jobs
         navigation={navigation}
         data={userFilters.length > 0 ? filteredSearchJobs : filteredJobs}
