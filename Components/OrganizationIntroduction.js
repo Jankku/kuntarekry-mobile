@@ -13,41 +13,46 @@ export default function OrganizationIntroduction({ navigation }) {
   // select random job
   const randomJob = uniqueJobs[Math.floor(Math.random() * uniqueJobs.length)];
   return (
-    <View style={styles.container}>
-      {randomJob ? (
-        <View>
-          <Image source={kuvaPng} />
-          <Text style={styles.intro}>Tutustu työnantajiin</Text>
-          <Text style={styles.title}>
-            Kuntarekryssä on yli 300 työnantajaa.{' '}
-            <Text style={styles.bold}>{randomJob.jobAdvertisement.profitCenter}</Text> on yksi
-            heistä
-          </Text>
-          <Text>{randomJob.jobAdvertisement.organizationDesc}</Text>
-          <Button
-            onPress={() =>
-              navigation.navigate('Organization', {
-                org: randomJob.jobAdvertisement.profitCenter,
-              })
-            }
-          >
-            Työnantajan sivuille
-          </Button>
-        </View>
-      ) : (
-        <Text>Ei töitä saatavilla tällä hetkellä.</Text>
-      )}
+    <View style={styles.bgColor}>
+      <View style={styles.container}>
+        {randomJob ? (
+          <View>
+            <Image source={kuvaPng} />
+            <Text style={styles.intro}>Tutustu työnantajiin</Text>
+            <Text style={styles.title}>
+              Kuntarekryssä on yli 300 työnantajaa.{' '}
+              <Text style={styles.bold}>{randomJob.jobAdvertisement.profitCenter}</Text> on yksi
+              heistä
+            </Text>
+            <Text>{randomJob.jobAdvertisement.organizationDesc}</Text>
+            <Button
+              onPress={() =>
+                navigation.navigate('Organization', {
+                  org: randomJob.jobAdvertisement.profitCenter,
+                })
+              }
+            >
+              Työnantajan sivuille
+            </Button>
+          </View>
+        ) : (
+          <Text>Ei töitä saatavilla tällä hetkellä.</Text>
+        )}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  bgColor: {
+    backgroundColor: '#FFFFFF',
+  },
   bold: {
     fontWeight: 'bold',
   },
   container: {
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
     flex: 1,
     flexDirection: 'row',

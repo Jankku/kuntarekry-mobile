@@ -75,48 +75,66 @@ export default function JobsListScreen({ navigation, route }) {
           : 'Kaikki ilmoitukset'}{' '}
       </Title>
       <View style={styles.containerFilters}>
-        {userFilters.length > 0 &&
-          userFilters.map((f, i) => (
-            <Chip key={(f, i)} style={styles.redButton} onPress={() => deleteFilter(i)}>
-              {`${f.value} X`}
-            </Chip>
-          ))}
+        <ScrollView horizontal={true}>
+          {userFilters.length > 0 &&
+            userFilters.map((f, i) => (
+              <Chip key={(f, i)} style={styles.redButton} onPress={() => deleteFilter(i)}>
+                {`${f.value} X`}
+              </Chip>
+            ))}
+        </ScrollView>
       </View>
-
-      <View style={styles.containerOptions}>
-        {!filterKeyInUse('employment') && (
-          <Chip
-            title="employment"
-            onPress={() => {
-              setShowOptions(true);
-              setNewFilterKey('employment');
-            }}
-          >
-            <Text>Tyyppi</Text>
-          </Chip>
-        )}
-        {!filterKeyInUse('profitCenter') && (
-          <Chip
-            title="profitCenter"
-            onPress={() => {
-              setShowOptions(true);
-              setNewFilterKey('profitCenter');
-            }}
-          >
-            <Text>Työnantaja</Text>
-          </Chip>
-        )}
-        {!filterKeyInUse('region') && (
-          <Chip
-            // eslint-disable-next-line prettier/prettier
+      <View>
+        <ScrollView horizontal={true} style={styles.containerOptions}>
+          {!filterKeyInUse('employment') && (
+            <Chip
+              style={styles.chipButton}
+              title="employment"
+              onPress={() => {
+                setShowOptions(true);
+                setNewFilterKey('employment');
+              }}
+            >
+              <Text>Työsuhde</Text>
+            </Chip>
+          )}
+          {!filterKeyInUse('profitCenter') && (
+            <Chip
+              style={styles.chipButton}
+              title="profitCenter"
+              onPress={() => {
+                setShowOptions(true);
+                setNewFilterKey('profitCenter');
+              }}
+            >
+              <Text>Työnantaja</Text>
+            </Chip>
+          )}
+          {!filterKeyInUse('region') && (
+            <Chip
+              style={styles.chipButton}
+              // eslint-disable-next-line prettier/prettier
   onPress={() => {
-              setShowOptions(true);
-              setNewFilterKey('region');
-            }}
-          >
-            <Text>Sijainti</Text>
-          </Chip>
-        )}
+                setShowOptions(true);
+                setNewFilterKey('region');
+              }}
+            >
+              <Text>Sijainti</Text>
+            </Chip>
+          )}
+          {!filterKeyInUse('taskArea') && (
+            <Chip
+              style={styles.chipButton}
+              // eslint-disable-next-line prettier/prettier
+  onPress={() => {
+                setShowOptions(true);
+                setNewFilterKey('taskArea');
+              }}
+            >
+              <Text>Tehtäväalueet</Text>
+            </Chip>
+          )}
+        </ScrollView>
       </View>
       <ScrollView>
         {showOptions &&
@@ -141,6 +159,10 @@ export default function JobsListScreen({ navigation, route }) {
   );
 }
 const styles = StyleSheet.create({
+  chipButton: {
+    backgroundColor: 'green',
+    marginHorizontal: 5,
+  },
   containerFilters: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -148,10 +170,10 @@ const styles = StyleSheet.create({
   },
   containerOptions: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 10,
+    marginBottom: 15,
   },
   redButton: {
     backgroundColor: 'red',
+    marginHorizontal: 5,
   },
 });
