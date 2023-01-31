@@ -32,31 +32,26 @@ export default function JobsListScreen({ navigation, route }) {
 
   useMemo(() => {
     if (newFilterKey) {
-      const options = jobs.reduce((acc, job) => {
-        const values = job.jobAdvertisement[newFilterKey]
-          ? job.jobAdvertisement[newFilterKey].split(',')
-          : [];
-        values.forEach((value) => {
-          acc.add(value.trim());
-        });
-        return acc;
-      }, new Set());
+      const options = new Set();
       let filteredJobs = jobs;
-
+  
       // Check for existing filters
       if (userFilters.length > 0) {
         filteredJobs = jobs.filter((j) => {
           return userFilters.every((f) => j.jobAdvertisement[f.key] === f.value);
         });
       }
-
+  
       filteredJobs.forEach((j) => {
         if (j.jobAdvertisement[newFilterKey]) {
-          options.add(j.jobAdvertisement[newFilterKey]);
+          const values = j.jobAdvertisement[newFilterKey].split(',');
+          values.forEach((value) => {
+            options.add(value.trim());
+          });
         }
       });
-
-      setNewFilterOptions([...options].filter((o) => !o.includes(',')));
+  
+      setNewFilterOptions(Array.from(options));
     }
   }, [newFilterKey, jobs, userFilters]);
 
