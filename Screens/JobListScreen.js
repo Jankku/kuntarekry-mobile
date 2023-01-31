@@ -33,27 +33,35 @@ export default function JobsListScreen({ navigation, route }) {
   useMemo(() => {
     if (newFilterKey) {
       const options = new Set();
-      let filteredJobs = jobs;
-  
-      // Check for existing filters
-      if (userFilters.length > 0) {
-        filteredJobs = jobs.filter((j) => {
-          return userFilters.every((f) => j.jobAdvertisement[f.key] === f.value);
-        });
-      }
-  
-      filteredJobs.forEach((j) => {
+      jobs.forEach((j) => {
         if (j.jobAdvertisement[newFilterKey]) {
-          const values = j.jobAdvertisement[newFilterKey].split(',');
-          values.forEach((value) => {
-            options.add(value.trim());
-          });
+          options.add(j.jobAdvertisement[newFilterKey]);
         }
       });
-  
-      setNewFilterOptions(Array.from(options));
+      const newOptions = new Set();
+      options.forEach((o) => {
+        if (o.includes(',')) {
+          o.split(',').forEach((oo) => newOptions.add(oo.trim()));
+        } else {
+          newOptions.add(o);
+        }
+      });
+      const newOptions2 = [];
+      newOptions.forEach((o) => {
+        const newFilter = { key: newFilterKey, value: o };
+        const newFilters = [...userFilters, newFilter];
+        const filteredSearchJobs = filteredJobs.filter((j) =>
+          newFilters.every(
+            (f) => j.jobAdvertisement[f.key] && j.jobAdvertisement[f.key].includes(f.value)
+          )
+        );
+        if (filteredSearchJobs.length > 0) {
+          newOptions2.push(o);
+        }
+      });
+      setNewFilterOptions([...newOptions2]);
     }
-  }, [newFilterKey, jobs, userFilters]);
+  }, [newFilterKey, jobs]);
 
   const filteredSearchJobs = useMemo(
     () =>
@@ -102,7 +110,6 @@ export default function JobsListScreen({ navigation, route }) {
           {!filterKeyInUse('employment') && (
             <Chip
               style={styles.chipButton}
-              title="employment"
               onPress={() => {
                 setShowOptions(true);
                 setNewFilterKey('employment');
@@ -114,7 +121,6 @@ export default function JobsListScreen({ navigation, route }) {
           {!filterKeyInUse('profitCenter') && (
             <Chip
               style={styles.chipButton}
-              title="profitCenter"
               onPress={() => {
                 setShowOptions(true);
                 setNewFilterKey('profitCenter');
@@ -149,21 +155,23 @@ export default function JobsListScreen({ navigation, route }) {
           )}
         </ScrollView>
       </View>
-      <ScrollView>
-        {showOptions &&
-          newFilterOptions.length > 0 &&
-          newFilterOptions.map((o) => (
-            <Button
-              key={o}
-              title={o}
-              onPress={() => {
-                setNewFilterValue(o);
-                setShowOptions(false);
-                submitFilter(o);
-              }}
-            />
-          ))}
-      </ScrollView>
+      <View style={styles.optionContainer}>
+        <ScrollView>
+          {showOptions &&
+            newFilterOptions.length > 0 &&
+            newFilterOptions.map((o) => (
+              <Button
+                key={o}
+                title={`${o}`}
+                onPress={() => {
+                  setNewFilterValue(o);
+                  setShowOptions(false);
+                  submitFilter(o);
+                }}
+              />
+            ))}
+        </ScrollView>
+      </View>
       <Jobs
         navigation={navigation}
         data={userFilters.length > 0 ? filteredSearchJobs : filteredJobs}
@@ -184,6 +192,10 @@ const styles = StyleSheet.create({
   containerOptions: {
     flexDirection: 'row',
     marginBottom: 15,
+  },
+  optionContainer: {
+    height: 'auto',
+    maxHeight: 250,
   },
   redButton: {
     backgroundColor: 'red',
