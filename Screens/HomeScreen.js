@@ -180,7 +180,7 @@ export default function HomeScreen({ navigation }) {
         </View>
       </View>
       <OrganizationIntroduction navigation={navigation} />
-      <ExtendedJobs />
+      <ExtendedJobs navigation={navigation} />
     </ScrollView>
   );
 }

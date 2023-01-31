@@ -5,7 +5,7 @@ import Kuva1 from '../assets/Rectangle69.png';
 import Kuva2 from '../assets/Rectangle69(1).png';
 import Kuva3 from '../assets/Rectangle96.png';
 
-export default function ExtendedJobs() {
+export default function ExtendedJobs({navigation}) {
   const { jobs } = useJobAdvertisements();
   // filter jobs with jobAdvertisement and profitcenter
   const filteredJobs = jobs.filter(
@@ -27,7 +27,11 @@ export default function ExtendedJobs() {
           <View style={{ maxWidth: '90%' }}>
           <Text  style={styles.blueText}>{job.jobAdvertisement.profitCenter + ' työpaikat'}</Text>
           </View>
-          <Button style={styles.btn} ><Text style={{color: 'white'}}>KATSO LISÄÄ ></Text></Button>
+          <Button onPress={() =>
+                navigation.navigate('Organization', {
+                  org: job.jobAdvertisement.profitCenter,
+                })
+              } style={styles.btn} ><Text style={{color: 'white'}}>KATSO LISÄÄ ></Text></Button>
         </View>
       ))}
     </View>
