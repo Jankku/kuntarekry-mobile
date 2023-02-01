@@ -1,6 +1,14 @@
+import 'react-native-gesture-handler';
 import HomeScreen from './Screens/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from '@react-navigation/drawer';
+
 import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { colors } from './styles/colors';
 import AppBar from './Components/AppBar';
@@ -28,24 +36,76 @@ const theme = {
   },
 };
 
+function CustomDrawerContent (props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      {/* <DrawerItem
+        label='Close drawer'
+        onPress={() => navigation.navigate('Filter', { list: 'organizations' })}
+      /> */}
+      <DrawerItem label='Toggle drawer' onPress={() => props.navigation.toggleDrawer()} />
+    </DrawerContentScrollView>
+  );
+}
+
+const Drawer = createDrawerNavigator();
+
+function MyDrawer () {
+  return (
+    <Drawer.Navigator
+      useLegacyImplementation
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      screenOptions={{
+        header: (props) => <AppBar {...props} />,
+      }}
+    >
+      <Drawer.Screen
+        name='Stack'
+        component={StackScreen}
+        options={{ headerShown: false, drawerItemStyle: { height: 0 } }}
+      />
+      <Drawer.Screen name='Työpaikat' component={JobListScreen} />
+      <Drawer.Screen name='Tutustu työnantajiin' component={OrganizationScreen} />
+    </Drawer.Navigator>
+  );
+}
+
 const Stack = createStackNavigator();
 
-export default function App() {
+function StackScreen () {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        header: (props) => <AppBar {...props} />,
+      }}
+    >
+      <Stack.Screen name='Home' component={HomeScreen} />
+      <Stack.Screen name='Jobs' component={JobListScreen} />
+      <Stack.Screen name='Job' component={JobScreen} />
+      <Stack.Screen name='Filter' component={JobFilterScreen} />
+      <Stack.Screen name='Organization' component={OrganizationScreen} />
+    </Stack.Navigator>
+  );
+}
+
+export default function App () {
   return (
     <JobAdvertisementProvider>
       <PaperProvider theme={theme}>
         <NavigationContainer>
-          <Stack.Navigator
+          {/* <Stack.Navigator
             screenOptions={{
               header: (props) => <AppBar {...props} />,
             }}
           >
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Jobs" component={JobListScreen} />
-            <Stack.Screen name="Job" component={JobScreen} />
-            <Stack.Screen name="Filter" component={JobFilterScreen} />
-            <Stack.Screen name="Organization" component={OrganizationScreen} />
-          </Stack.Navigator>
+            <Stack.Screen name='Home' component={HomeScreen} />
+            <Stack.Screen name='Jobs' component={JobListScreen} />
+            <Stack.Screen name='Job' component={JobScreen} />
+            <Stack.Screen name='Filter' component={JobFilterScreen} />
+            <Stack.Screen name='Organization' component={OrganizationScreen} />
+          </Stack.Navigator> */}
+          <MyDrawer />
         </NavigationContainer>
       </PaperProvider>
     </JobAdvertisementProvider>
