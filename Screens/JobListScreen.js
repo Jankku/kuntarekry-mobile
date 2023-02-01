@@ -35,13 +35,13 @@ export default function JobsListScreen({ navigation, route }) {
       const options = new Set();
       jobs.forEach((j) => {
         if (j.jobAdvertisement[newFilterKey]) {
-          options.add(j.jobAdvertisement[newFilterKey]);
+          options.add(j.jobAdvertisement[newFilterKey].toLowerCase());
         }
       });
       const newOptions = new Set();
       options.forEach((o) => {
         if (o.includes(',')) {
-          o.split(',').forEach((oo) => newOptions.add(oo.trim()));
+          o.split(',').forEach((oo) => newOptions.add(oo.trim().toLowerCase()));
         } else {
           newOptions.add(o);
         }
@@ -52,7 +52,7 @@ export default function JobsListScreen({ navigation, route }) {
         const newFilters = [...userFilters, newFilter];
         const filteredSearchJobs = filteredJobs.filter((j) =>
           newFilters.every(
-            (f) => j.jobAdvertisement[f.key] && j.jobAdvertisement[f.key].includes(f.value)
+            (f) => j.jobAdvertisement[f.key] && j.jobAdvertisement[f.key].toLowerCase() === f.value
           )
         );
         if (filteredSearchJobs.length > 0) {
@@ -61,13 +61,16 @@ export default function JobsListScreen({ navigation, route }) {
       });
       setNewFilterOptions([...newOptions2]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newFilterKey, jobs]);
 
   const filteredSearchJobs = useMemo(
     () =>
       filteredJobs.filter((j) =>
         userFilters.every(
-          (f) => j.jobAdvertisement[f.key] && j.jobAdvertisement[f.key].includes(f.value)
+          (f) =>
+            j.jobAdvertisement[f.key] &&
+            j.jobAdvertisement[f.key].toLowerCase() === f.value.toLowerCase()
         )
       ),
     [filteredJobs, userFilters]
