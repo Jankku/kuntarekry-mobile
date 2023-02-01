@@ -9,6 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import OrganizationIntroduction from '../Components/OrganizationIntroduction';
 import kuvaPng from '../assets/Rectangle90.png';
 import ExtendedJobs from '../Components/ExtendedJobs';
+import HomeScreenFooter from '../Components/HomeScreenFooter';
 
 export default function HomeScreen({ navigation }) {
   const { jobs } = useJobAdvertisements();
@@ -179,6 +180,7 @@ export default function HomeScreen({ navigation }) {
       </View>
       <OrganizationIntroduction navigation={navigation} />
       <ExtendedJobs navigation={navigation} />
+      <HomeScreenFooter />
     </ScrollView>
   );
 }
