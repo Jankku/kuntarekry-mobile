@@ -182,7 +182,7 @@ export default function HomeScreen({ navigation }) {
       </View>
       <OrganizationIntroduction navigation={navigation} />
       <ExtendedJobs navigation={navigation} />
-      <HomeScreenFooter />
+      <HomeScreenFooter navigation={navigation} />
     </ScrollView>
   );
 }
