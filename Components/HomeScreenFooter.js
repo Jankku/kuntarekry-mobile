@@ -3,53 +3,109 @@ import { Button } from 'react-native-paper';
 import KuntarekryPng from '../assets/Kuntarekry.png';
 import Suoss from '../assets/Suoss.png';
 import kuntarekrylogo from '../assets/kuntarekrylogo.png';
-export default function HomeScreenFooter() {
+import { useJobAdvertisements } from '../hooks/usejobadvertisements';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+export default function HomeScreenFooter({ navigation }) {
+  const { jobs } = useJobAdvertisements();
+  //find most common regions top 5
+  const regions = jobs.map((job) => job.jobAdvertisement.region);
+  //remove undefined
+  const filteredRegions = regions.filter((region) => region);
+  const regionCount = {};
+  filteredRegions.forEach((region) => {
+    regionCount[region] = (regionCount[region] || 0) + 1;
+  });
+  const regionCountArray = Object.entries(regionCount);
+  const sortedRegionCountArray = regionCountArray.sort((a, b) => b[1] - a[1]);
+  const top5Regions = sortedRegionCountArray.slice(0, 5);
+
+  //top 5 locations
+  const locations = jobs.map((job) => job.jobAdvertisement.location);
+  //remove undefined
+  const filteredLocations = locations.filter((location) => location);
+  const locationCount = {};
+  filteredLocations.forEach((location) => {
+    locationCount[location] = (locationCount[location] || 0) + 1;
+  });
+  const locationCountArray = Object.entries(locationCount);
+  const sortedLocationCountArray = locationCountArray.sort((a, b) => b[1] - a[1]);
+  const top5Locations = sortedLocationCountArray.slice(0, 5);
+
+  //top 5 taskArea
+  const taskAreas = jobs.map((job) => job.jobAdvertisement.taskArea);
+  //remove null
+  const filteredTaskAreas = taskAreas.filter((taskArea) => taskArea);
+  const taskAreaCount = {};
+  filteredTaskAreas.forEach((taskArea) => {
+    taskAreaCount[taskArea] = (taskAreaCount[taskArea] || 0) + 1;
+  });
+  const taskAreaCountArray = Object.entries(taskAreaCount);
+  const sortedTaskAreaCountArray = taskAreaCountArray.sort((a, b) => b[1] - a[1]);
+  const top5TaskAreas = sortedTaskAreaCountArray.slice(0, 5);
+
   return (
     <>
       <ImageBackground source={KuntarekryPng} style={styles.imageBG}></ImageBackground>
       <View style={{ backgroundColor: '#1D847E' }}>
         <Text style={styles.heading}>Suosituimmat Maakunnat</Text>
         <View style={styles.container}>
-          <Text style={styles.listing}>Uusimaa</Text>
-          <Text style={styles.listing}>Varsinais-Suomi</Text>
-          <Text style={styles.listing}>Pohjois-Pohjanmaa</Text>
-          <Text style={styles.listing}>Pohjois-Savo</Text>
-          <Text style={styles.listing}>Keski-Suomi</Text>
+          {top5Regions.map((region, i) => (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Jobs', { buttonJobQuery: region[0], filter: 'region' })
+              }
+              key={i}
+            >
+              <Text key={i} style={styles.listing}>
+                {region[0]}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
-        <Button style={styles.btn}>
+        <Button
+          onPress={() => navigation.navigate('Filter', { list: 'regions' })}
+          style={styles.btn}
+        >
           <Text style={styles.btnText}>Näytä kaikki</Text>
         </Button>
         <Text style={styles.heading}>Suosituimmat kunnat</Text>
         <View style={styles.container}>
-          <Text style={styles.listing}>Turku</Text>
-          <Text style={styles.listing}>Oulu</Text>
-          <Text style={styles.listing}>Espoo</Text>
-          <Text style={styles.listing}>Jyväskylä</Text>
-          <Text style={styles.listing}>Lahti</Text>
+          {top5Locations.map((location, i) => (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Jobs', { buttonJobQuery: location[0], filter: 'location' })
+              }
+              key={i}
+            >
+              <Text style={styles.listing}>{location[0]}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
-        <Button style={styles.btn}>
-          <Text style={styles.btnText}>Näytä kaikki</Text>
-        </Button>
-        <Text style={styles.heading}>Suosituimmat ammattialat</Text>
-        <View style={styles.container}>
-          <Text style={styles.listing}>Opetus- ja kulttuuriala</Text>
-          <Text style={styles.listing}>Terveydenhuoltoala</Text>
-          <Text style={styles.listing}>Sosiaaliala</Text>
-          <Text style={styles.listing}>Tekninen ala</Text>
-          <Text style={styles.listing}>Hallinto- ja toimistotyö</Text>
-        </View>
-        <Button style={styles.btn}>
+        <Button
+          onPress={() => navigation.navigate('Filter', { list: 'locations' })}
+          style={styles.btn}
+        >
           <Text style={styles.btnText}>Näytä kaikki</Text>
         </Button>
         <Text style={styles.heading}>Suosituimmat Tehtäväalueet</Text>
         <View style={styles.container}>
-          <Text style={styles.listing}>Sairaanhoitajat ja terveydenhoitajat</Text>
-          <Text style={styles.listing}>Varhaiskasvatus</Text>
-          <Text style={styles.listing}>Lähi- ja perushoitajat</Text>
-          <Text style={styles.listing}>Luokanopettajat</Text>
-          <Text style={styles.listing}>Aineenopettajat ja lehtorit</Text>
+          {top5TaskAreas.map((taskArea, i) => (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Jobs', { buttonJobQuery: taskArea[0], filter: 'taskArea' })
+              }
+              key={i}
+            >
+              <Text key={i} style={styles.listing}>
+                {taskArea[0]}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
-        <Button style={styles.btn}>
+        <Button
+          onPress={() => navigation.navigate('Filter', { list: 'taskAreas' })}
+          style={styles.btn}
+        >
           <Text style={styles.btnText}>Näytä kaikki</Text>
         </Button>
       </View>
