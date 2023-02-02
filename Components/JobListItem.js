@@ -1,8 +1,9 @@
-import { Card, IconButton } from 'react-native-paper';
+import { Card } from 'react-native-paper';
 import { StyleSheet, Text, View } from 'react-native';
 import dayjs from 'dayjs';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/colors';
+import FavoriteButton from './FavoriteButton';
 
 export default function JobListItem({ job }) {
   const navigation = useNavigation();
@@ -12,11 +13,12 @@ export default function JobListItem({ job }) {
       <Card style={styles.border} onPress={() => navigation.navigate('Job', { job: job })}>
         <Card.Content>
           <View style={styles.container}>
-            <IconButton
-              style={styles.button}
-              iconColor={colors.detailGreen}
-              icon="heart-outline"
-            ></IconButton>
+            <FavoriteButton
+              jobId={job.id}
+              size={24}
+              buttonStyle={styles.button}
+              buttonColor={colors.detailGreen}
+            />
             <View>
               <Text style={styles.itemText}>{job.organization}</Text>
               <Text style={styles.itemHeaderText}>{job.title}</Text>

@@ -1,9 +1,10 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Avatar, Button, List, Divider, Chip } from 'react-native-paper';
+import { Avatar, Button, List, Divider, Chip, IconButton } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import dayjs from 'dayjs';
 import { colors } from '../styles/colors';
 import OpenURLButton from '../Components/OpenURLButton';
+import FavoriteButton from '../Components/FavoriteButton';
 
 export default function JobScreen({ route, navigation }) {
   const job = route.params?.job ?? '';
@@ -14,7 +15,6 @@ export default function JobScreen({ route, navigation }) {
     }
     const tags = tag.split(/\s*,\s*/);
     const filteredTags = tags.filter((tag) => tag.length > 0);
-    console.log(filteredTags);
 
     return filteredTags.map((tagInfo) => (
       <Chip
@@ -33,7 +33,7 @@ export default function JobScreen({ route, navigation }) {
       <LinearGradient
         style={styles.backgroundTop}
         colors={['#0a8bc2', '#33cc80']}
-        start={{ x: 0.35, y: 0.45 }}
+        start={{ x: 0.7, y: 0.65 }}
         end={{ x: 0, y: 0 }}
       >
         <View style={styles.container}>
@@ -54,8 +54,18 @@ export default function JobScreen({ route, navigation }) {
           Hae työpaikkaa
         </Button>
         <View style={styles.buttons}>
-          <Button buttonColor="transparent" textColor="white" icon="heart-outline"></Button>
-          <Button buttonColor="transparent" textColor="white" icon="share-variant"></Button>
+          <FavoriteButton
+            jobId={job.id}
+            size={20}
+            buttonStyle={styles.iconButton}
+            buttonColor={'white'}
+          ></FavoriteButton>
+          <IconButton
+            style={styles.iconButton}
+            size={20}
+            iconColor="white"
+            icon="share-variant"
+          ></IconButton>
         </View>
       </LinearGradient>
       <View style={styles.content}>
@@ -291,6 +301,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     color: 'white',
     fontSize: 16,
+  },
+  iconButton: {
+    marginHorizontal: 15,
   },
   jobDetail: {
     marginHorizontal: 50,
