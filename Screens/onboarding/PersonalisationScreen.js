@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useCallback } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { Card, Divider, Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BackButton from '../../Components/onboarding/BackButton';
@@ -44,34 +44,40 @@ export default function PersonalisationScreen({ navigation }) {
 
   return (
     <LinearGradient colors={['#0a8bc2', '#33cc80']} style={styles.gradient}>
-      <SafeAreaView style={styles.container}>
-        <Image source={require('../../assets/logo.png')} resizeMode="center" style={styles.image} />
+      <SafeAreaView>
+        <ScrollView contentContainerStyle={styles.container}>
+          <Image
+            source={require('../../assets/logo.png')}
+            resizeMode="center"
+            style={styles.image}
+          />
 
-        <Card style={styles.card}>
-          <Card.Content>
-            <Text variant="titleLarge">Personoi kokemustasi</Text>
+          <Card style={styles.card}>
+            <Card.Content>
+              <Text variant="titleLarge">Personoi kokemustasi</Text>
 
-            <View style={styles.section}>
-              <Text variant="titleMedium">Kieli</Text>
-              <LanguageDropdown onChange={onChangeLanguage} />
-            </View>
+              <View style={styles.section}>
+                <Text variant="titleMedium">Kieli</Text>
+                <LanguageDropdown onChange={onChangeLanguage} />
+              </View>
 
-            <View style={styles.section}>
-              <Text variant="titleMedium">Paikkakunta</Text>
-              <LocationDropdown onChange={onChangeLocation} />
-            </View>
-            <Divider />
-            <View style={styles.section}>
-              <Text variant="titleMedium">Tehtäväala</Text>
-              <TaskDropdown onChange={onChangeTask} />
-            </View>
-          </Card.Content>
-        </Card>
+              <View style={styles.section}>
+                <Text variant="titleMedium">Paikkakunta</Text>
+                <LocationDropdown onChange={onChangeLocation} />
+              </View>
+              <Divider />
+              <View style={styles.section}>
+                <Text variant="titleMedium">Tehtäväala</Text>
+                <TaskDropdown onChange={onChangeTask} />
+              </View>
+            </Card.Content>
+          </Card>
 
-        <View style={styles.buttonContainer}>
-          <BackButton onPress={() => navigation.navigate('Welcome')} />
-          <ForwardButton onPress={() => finishOnboarding()} />
-        </View>
+          <View style={styles.buttonContainer}>
+            <BackButton onPress={() => navigation.navigate('Welcome')} />
+            <ForwardButton onPress={() => finishOnboarding()} />
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </LinearGradient>
   );
@@ -89,7 +95,7 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
-    flex: 1,
+    paddingBottom: 16,
   },
   gradient: {
     flex: 1,
