@@ -14,6 +14,7 @@ export default function LanguageDropdown({ onChange }) {
 
   return (
     <DropDownPicker
+      listMode="SCROLLVIEW"
       open={open}
       value={value}
       items={items}

@@ -1,8 +1,16 @@
+import 'react-native-gesture-handler';
 import { useCallback } from 'react';
 import HomeScreen from './Screens/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from '@react-navigation/drawer';
+
+import { MD3LightTheme as DefaultTheme, Provider as PaperProvider, List } from 'react-native-paper';
 import { colors } from './styles/colors';
 import AppBar from './Components/AppBar';
 import JobListScreen from './Screens/JobListScreen';
@@ -39,7 +47,21 @@ const theme = {
   },
 };
 
-export default function App() {
+function CustomDrawerContent (props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      {/* <DrawerItem
+        label='Tutustu työnantajiin'
+        onPress={() => navigation.navigate('Filter', { list: 'organizations' })}
+      /> */}
+    </DrawerContentScrollView>
+  );
+}
+
+const Drawer = createDrawerNavigator();
+
+export default function App () {
   return (
     <OnboardingProvider>
       <AppWrapper />
@@ -49,7 +71,24 @@ export default function App() {
 
 const Stack = createStackNavigator();
 
-function AppWrapper() {
+function StackScreen () {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        header: (props) => <AppBar {...props} />,
+      }}
+    >
+      <Stack.Screen name='Home' component={HomeScreen} />
+      <Stack.Screen name='Jobs' component={JobListScreen} />
+      <Stack.Screen name='Job' component={JobScreen} />
+      <Stack.Screen name='Filter' component={JobFilterScreen} />
+      <Stack.Screen name='Organization' component={OrganizationScreen} />
+      <Stack.Screen name='Favorites' component={FavoritesScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function AppWrapper () {
   const { onboardingDone } = useOnboarding();
 
   const onReady = useCallback(() => {
@@ -67,9 +106,11 @@ function AppWrapper() {
       <JobLocationProvider>
         <JobTaskProvider>
           <PaperProvider theme={theme}>
-            <StatusBar style="inverted" />
+            <StatusBar style='inverted' />
             <NavigationContainer onReady={onReady}>
-              <Stack.Navigator
+              <Drawer.Navigator
+                useLegacyImplementation
+                drawerContent={(props) => <CustomDrawerContent {...props} />}
                 screenOptions={{
                   header: (props) => <AppBar {...props} />,
                   headerShown: onboardingDone,
@@ -77,20 +118,22 @@ function AppWrapper() {
               >
                 {onboardingDone === true ? (
                   <>
-                    <Stack.Screen name="Home" component={HomeScreen} />
-                    <Stack.Screen name="Jobs" component={JobListScreen} />
-                    <Stack.Screen name="Job" component={JobScreen} />
-                    <Stack.Screen name="Filter" component={JobFilterScreen} />
-                    <Stack.Screen name="Organization" component={OrganizationScreen} />
-                    <Stack.Screen name="Favorites" component={FavoritesScreen} />
+                    <Drawer.Screen
+                      name='Stack'
+                      component={StackScreen}
+                      options={{ headerShown: false, drawerItemStyle: { height: 0 } }}
+                    />
+                    <Drawer.Screen name='Työpaikat' component={JobListScreen} />
+                    <Drawer.Screen name='Työpaikat sijainnin mukaan' component={JobListScreen} />
+                    <Drawer.Screen name='Työpaikat tehtävän mukaan' component={JobListScreen} />
                   </>
                 ) : (
                   <>
-                    <Stack.Screen name="Welcome" component={WelcomeScreen} />
-                    <Stack.Screen name="Personalisation" component={PersonalisationScreen} />
+                    <Drawer.Screen name='Welcome' component={WelcomeScreen} />
+                    <Drawer.Screen name='Personalisation' component={PersonalisationScreen} />
                   </>
                 )}
-              </Stack.Navigator>
+              </Drawer.Navigator>
             </NavigationContainer>
           </PaperProvider>
         </JobTaskProvider>

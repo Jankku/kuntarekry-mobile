@@ -1,15 +1,19 @@
 export function flattenItems(items) {
-  const result = [];
+  const parentItems = [];
+  const childItems = [];
   items.forEach((item) => {
     if (item.childs) {
-      result.push(...item.childs);
+      childItems.push(...item.childs);
       delete item.childs;
-      result.push(item);
+      parentItems.push(item);
     } else {
-      result.push(item);
+      childItems.push(item);
     }
   });
-  return result.filter((item) => item?.order !== -1); // Filter "duplicates" for onboarding personalisation
+  // Remove child items which have the same ID as the parent item for onboarding dropdown.
+  // Reverse array to fix this issue: https://github.com/hossein-zare/react-native-dropdown-picker/issues/387
+  const childItemsWithoutDuplicates = childItems.filter((item) => item?.order !== -1).reverse();
+  return parentItems.concat(childItemsWithoutDuplicates);
 }
 
 export function addParentToChilds(items, parentId) {

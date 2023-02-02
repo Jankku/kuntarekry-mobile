@@ -1778,16 +1778,6 @@
     "prompts" "^2.4.0"
     "semver" "^6.3.0"
 
-"@react-native-picker/picker@^1.8.3":
-  "integrity" "sha512-pacdQDX6V6EmjF+HoiIh6u++qx4mTK0WnhgUHRc01B+Qt5eoeUwseBqmqfTSXTx/aHDEd6PiIw7UGvKgFoqgFQ=="
-  "resolved" "https://registry.npmjs.org/@react-native-picker/picker/-/picker-1.16.8.tgz"
-  "version" "1.16.8"
-
-"@react-native-picker/picker@^2.4.8":
-  "integrity" "sha512-5NQ5XPo1B03YNqKFrV6h9L3CQaHlB80wd4ETHUEABRP2iLh7FHLVObX2GfziD+K/VJb8G4KZcZ23NFBFP1f7bg=="
-  "resolved" "https://registry.npmjs.org/@react-native-picker/picker/-/picker-2.4.8.tgz"
-  "version" "2.4.8"
-
 "@react-native/assets@1.0.0":
   "integrity" "sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ=="
   "resolved" "https://registry.npmjs.org/@react-native/assets/-/assets-1.0.0.tgz"
@@ -1820,10 +1810,19 @@
     "react-is" "^16.13.0"
     "use-latest-callback" "^0.1.5"
 
-"@react-navigation/elements@^1.3.13":
-  "integrity" "sha512-LqqK5s2ZfYHn2cQ376jC5V9dQztLH5ixkkJj9WR7JY2g4SghDd39WJhL3Jillw1Mu3F3b9sZwvAK+QkXhnDeAA=="
-  "resolved" "https://registry.npmjs.org/@react-navigation/elements/-/elements-1.3.13.tgz"
-  "version" "1.3.13"
+"@react-navigation/drawer@^6.5.8":
+  "integrity" "sha512-24okwc1gVJex+NMwau1QfxIRUDfFvdbnwFS/N0bCUXDVu8bqsMeYA00C3xwCpvdRmANbBH4rFRniNbJLAvD4Jg=="
+  "resolved" "https://registry.npmjs.org/@react-navigation/drawer/-/drawer-6.5.8.tgz"
+  "version" "6.5.8"
+  dependencies:
+    "@react-navigation/elements" "^1.3.14"
+    "color" "^4.2.3"
+    "warn-once" "^0.1.0"
+
+"@react-navigation/elements@^1.3.13", "@react-navigation/elements@^1.3.14":
+  "integrity" "sha512-RBbPhYq+KNFPAkWPaHB9gypq0jTGp/0fkMwRLToJ8jkLtWG4LV+JoQ/erFQnVARkR3Q807n0VnES15EYP4ITMQ=="
+  "resolved" "https://registry.npmjs.org/@react-navigation/elements/-/elements-1.3.14.tgz"
+  "version" "1.3.14"
 
 "@react-navigation/native@^6.0.0", "@react-navigation/native@^6.1.2":
   "integrity" "sha512-qLUe0asHofr5EhxKjvUBJ9DrPPmR4535IEwmW3oU4DRb3cLbNysjajJKHL8kcYtqPvn9Bx9QZG2x0PMb2vN23A=="
@@ -6920,20 +6919,12 @@
     "color" "^3.1.2"
     "use-event-callback" "^0.1.0"
 
-"react-native-picker-select@^8.0.4":
-  "integrity" "sha512-orBjPIwBkV5oipyVw263YNMI56f6Kj3p/ejabZoCYYNSG3AiLVVhC2RqsxMgDA7IayyURAW+AlV+mDJyVqLBkg=="
-  "resolved" "https://registry.npmjs.org/react-native-picker-select/-/react-native-picker-select-8.0.4.tgz"
-  "version" "8.0.4"
-  dependencies:
-    "@react-native-picker/picker" "^1.8.3"
-    "lodash.isequal" "^4.5.0"
-
 "react-native-reanimated-carousel@^3.3.0":
   "integrity" "sha512-rprUl+LqWoXyH/8OvHv+m9Kol2YORHEnz7tvRum+o4ciCUCcYnafQBbSqG44RMllOCqm3WOAcuEX5p8a7W3ZZw=="
   "resolved" "https://registry.npmjs.org/react-native-reanimated-carousel/-/react-native-reanimated-carousel-3.3.0.tgz"
   "version" "3.3.0"
 
-"react-native-reanimated@>=2.7.0", "react-native-reanimated@~2.12.0":
+"react-native-reanimated@>= 1.0.0", "react-native-reanimated@>=2.7.0", "react-native-reanimated@~2.12.0":
   "integrity" "sha512-nrlPyw+Hx9u4iJhZk9PoTvDo/QmVAd+bo7OK9Tv3hveNEF9++5oig/g3Uv9V93shy9avTYGsUprUvAEt/xdzeQ=="
   "resolved" "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-2.12.0.tgz"
   "version" "2.12.0"
@@ -6967,7 +6958,7 @@
     "prop-types" "^15.7.2"
     "yargs" "^16.1.1"
 
-"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.71 || 1000.0.0", "react-native@>=0.57", "react-native@>=0.6.0", "react-native@0.70.5":
+"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.71 || 1000.0.0", "react-native@>=0.6.0", "react-native@0.70.5":
   "integrity" "sha512-5NZM80LC3L+TIgQX/09yiyy48S73wMgpIgN5cCv3XTMR394+KpDI3rBZGH4aIgWWuwijz31YYVF5504+9n2Zfw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.70.5.tgz"
   "version" "0.70.5"
@@ -7018,20 +7009,12 @@
     "object-assign" "^4.1.1"
     "react-is" "^16.12.0 || ^17.0.0 || ^18.0.0"
 
-"react@*", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@>=16", "react@>=16.3.0", "react@>=16.8", "react@>=16.8.0", "react@>=17.0.0", "react@18.1.0":
+"react@*", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@>=16.3.0", "react@>=16.8", "react@>=16.8.0", "react@>=17.0.0", "react@18.1.0":
   "integrity" "sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.1.0.tgz"
   "version" "18.1.0"
   dependencies:
     "loose-envify" "^1.1.0"
-
-"react@16 || 17":
-  "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
-  "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
-  "version" "17.0.2"
-  dependencies:
-    "loose-envify" "^1.1.0"
-    "object-assign" "^4.1.1"
 
 "readable-stream@^3.4.0":
   "integrity" "sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA=="
