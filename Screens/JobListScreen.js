@@ -52,7 +52,8 @@ export default function JobsListScreen({ navigation, route }) {
         const newFilters = [...userFilters, newFilter];
         const filteredSearchJobs = filteredJobs.filter((j) =>
           newFilters.every(
-            (f) => j.jobAdvertisement[f.key] && j.jobAdvertisement[f.key].toLowerCase() === f.value
+            (f) =>
+              j.jobAdvertisement[f.key] && j.jobAdvertisement[f.key].toLowerCase().includes(f.value)
           )
         );
         if (filteredSearchJobs.length > 0) {
@@ -70,7 +71,7 @@ export default function JobsListScreen({ navigation, route }) {
         userFilters.every(
           (f) =>
             j.jobAdvertisement[f.key] &&
-            j.jobAdvertisement[f.key].toLowerCase() === f.value.toLowerCase()
+            j.jobAdvertisement[f.key].toLowerCase().includes(f.value.toLowerCase())
         )
       ),
     [filteredJobs, userFilters]
