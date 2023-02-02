@@ -24,12 +24,34 @@ export default function JobFilterScreen({ navigation, route }) {
       .filter((org) => org) // remove elements that are undefined or null
       .map((org) => org.split(',')[0].trim());
     list = list.filter((item, index, self) => self.indexOf(item) === index).sort();
+  } else if (route.params.list === 'locations') {
+    list = jobs
+      .filter((jobAd) => jobAd.jobAdvertisement.location)
+      .map((jobAd) => jobAd.jobAdvertisement.location);
+    list = list
+      .filter((org) => org) // remove elements that are undefined or null
+      .map((org) => org.split(',')[0].trim());
+    list = list.filter((item, index, self) => self.indexOf(item) === index).sort();
+  } else if (route.params.list === 'taskAreas') {
+    list = jobs
+      .filter((jobAd) => jobAd.jobAdvertisement.taskArea)
+      .map((jobAd) => jobAd.jobAdvertisement.taskArea);
+    list = list
+      .filter((org) => org) // remove elements that are undefined or null
+      .map((org) => org.split(',')[0].trim());
+    list = list.filter((item, index, self) => self.indexOf(item) === index).sort();
   }
   return (
     <>
       <ScrollView>
         <Title style={styles.title}>
-          {route.params.list === 'regions' ? 'Kaikki maakunnat' : 'Kaikki työnantajat'}
+          {route.params.list === 'regions'
+            ? 'Kaikki maakunnat'
+            : route.params.list === 'organizations'
+            ? 'Kaikki työnantajat'
+            : route.params.list === 'taskAreas'
+            ? 'Kaikki tehtäväalueet'
+            : 'Kaikki kunnat'}
         </Title>
         {list.map((item, index) => (
           <View key={index} style={styles.border}>
