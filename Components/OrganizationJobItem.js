@@ -1,8 +1,9 @@
 import dayjs from 'dayjs';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Avatar, IconButton } from 'react-native-paper';
+import { Avatar } from 'react-native-paper';
 import { colors } from '../styles/colors';
+import FavoriteButton from './FavoriteButton';
 
 export default function OrganizationJobItem({ job, style }) {
   const navigation = useNavigation();
@@ -10,11 +11,12 @@ export default function OrganizationJobItem({ job, style }) {
   return (
     <TouchableOpacity onPress={() => navigation.navigate('Job', { job: job })}>
       <View style={{ ...styles.itemContainer, ...style }}>
-        <IconButton
-          style={styles.button}
-          icon={'heart-outline'}
-          iconColor={colors.detailGreen}
-        ></IconButton>
+        <FavoriteButton
+          jobId={job.id}
+          size={24}
+          buttonStyle={styles.button}
+          buttonColor={colors.detailGreen}
+        />
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{job?.title}</Text>
           <View style={styles.date}>

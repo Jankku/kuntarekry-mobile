@@ -12,6 +12,7 @@ import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import OrganizationScreen from './Screens/OrganizationScreen';
+import FavoritesScreen from './Screens/FavoritesScreen';
 // eslint-disable-next-line no-unused-vars
 import fi from 'dayjs/locale/fi';
 
@@ -45,6 +46,7 @@ export default function App() {
             <Stack.Screen name="Job" component={JobScreen} />
             <Stack.Screen name="Filter" component={JobFilterScreen} />
             <Stack.Screen name="Organization" component={OrganizationScreen} />
+            <Stack.Screen name="Favorites" component={FavoritesScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
