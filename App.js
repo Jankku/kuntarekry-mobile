@@ -10,7 +10,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 
-import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { MD3LightTheme as DefaultTheme, Provider as PaperProvider, List } from 'react-native-paper';
 import { colors } from './styles/colors';
 import AppBar from './Components/AppBar';
 import JobListScreen from './Screens/JobListScreen';
@@ -52,35 +52,15 @@ function CustomDrawerContent (props) {
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
       {/* <DrawerItem
-        label='Close drawer'
+        label='Tutustu työnantajiin'
         onPress={() => navigation.navigate('Filter', { list: 'organizations' })}
       /> */}
-      <DrawerItem label='Toggle drawer' onPress={() => props.navigation.toggleDrawer()} />
     </DrawerContentScrollView>
   );
 }
 
 const Drawer = createDrawerNavigator();
 
-function DrawerNav () {
-  return (
-    <Drawer.Navigator
-      useLegacyImplementation
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
-      screenOptions={{
-        header: (props) => <AppBar {...props} />,
-      }}
-    >
-      <Drawer.Screen
-        name='Stack'
-        component={StackScreen}
-        options={{ headerShown: false, drawerItemStyle: { height: 0 } }}
-      />
-      <Drawer.Screen name='Työpaikat' component={JobListScreen} />
-      <Drawer.Screen name='Tutustu työnantajiin' component={OrganizationScreen} />
-    </Drawer.Navigator>
-  );
-}
 export default function App () {
   return (
     <OnboardingProvider>
@@ -96,53 +76,18 @@ function StackScreen () {
     <Stack.Navigator
       screenOptions={{
         header: (props) => <AppBar {...props} />,
-        headerShown: onboardingDone,
       }}
     >
-      {onboardingDone === true ? (
-        <>
-          <Stack.Screen name='Home' component={HomeScreen} />
-          <Stack.Screen name='Jobs' component={JobListScreen} />
-          <Stack.Screen name='Job' component={JobScreen} />
-          <Stack.Screen name='Filter' component={JobFilterScreen} />
-          <Stack.Screen name='Organization' component={OrganizationScreen} />
-          <Stack.Screen name='Favorites' component={FavoritesScreen} />
-        </>
-      ) : (
-        <>
-          <Stack.Screen name='Welcome' component={WelcomeScreen} />
-          <Stack.Screen name='Personalisation' component={PersonalisationScreen} />
-        </>
-      )}
+      <Stack.Screen name='Home' component={HomeScreen} />
+      <Stack.Screen name='Jobs' component={JobListScreen} />
+      <Stack.Screen name='Job' component={JobScreen} />
+      <Stack.Screen name='Filter' component={JobFilterScreen} />
+      <Stack.Screen name='Organization' component={OrganizationScreen} />
+      <Stack.Screen name='Favorites' component={FavoritesScreen} />
     </Stack.Navigator>
   );
 }
 
-/* export default function App () {
-  return (
-    <JobAdvertisementProvider>
-      <PaperProvider theme={theme}>
-        <NavigationContainer> */
-{
-  /* <Stack.Navigator
-            screenOptions={{
-              header: (props) => <AppBar {...props} />,
-            }}
-          >
-            <Stack.Screen name='Home' component={HomeScreen} />
-            <Stack.Screen name='Jobs' component={JobListScreen} />
-            <Stack.Screen name='Job' component={JobScreen} />
-            <Stack.Screen name='Filter' component={JobFilterScreen} />
-            <Stack.Screen name='Organization' component={OrganizationScreen} />
-          </Stack.Navigator> */
-}
-{
-  /*           <DrawerNav />
-        </NavigationContainer>
-      </PaperProvider>
-    </JobAdvertisementProvider>
-  ); */
-}
 function AppWrapper () {
   const { onboardingDone } = useOnboarding();
 
@@ -163,7 +108,9 @@ function AppWrapper () {
           <PaperProvider theme={theme}>
             <StatusBar style='inverted' />
             <NavigationContainer onReady={onReady}>
-              {/* <Stack.Navigator
+              <Drawer.Navigator
+                useLegacyImplementation
+                drawerContent={(props) => <CustomDrawerContent {...props} />}
                 screenOptions={{
                   header: (props) => <AppBar {...props} />,
                   headerShown: onboardingDone,
@@ -171,21 +118,22 @@ function AppWrapper () {
               >
                 {onboardingDone === true ? (
                   <>
-                    <Stack.Screen name="Home" component={HomeScreen} />
-                    <Stack.Screen name="Jobs" component={JobListScreen} />
-                    <Stack.Screen name="Job" component={JobScreen} />
-                    <Stack.Screen name="Filter" component={JobFilterScreen} />
-                    <Stack.Screen name="Organization" component={OrganizationScreen} />
-                    <Stack.Screen name="Favorites" component={FavoritesScreen} />
+                    <Drawer.Screen
+                      name='Stack'
+                      component={StackScreen}
+                      options={{ headerShown: false, drawerItemStyle: { height: 0 } }}
+                    />
+                    <Drawer.Screen name='Työpaikat' component={JobListScreen} />
+                    <Drawer.Screen name='Työpaikat sijainnin mukaan' component={JobListScreen} />
+                    <Drawer.Screen name='Työpaikat tehtävän mukaan' component={JobListScreen} />
                   </>
                 ) : (
                   <>
-                    <Stack.Screen name="Welcome" component={WelcomeScreen} />
-                    <Stack.Screen name="Personalisation" component={PersonalisationScreen} />
+                    <Drawer.Screen name='Welcome' component={WelcomeScreen} />
+                    <Drawer.Screen name='Personalisation' component={PersonalisationScreen} />
                   </>
                 )}
-              </Stack.Navigator> */}
-              <DrawerNav />
+              </Drawer.Navigator>
             </NavigationContainer>
           </PaperProvider>
         </JobTaskProvider>
