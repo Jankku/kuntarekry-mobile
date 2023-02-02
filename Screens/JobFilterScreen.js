@@ -61,8 +61,12 @@ export default function JobFilterScreen({ navigation, route }) {
               onPress={() => {
                 if (route.params.list === 'regions') {
                   navigation.navigate('Jobs', { buttonJobQuery: item, filter: 'region' });
-                } else {
+                } else if (route.params.list === 'organizations') {
                   navigation.navigate('Organization', { org: item });
+                } else if (route.params.list === 'locations') {
+                  navigation.navigate('Jobs', { buttonJobQuery: item, filter: 'location' });
+                } else if (route.params.list === 'taskAreas') {
+                  navigation.navigate('Jobs', { buttonJobQuery: item, filter: 'taskArea' });
                 }
               }}
             >
