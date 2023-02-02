@@ -1,6 +1,5 @@
 import { Text, StyleSheet, View, ImageBackground } from 'react-native';
 import { useReducer, useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
 import CarouselIndex from '../Components/CarouselIndex';
 import { Searchbar, Chip, Button } from 'react-native-paper';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
@@ -10,6 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import OrganizationIntroduction from '../Components/OrganizationIntroduction';
 import kuvaPng from '../assets/Rectangle90.png';
 import ExtendedJobs from '../Components/ExtendedJobs';
+import HomeScreenFooter from '../Components/HomeScreenFooter';
 
 export default function HomeScreen({ navigation }) {
   const { jobs } = useJobAdvertisements();
@@ -24,7 +24,6 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <ScrollView>
-      <StatusBar style="auto" />
       <LinearGradient
         colors={['#0a8bc2', '#33cc80']}
         start={{ x: 0, y: 0 }}
@@ -181,6 +180,7 @@ export default function HomeScreen({ navigation }) {
       </View>
       <OrganizationIntroduction navigation={navigation} />
       <ExtendedJobs navigation={navigation} />
+      <HomeScreenFooter />
     </ScrollView>
   );
 }
