@@ -56,11 +56,6 @@ const styles = StyleSheet.create({
   dateText: {
     color: colors.detail,
   },
-  footerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 16,
-  },
   itemHeaderText: {
     fontSize: 16,
     fontWeight: '500',

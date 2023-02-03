@@ -2,6 +2,7 @@ import { Appbar, Badge } from 'react-native-paper';
 import { colors } from '../styles/colors';
 import { StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+
 export default function AppBar({ navigation, back }) {
   return (
     <LinearGradient colors={['#0a8bc2', '#33cc80']} start={{ x: 0.9, y: 0.8 }} end={{ x: 0, y: 0 }}>
