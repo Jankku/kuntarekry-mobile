@@ -14,7 +14,7 @@ export default function JobListItem({ job }) {
         <Card.Content>
           <View style={styles.container}>
             <FavoriteButton
-              jobId={job.id}
+              job={job}
               size={24}
               buttonStyle={styles.button}
               buttonColor={colors.detailGreen}
@@ -55,11 +55,6 @@ const styles = StyleSheet.create({
   },
   dateText: {
     color: colors.detail,
-  },
-  footerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 16,
   },
   itemHeaderText: {
     fontSize: 16,

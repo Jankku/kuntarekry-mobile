@@ -55,17 +55,12 @@ export default function JobScreen({ route, navigation }) {
         </Button>
         <View style={styles.buttons}>
           <FavoriteButton
-            jobId={job.id}
+            job={job}
             size={20}
             buttonStyle={styles.iconButton}
             buttonColor={'white'}
-          ></FavoriteButton>
-          <IconButton
-            style={styles.iconButton}
-            size={20}
-            iconColor="white"
-            icon="share-variant"
-          ></IconButton>
+          />
+          <IconButton style={styles.iconButton} size={20} iconColor="white" icon="share-variant" />
         </View>
       </LinearGradient>
       <View style={styles.content}>
@@ -304,9 +299,6 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     marginHorizontal: 15,
-  },
-  jobDetail: {
-    marginHorizontal: 50,
   },
   jobDetailList: {
     backgroundColor: 'white',

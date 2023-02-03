@@ -1,28 +1,24 @@
 import { IconButton } from 'react-native-paper';
-import useFavoriteList from '../hooks/usefavoritelist';
+import { useState, useEffect } from 'react';
+import { getStoredList, updateStoredList } from '../hooks/usefavoritelist';
 
-export default function FavoriteButton({ jobId, buttonStyle, buttonColor, size }) {
-  const [favorite, setFavorite] = useFavoriteList();
+export default function FavoriteButton({ job, buttonStyle, buttonColor, size }) {
+  const [favorite, setFavorite] = useState([]);
 
-  function handleFavorite() {
-    if (favorite.includes(jobId)) {
-      const newList = favorite.filter((item) => item !== jobId);
-      setFavorite(newList);
-      console.log('filterlist', newList);
-    } else {
-      const newList = [...favorite, jobId];
-      setFavorite(newList);
-      console.log('newlist', newList);
-    }
-  }
+  useEffect(() => {
+    (async () => {
+      const storedList = await getStoredList();
+      setFavorite(storedList);
+    })();
+  }, []);
 
   return (
     <IconButton
       size={size}
       style={buttonStyle}
       iconColor={buttonColor}
-      icon={favorite.includes(jobId) ? 'heart' : 'heart-outline'}
-      onPress={() => handleFavorite()}
+      icon={favorite.includes(job) ? 'heart' : 'heart-outline'}
+      onPress={() => updateStoredList(job)}
     ></IconButton>
   );
 }

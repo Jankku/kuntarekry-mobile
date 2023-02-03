@@ -12,7 +12,7 @@ export default function OrganizationJobItem({ job, style }) {
     <TouchableOpacity onPress={() => navigation.navigate('Job', { job: job })}>
       <View style={{ ...styles.itemContainer, ...style }}>
         <FavoriteButton
-          jobId={job.id}
+          job={job}
           size={24}
           buttonStyle={styles.button}
           buttonColor={colors.detailGreen}

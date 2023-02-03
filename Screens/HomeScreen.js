@@ -198,11 +198,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     color: 'white',
   },
-  bgPicture: {
-    flex: 1,
-    justifyContent: 'center',
-    resizeMode: 'cover',
-  },
   buttonrow: {
     flexDirection: 'row',
     paddingTop: 5,
@@ -211,11 +206,6 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 24,
     fontWeight: '400',
-  },
-  carouselheader2: {
-    color: '#35A9DB',
-    fontSize: 13,
-    fontWeight: '700',
   },
   centerText: {
     alignItems: 'center',
@@ -237,38 +227,6 @@ const styles = StyleSheet.create({
   chip1: {
     marginHorizontal: '2%',
     margin: 5,
-  },
-  chip2: {
-    backgroundColor: colors.background,
-    borderTopLeftRadius: 9,
-    borderTopRightRadius: 9,
-    color: '#006B96',
-    fontSize: 16,
-    marginTop: 40,
-    padding: 14,
-    zIndex: 1,
-  },
-  circle: {
-    backgroundColor: colors.background,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    height: 21,
-    overflow: 'hidden',
-    position: 'absolute',
-    top: 364,
-    transform: [{ scaleX: 9 }],
-    width: 42,
-  },
-  circle2: {
-    backgroundColor: colors.background,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    height: 21,
-    overflow: 'hidden',
-    position: 'absolute',
-    top: 411,
-    transform: [{ scaleX: 10 }],
-    width: 42,
   },
   container: {
     alignItems: 'center',
@@ -333,17 +291,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginVertical: 12,
     width: '88%',
-  },
-  jobsContainer: {
-    backgroundColor: colors.background,
-    padding: 12,
-  },
-  jobsOrganisation: {
-    fontSize: 12,
-    marginTop: 12,
-  },
-  jobsTitle: {
-    fontSize: 20,
   },
   row: {
     alignItems: 'baseline',
