@@ -14,7 +14,7 @@ export default function JobListItem({ job }) {
         <Card.Content>
           <View style={styles.container}>
             <FavoriteButton
-              jobId={job.id}
+              job={job}
               size={24}
               buttonStyle={styles.button}
               buttonColor={colors.detailGreen}

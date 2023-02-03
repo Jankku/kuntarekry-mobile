@@ -1,36 +1,49 @@
-import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+const KEY = 'favoritelist';
 
-export default function useFavoriteList() {
-  const [storedList, setStoredList] = useState([]);
-  const KEY = 'favoritelist';
-  //AsyncStorage.removeItem(KEY);
-  useEffect(() => {
-    getStoredList();
-  }, []);
-
-  async function getStoredList() {
-    try {
-      const item = await AsyncStorage.getItem(KEY);
-      const list = item ? JSON.parse(item) : [];
-      console.log('Found this: ' + list);
-      setStoredList(list);
-    } catch (e) {
-      alert(e);
-      setStoredList([]);
-    }
+export async function getStoredList() {
+  try {
+    const item = await AsyncStorage.getItem(KEY);
+    const list = item ? JSON.parse(item) : [];
+    console.log(
+      'Found list: ',
+      list.map((job) => job.id)
+    );
+    return list;
+  } catch (e) {
+    console.log(e);
+    return [];
   }
+}
+export async function updateStoredList(job) {
+  const storedList = await getStoredList();
+  const newList = await mergeLists(storedList, job);
+  console.log(
+    'Updated list',
+    newList.map((job) => job.id)
+  );
+  await AsyncStorage.setItem(KEY, JSON.stringify(newList));
+  return newList;
+}
 
-  const setValue = async (value) => {
-    try {
-      // Allow value to be a function so we have same API as useState
-      const valueToStore = value instanceof Function ? value(storedList) : value;
-      setStoredList(valueToStore);
-      await AsyncStorage.setItem(KEY, JSON.stringify(valueToStore));
-      console.log('Stored successfully', valueToStore);
-    } catch (e) {
-      alert(e);
-    }
-  };
-  return [storedList, setValue];
+export async function clearStoredList() {
+  await AsyncStorage.removeItem(KEY);
+}
+
+function mergeLists(storedList, job) {
+  if (storedList.includes(job)) {
+    const newList = storedList.filter((item) => item.id !== job.id);
+    console.log(
+      'Filtered job:',
+      newList.map((job) => job.id)
+    );
+    return newList;
+  } else {
+    const newList = [...storedList, job];
+    console.log(
+      'Added job:',
+      newList.map((job) => job.id)
+    );
+    return newList;
+  }
 }

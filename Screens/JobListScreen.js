@@ -6,6 +6,7 @@ import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { useState } from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { colors } from '../styles/colors';
 
 export default function JobsListScreen({ navigation, route }) {
   const searchQuery = route.params?.searchQuery ?? '';
@@ -137,7 +138,7 @@ export default function JobsListScreen({ navigation, route }) {
             <Chip
               style={styles.chipButton}
               // eslint-disable-next-line prettier/prettier
-  onPress={() => {
+              onPress={() => {
                 setShowOptions(true);
                 setNewFilterKey('region');
               }}
@@ -149,7 +150,7 @@ export default function JobsListScreen({ navigation, route }) {
             <Chip
               style={styles.chipButton}
               // eslint-disable-next-line prettier/prettier
-  onPress={() => {
+              onPress={() => {
                 setShowOptions(true);
                 setNewFilterKey('taskArea');
               }}
@@ -185,7 +186,7 @@ export default function JobsListScreen({ navigation, route }) {
 }
 const styles = StyleSheet.create({
   chipButton: {
-    backgroundColor: 'green',
+    backgroundColor: colors.detailGreen,
     marginHorizontal: 5,
   },
   containerFilters: {
