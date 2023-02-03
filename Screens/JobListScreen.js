@@ -26,7 +26,7 @@ export default function JobsListScreen({ navigation, route }) {
 
   useMemo(() => {
     if (filter) {
-      setUserFilters([{ key: filter, value: buttonJobQuery }]);
+      setUserFilters([{ key: filter.toLowerCase(), value: buttonJobQuery.toLowerCase() }]);
     }
   }, [filter, buttonJobQuery]);
 

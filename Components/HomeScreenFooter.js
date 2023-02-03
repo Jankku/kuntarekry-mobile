@@ -115,6 +115,27 @@ export default function HomeScreenFooter({ navigation }) {
           source={kuntarekrylogo}
           style={{ height: 36, width: 185, marginLeft: '15%' }}
         ></Image>
+        <Text style={styles.footerText}>
+          Kuntarekrystä löytyy tuhansia avoimia työpaikkoja kaikkialta Suomesta.
+        </Text>
+        <Text style={styles.footerText}>
+          Työnhakijoille tarjoamme työvälineet työpaikkojen, sijaisuuksien ja keikkatöiden
+          hakemiseen sekä tietoa työskentelystä kunta-alalla.
+        </Text>
+        <Text style={styles.footerText}>
+          Työnantajille - kunnille, kaupungeille, kuntayhtymille ja kuntien omistamille yrityksille
+          - tarjoamme rekrytoinnin ohjelmisto- ja asiantuntijapalveluja, jotka sopivat ulkoiseen ja
+          sisäiseen rekrytointiin sekä sijaisuuksien hallintaan.
+        </Text>
+        <Text style={styles.footerText}>
+          Verkkopalvelussamme käytetään evästeitä käyttäjäkokemuksen parantamiseen. Käyttämällä
+          palvelua hyväksyt evästeiden käytön. Katso palvelun tietosuojaseloste, tietosuojalauseke
+          sekä saavutettavuusseloste.
+        </Text>
+        <Text style={styles.footerText}>
+          Palautetta voit lähettää osoitteeseen: tuki@fcgtalent.fi
+        </Text>
+        <Text style={styles.footerText}>Löydät meidät myös täältä:</Text>
       </View>
     </>
   );
@@ -138,6 +159,12 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     marginLeft: '15%',
     width: '100%',
+  },
+  footerText: {
+    lineHeight: 19,
+    marginLeft: '15%',
+    marginRight: '10%',
+    marginTop: 20,
   },
   heading: {
     color: 'white',
