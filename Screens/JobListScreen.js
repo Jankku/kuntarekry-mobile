@@ -137,7 +137,7 @@ export default function JobsListScreen({ navigation, route }) {
             <Chip
               style={styles.chipButton}
               // eslint-disable-next-line prettier/prettier
-  onPress={() => {
+              onPress={() => {
                 setShowOptions(true);
                 setNewFilterKey('region');
               }}
@@ -149,7 +149,7 @@ export default function JobsListScreen({ navigation, route }) {
             <Chip
               style={styles.chipButton}
               // eslint-disable-next-line prettier/prettier
-  onPress={() => {
+              onPress={() => {
                 setShowOptions(true);
                 setNewFilterKey('taskArea');
               }}

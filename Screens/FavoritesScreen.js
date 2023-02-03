@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList, Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Title, Button } from 'react-native-paper';
 import useFavoriteList from '../hooks/usefavoritelist';
@@ -22,5 +22,3 @@ export default function FavoritesScreen() {
     </>
   );
 }
-
-const styles = StyleSheet.create({});

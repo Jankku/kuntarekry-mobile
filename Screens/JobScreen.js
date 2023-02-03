@@ -305,9 +305,6 @@ const styles = StyleSheet.create({
   iconButton: {
     marginHorizontal: 15,
   },
-  jobDetail: {
-    marginHorizontal: 50,
-  },
   jobDetailList: {
     backgroundColor: 'white',
   },

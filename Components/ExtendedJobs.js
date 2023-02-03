@@ -1,11 +1,11 @@
-import { View, Text, StyleSheet, Image} from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import Kuva1 from '../assets/Rectangle69.png';
 import Kuva2 from '../assets/Rectangle69(1).png';
 import Kuva3 from '../assets/Rectangle96.png';
 
-export default function ExtendedJobs({navigation}) {
+export default function ExtendedJobs({ navigation }) {
   const { jobs } = useJobAdvertisements();
   // filter jobs with jobAdvertisement and profitcenter
   const filteredJobs = jobs.filter(
@@ -25,13 +25,18 @@ export default function ExtendedJobs({navigation}) {
         <View key={index}>
           <Image source={images[index]} />
           <View style={{ maxWidth: '90%' }}>
-          <Text  style={styles.blueText}>{job.jobAdvertisement.profitCenter + ' työpaikat'}</Text>
+            <Text style={styles.blueText}>{job.jobAdvertisement.profitCenter + ' työpaikat'}</Text>
           </View>
-          <Button onPress={() =>
-                navigation.navigate('Organization', {
-                  org: job.jobAdvertisement.profitCenter,
-                })
-              } style={styles.btn} ><Text style={{color: 'white'}}>KATSO LISÄÄ ></Text></Button>
+          <Button
+            onPress={() =>
+              navigation.navigate('Organization', {
+                org: job.jobAdvertisement.profitCenter,
+              })
+            }
+            style={styles.btn}
+          >
+            <Text style={{ color: 'white' }}>KATSO LISÄÄ</Text>
+          </Button>
         </View>
       ))}
     </View>
@@ -50,13 +55,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   btn: {
-    backgroundColor: '#167FAC',
-    marginHorizontal: 50,
-    marginBottom: 10,
-    height: 40,
     alignItems: 'center',
+    backgroundColor: '#167FAC',
+    height: 40,
     justifyContent: 'center',
-
+    marginBottom: 10,
+    marginHorizontal: 50,
   },
   container: {
     alignItems: 'center',
