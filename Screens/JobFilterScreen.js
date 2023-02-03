@@ -4,43 +4,42 @@ import { StyleSheet, View } from 'react-native';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { colors } from '../styles/colors';
 
+const routeParamToField = {
+  organizations: 'profitCenter',
+  regions: 'region',
+  locations: 'location',
+  taskAreas: 'taskArea',
+};
+
 export default function JobFilterScreen({ navigation, route }) {
   const { jobs } = useJobAdvertisements();
-  let list;
+  const list = jobs
+    .filter((jobAd) => {
+      let filterAttribute;
+      switch (route.params.list) {
+        case 'regions':
+          filterAttribute = jobAd.jobAdvertisement.region;
+          break;
+        case 'organizations':
+          filterAttribute = jobAd.jobAdvertisement.profitCenter;
+          break;
+        case 'locations':
+          filterAttribute = jobAd.jobAdvertisement.location;
+          break;
+        case 'taskAreas':
+          filterAttribute = jobAd.jobAdvertisement.taskArea;
+          break;
+        default:
+          break;
+      }
+      return filterAttribute;
+    })
+    .map((jobAd) => jobAd.jobAdvertisement[routeParamToField[route.params.list]])
+    .filter((org) => org) // remove elements that are undefined or null
+    .map((org) => org.split(', ')[0].trim())
+    .filter((item, index, self) => self.indexOf(item) === index)
+    .sort();
 
-  if (route.params.list === 'regions') {
-    list = jobs
-      .filter((jobAd) => jobAd.jobAdvertisement.region)
-      .map((jobAd) => jobAd.jobAdvertisement.region);
-    list = list
-      .filter((org) => org) // remove elements that are undefined or null
-      .map((org) => org.split(',')[0].trim());
-    list = list.filter((item, index, self) => self.indexOf(item) === index).sort();
-  } else if (route.params.list === 'organizations') {
-    list = jobs
-      .filter((jobAd) => jobAd.jobAdvertisement.profitCenter)
-      .map((jobAd) => jobAd.jobAdvertisement.profitCenter);
-    list = list
-      .filter((org) => org) // remove elements that are undefined or null
-      .map((org) => org.split(',')[0].trim());
-    list = list.filter((item, index, self) => self.indexOf(item) === index).sort();
-  } else if (route.params.list === 'locations') {
-    list = jobs
-      .filter((jobAd) => jobAd.jobAdvertisement.location)
-      .map((jobAd) => jobAd.jobAdvertisement.location);
-    list = list
-      .filter((org) => org) // remove elements that are undefined or null
-      .map((org) => org.split(',')[0].trim());
-    list = list.filter((item, index, self) => self.indexOf(item) === index).sort();
-  } else if (route.params.list === 'taskAreas') {
-    list = jobs
-      .filter((jobAd) => jobAd.jobAdvertisement.taskArea)
-      .map((jobAd) => jobAd.jobAdvertisement.taskArea);
-    list = list
-      .filter((org) => org) // remove elements that are undefined or null
-      .map((org) => org.split(',')[0].trim());
-    list = list.filter((item, index, self) => self.indexOf(item) === index).sort();
-  }
   return (
     <>
       <ScrollView>
