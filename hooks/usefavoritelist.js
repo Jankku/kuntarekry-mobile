@@ -31,7 +31,7 @@ export async function clearStoredList() {
 }
 
 function mergeLists(storedList, job) {
-  if (storedList.includes(job)) {
+  if (storedList.some((item) => item.id === job.id)) {
     const newList = storedList.filter((item) => item.id !== job.id);
     console.log(
       'Filtered job:',
