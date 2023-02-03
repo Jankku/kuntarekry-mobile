@@ -1,10 +1,11 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Avatar, Button, List, Divider, Chip, IconButton } from 'react-native-paper';
+import { Avatar, List, Divider, Chip, IconButton } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import dayjs from 'dayjs';
 import { colors } from '../styles/colors';
 import OpenURLButton from '../Components/OpenURLButton';
 import FavoriteButton from '../Components/FavoriteButton';
+import PrimaryButton from '../Components/PrimaryButton';
 
 export default function JobScreen({ route, navigation }) {
   const job = route.params?.job ?? '';
@@ -44,38 +45,33 @@ export default function JobScreen({ route, navigation }) {
             <Avatar.Icon style={styles.h3} size={30} color="white" icon="calendar" />
             <Text style={styles.h3}>{dayjs(job.publicationEnds).format('l LT')}</Text>
           </View>
+          <PrimaryButton style={styles.button} buttonColor="white" textColor={colors.detailGreen}>
+            Hae työpaikkaa
+          </PrimaryButton>
         </View>
-        <Button
-          style={styles.button}
-          buttonColor="white"
-          textColor={colors.detailGreen}
-          icon="chevron-right"
-        >
-          Hae työpaikkaa
-        </Button>
         <View style={styles.buttons}>
           <FavoriteButton
             job={job}
-            size={20}
+            size={24}
             buttonStyle={styles.iconButton}
             buttonColor={'white'}
           />
-          <IconButton style={styles.iconButton} size={20} iconColor="white" icon="share-variant" />
+          <IconButton style={styles.iconButton} size={24} iconColor="white" icon="share-variant" />
         </View>
       </LinearGradient>
       <View style={styles.content}>
         <Text style={styles.desc}>{job.jobDesc}</Text>
         <Text style={styles.readMore}>Lisätietoja</Text>
         <OpenURLButton url={job.internetLink} style={styles.link} />
-        <Button
-          buttonColor={colors.detail}
-          textColor="white"
-          icon="chevron-right"
-          style={styles.buttonOrganization}
-          onPress={() => navigation.navigate('Organization', { org: job.profitCenter })}
-        >
-          Tutustu työnantajaan
-        </Button>
+        <View style={styles.buttonOrganization}>
+          <PrimaryButton
+            buttonColor={colors.detail}
+            textColor="white"
+            onPress={() => navigation.navigate('Organization', { org: job.profitCenter })}
+          >
+            Tutustu työnantajaan
+          </PrimaryButton>
+        </View>
       </View>
       <View style={styles.jobDetailList}>
         {job.anonymous == 1 && (
@@ -274,6 +270,7 @@ const styles = StyleSheet.create({
   dateContainer: {
     alignItems: 'center',
     flexDirection: 'row',
+    paddingBottom: 8,
   },
   desc: {
     fontSize: 20,

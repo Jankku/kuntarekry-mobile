@@ -1,8 +1,11 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { Button } from 'react-native-paper';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import kuvaPng from '../assets/kuva.png';
-export default function OrganizationIntroduction({ navigation }) {
+import { useNavigation } from '@react-navigation/native';
+import PrimaryButton from './PrimaryButton';
+
+export default function OrganizationIntroduction() {
+  const navigation = useNavigation();
   const { jobs } = useJobAdvertisements();
   // filter jobs with jobAdvertisement and profitcenter
   const filteredJobs = jobs.filter(
@@ -12,28 +15,29 @@ export default function OrganizationIntroduction({ navigation }) {
   const uniqueJobs = Array.from(new Set(filteredJobs));
   // select random job
   const randomJob = uniqueJobs[Math.floor(Math.random() * uniqueJobs.length)];
+
   return (
     <View style={styles.bgColor}>
       <View style={styles.container}>
         {randomJob ? (
           <View>
-            <Image source={kuvaPng} />
+            <Image source={kuvaPng} resizeMode="cover" style={{ width: '100%' }} />
             <Text style={styles.intro}>Tutustu työnantajiin</Text>
             <Text style={styles.title}>
               Kuntarekryssä on yli 300 työnantajaa.{' '}
               <Text style={styles.bold}>{randomJob.jobAdvertisement.profitCenter}</Text> on yksi
               heistä
             </Text>
-            <Text>{randomJob.jobAdvertisement.organizationDesc}</Text>
-            <Button
+            <Text style={styles.description}>{randomJob.jobAdvertisement.organizationDesc}</Text>
+            <PrimaryButton
               onPress={() =>
                 navigation.navigate('Organization', {
                   org: randomJob.jobAdvertisement.profitCenter,
                 })
               }
             >
-              Työnantajan sivuille
-            </Button>
+              Tutustu työnantajaan
+            </PrimaryButton>
           </View>
         ) : (
           <Text>Ei töitä saatavilla tällä hetkellä.</Text>
@@ -60,9 +64,13 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
   },
+  description: {
+    paddingBottom: 16,
+    paddingTop: 8,
+  },
   intro: {
     fontSize: 14,
-    fontWeight: 'normal',
+    paddingBottom: 8,
     textTransform: 'uppercase',
   },
   title: {

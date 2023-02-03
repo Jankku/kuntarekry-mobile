@@ -8,8 +8,7 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import { colors } from './styles/colors';
+import { Provider as PaperProvider } from 'react-native-paper';
 import AppBar from './Components/AppBar';
 import JobListScreen from './Screens/JobListScreen';
 import JobScreen from './Screens/JobScreen';
@@ -29,6 +28,7 @@ import PersonalisationScreen from './Screens/onboarding/PersonalisationScreen';
 import { JobLocationProvider } from './hooks/usejoblocations';
 import { JobTaskProvider } from './hooks/usejobtasks';
 import FavoritesScreen from './Screens/FavoritesScreen';
+import { lightTheme, navigationLightTheme } from './styles/theme';
 
 SplashScreen.preventAutoHideAsync().catch(console.warn);
 
@@ -37,22 +37,10 @@ dayjs.extend(timezone);
 dayjs.locale('fi');
 dayjs.tz.setDefault('Europe/Helsinki');
 
-const theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    ...colors,
-  },
-};
-
 function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
-      {/* <DrawerItem
-        label='Tutustu työnantajiin'
-        onPress={() => navigation.navigate('Filter', { list: 'organizations' })}
-      /> */}
     </DrawerContentScrollView>
   );
 }
@@ -103,9 +91,9 @@ function AppWrapper() {
     <JobAdvertisementProvider>
       <JobLocationProvider>
         <JobTaskProvider>
-          <PaperProvider theme={theme}>
+          <PaperProvider theme={lightTheme}>
             <StatusBar style="inverted" />
-            <NavigationContainer onReady={onReady}>
+            <NavigationContainer theme={navigationLightTheme} onReady={onReady}>
               <Drawer.Navigator
                 useLegacyImplementation
                 drawerContent={(props) => <CustomDrawerContent {...props} />}

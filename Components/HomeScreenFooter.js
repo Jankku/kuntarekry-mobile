@@ -5,7 +5,10 @@ import Suoss from '../assets/Suoss.png';
 import kuntarekrylogo from '../assets/kuntarekrylogo.png';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-export default function HomeScreenFooter({ navigation }) {
+import { useNavigation } from '@react-navigation/native';
+
+export default function HomeScreenFooter() {
+  const navigation = useNavigation();
   const { jobs } = useJobAdvertisements();
   //find most common regions top 5
   const regions = jobs.map((job) => job.jobAdvertisement.region);

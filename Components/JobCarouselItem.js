@@ -12,7 +12,7 @@ export default function JobCarouselItem({ job, style }) {
       <View style={{ ...styles.itemContainer, ...style }}>
         <FavoriteButton
           job={job}
-          size={20}
+          size={24}
           buttonStyle={styles.button}
           buttonColor={colors.detailGreen}
         />
