@@ -20,7 +20,7 @@ export default function JobScreen({ route, navigation }) {
     return filteredTags.map((tagInfo) => (
       <Chip
         key={tagInfo}
-        style={style}
+        style={[style, styles.tag]}
         textStyle={styles.tagText}
         onPress={() => navigation.navigate('Jobs', { buttonJobQuery: tagInfo, filter: filter })}
       >
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     marginHorizontal: '25%',
   },
   buttonOrganization: {
-    marginHorizontal: '20%',
+    marginHorizontal: '12%',
     marginTop: 15,
   },
   buttons: {
@@ -314,25 +314,23 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '400',
   },
+  tag: {
+    margin: '2%',
+  },
   tagEmployment: {
     backgroundColor: '#fad6d4',
-    margin: '2%',
   },
   tagEmploymentCategory: {
     backgroundColor: '#faeee3',
-    margin: '2%',
   },
   tagEmploymentType: {
     backgroundColor: '#f1f5f8',
-    margin: '2%',
   },
   tagLocation: {
     backgroundColor: '#d4effa',
-    margin: '2%',
   },
   tagProfession: {
     backgroundColor: '#d0f5dc',
-    margin: '2%',
   },
   tagRow: {
     flexDirection: 'row',

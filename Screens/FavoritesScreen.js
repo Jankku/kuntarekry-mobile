@@ -1,5 +1,5 @@
 import { StyleSheet, FlatList, Text } from 'react-native';
-import { Title, Button } from 'react-native-paper';
+import { Title, FAB } from 'react-native-paper';
 import { clearStoredList, useFavoriteList } from '../hooks/usefavoritelist';
 import JobListItem from '../Components/JobListItem';
 import { colors } from '../styles/colors';
@@ -27,22 +27,25 @@ export default function FavoritesScreen() {
         renderItem={({ item }) => <JobListItem job={item} />}
         keyExtractor={(_, index) => index}
       />
-      <Button
+      <FAB
+        visible={favorites.length === 0 ? false : true}
         style={styles.button}
-        textColor={'white'}
-        buttonColor={colors.detail}
         onPress={clearFavorites}
-      >
-        Tyhjennä suosikit
-      </Button>
+        label="Tyhjennä suosikit"
+        color="white"
+        mode="flat"
+        size="small"
+      />
     </>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    marginHorizontal: '25%',
-    marginTop: 10,
+    alignSelf: 'center',
+    backgroundColor: colors.detailGreen,
+    bottom: 10,
+    position: 'absolute',
   },
   list: {
     marginHorizontal: 8,

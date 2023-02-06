@@ -12,7 +12,12 @@ export default function CarouselIndex() {
   return carouselJobs.length === 0 ? (
     <Text>No Jobs</Text>
   ) : (
-    <Carousel backgroundColor={colors.background} color="#009978" height={100} width={width}>
+    <Carousel
+      backgroundColor={colors.background}
+      color={colors.detailGreen}
+      height={100}
+      width={width}
+    >
       {carouselJobs.map((job, index) => (
         <JobCarouselItem key={index} job={job} />
       ))}
