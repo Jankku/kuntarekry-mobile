@@ -2,8 +2,10 @@ import { Appbar, Badge } from 'react-native-paper';
 import { colors } from '../styles/colors';
 import { StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import { useFavoriteList } from '../hooks/usefavoritelist';
 export default function AppBar({ navigation, back }) {
+  const { favorites } = useFavoriteList();
+
   return (
     <LinearGradient colors={['#0a8bc2', '#33cc80']} start={{ x: 0.9, y: 0.8 }} end={{ x: 0, y: 0 }}>
       <Appbar.Header style={styles.header} mode={'center-aligned'}>
@@ -22,8 +24,8 @@ export default function AppBar({ navigation, back }) {
           icon="heart"
           onPress={() => navigation.navigate('Favorites')}
         />
-        <Badge size={18} style={styles.badge}>
-          0
+        <Badge size={18} style={styles.badge} visible={favorites.length > 0 ? true : false}>
+          {favorites.length}
         </Badge>
         <Appbar.Action color={colors.onPrimary} icon="dots-vertical" onPress={() => {}} />
       </Appbar.Header>

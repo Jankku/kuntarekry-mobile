@@ -1,26 +1,23 @@
 import { StyleSheet, FlatList, Text } from 'react-native';
 import { Title, Button } from 'react-native-paper';
-import { useState, useEffect } from 'react';
-import { getStoredList, clearStoredList } from '../hooks/usefavoritelist';
+import { clearStoredList, useFavoriteList } from '../hooks/usefavoritelist';
 import JobListItem from '../Components/JobListItem';
 import { colors } from '../styles/colors';
 
 export default function FavoritesScreen() {
-  const [favorite, setFavorite] = useState([]);
+  const { favorites, updateFavorites } = useFavoriteList();
 
-  useEffect(() => {
-    (async () => {
-      const storedList = await getStoredList();
-      setFavorite(storedList);
-    })();
-  }, []);
+  const clearFavorites = async () => {
+    await clearStoredList();
+    updateFavorites();
+  };
 
   return (
     <>
       <Title style={styles.title}>Suosikit</Title>
       <FlatList
         style={styles.list}
-        data={favorite}
+        data={favorites}
         ListEmptyComponent={
           <Text style={styles.text}>
             Sinulla ei ole tallennettuja suosikkeja. Napauta sydäntä ilmoituksen vierestä
@@ -34,7 +31,7 @@ export default function FavoritesScreen() {
         style={styles.button}
         textColor={'white'}
         buttonColor={colors.detail}
-        onPress={() => clearStoredList()}
+        onPress={clearFavorites}
       >
         Tyhjennä suosikit
       </Button>
