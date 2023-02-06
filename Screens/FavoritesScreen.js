@@ -1,26 +1,23 @@
 import { StyleSheet, FlatList, Text } from 'react-native';
-import { Title, Button } from 'react-native-paper';
-import { useState, useEffect } from 'react';
-import { getStoredList, clearStoredList } from '../hooks/usefavoritelist';
+import { Title, FAB } from 'react-native-paper';
+import { clearStoredList, useFavoriteList } from '../hooks/usefavoritelist';
 import JobListItem from '../Components/JobListItem';
 import { colors } from '../styles/colors';
 
 export default function FavoritesScreen() {
-  const [favorite, setFavorite] = useState([]);
+  const { favorites, updateFavorites } = useFavoriteList();
 
-  useEffect(() => {
-    (async () => {
-      const storedList = await getStoredList();
-      setFavorite(storedList);
-    })();
-  }, []);
+  const clearFavorites = async () => {
+    await clearStoredList();
+    updateFavorites();
+  };
 
   return (
     <>
       <Title style={styles.title}>Suosikit</Title>
       <FlatList
         style={styles.list}
-        data={favorite}
+        data={favorites}
         ListEmptyComponent={
           <Text style={styles.text}>
             Sinulla ei ole tallennettuja suosikkeja. Napauta sydäntä ilmoituksen vierestä
@@ -30,22 +27,25 @@ export default function FavoritesScreen() {
         renderItem={({ item }) => <JobListItem job={item} />}
         keyExtractor={(_, index) => index}
       />
-      <Button
+      <FAB
+        visible={favorites.length === 0 ? false : true}
         style={styles.button}
-        textColor={'white'}
-        buttonColor={colors.detail}
-        onPress={() => clearStoredList()}
-      >
-        Tyhjennä suosikit
-      </Button>
+        onPress={clearFavorites}
+        label="Tyhjennä suosikit"
+        color="white"
+        mode="flat"
+        size="small"
+      />
     </>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    marginHorizontal: '25%',
-    marginTop: 10,
+    alignSelf: 'center',
+    backgroundColor: colors.detailGreen,
+    bottom: 10,
+    position: 'absolute',
   },
   list: {
     marginHorizontal: 8,

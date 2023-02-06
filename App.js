@@ -32,7 +32,7 @@ import { lightTheme, navigationLightTheme } from './styles/theme';
 import { PersonalisationProvider } from './hooks/usepersonalisation';
 import 'intl-pluralrules';
 import './i18n/config';
-
+import { FavoriteListProvider } from './hooks/usefavoritelist';
 SplashScreen.preventAutoHideAsync().catch(console.warn);
 
 dayjs.extend(localizedFormat);
@@ -95,37 +95,42 @@ function AppWrapper() {
       <JobAdvertisementProvider>
         <JobLocationProvider>
           <JobTaskProvider>
-            <PaperProvider theme={lightTheme}>
-              <StatusBar style="inverted" />
-              <NavigationContainer theme={navigationLightTheme} onReady={onReady}>
-                <Drawer.Navigator
-                  useLegacyImplementation
-                  drawerContent={(props) => <CustomDrawerContent {...props} />}
-                  screenOptions={{
-                    header: (props) => <AppBar {...props} />,
-                    headerShown: onboardingDone,
-                  }}
-                >
-                  {onboardingDone === true ? (
-                    <>
-                      <Drawer.Screen
-                        name="Stack"
-                        component={StackScreen}
-                        options={{ headerShown: false, drawerItemStyle: { height: 0 } }}
-                      />
-                      <Drawer.Screen name="Työpaikat" component={JobListScreen} />
-                      <Drawer.Screen name="Työpaikat sijainnin mukaan" component={JobListScreen} />
-                      <Drawer.Screen name="Työpaikat tehtävän mukaan" component={JobListScreen} />
-                    </>
-                  ) : (
-                    <>
-                      <Drawer.Screen name="Welcome" component={WelcomeScreen} />
-                      <Drawer.Screen name="Personalisation" component={PersonalisationScreen} />
-                    </>
-                  )}
-                </Drawer.Navigator>
-              </NavigationContainer>
-            </PaperProvider>
+            <FavoriteListProvider>
+              <PaperProvider theme={lightTheme}>
+                <StatusBar style="inverted" />
+                <NavigationContainer theme={navigationLightTheme} onReady={onReady}>
+                  <Drawer.Navigator
+                    useLegacyImplementation
+                    drawerContent={(props) => <CustomDrawerContent {...props} />}
+                    screenOptions={{
+                      header: (props) => <AppBar {...props} />,
+                      headerShown: onboardingDone,
+                    }}
+                  >
+                    {onboardingDone === true ? (
+                      <>
+                        <Drawer.Screen
+                          name="Stack"
+                          component={StackScreen}
+                          options={{ headerShown: false, drawerItemStyle: { height: 0 } }}
+                        />
+                        <Drawer.Screen name="Työpaikat" component={JobListScreen} />
+                        <Drawer.Screen
+                          name="Työpaikat sijainnin mukaan"
+                          component={JobListScreen}
+                        />
+                        <Drawer.Screen name="Työpaikat tehtävän mukaan" component={JobListScreen} />
+                      </>
+                    ) : (
+                      <>
+                        <Drawer.Screen name="Welcome" component={WelcomeScreen} />
+                        <Drawer.Screen name="Personalisation" component={PersonalisationScreen} />
+                      </>
+                    )}
+                  </Drawer.Navigator>
+                </NavigationContainer>
+              </PaperProvider>
+            </FavoriteListProvider>
           </JobTaskProvider>
         </JobLocationProvider>
       </JobAdvertisementProvider>
