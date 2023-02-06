@@ -1,4 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { Card, Divider, Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -6,6 +7,8 @@ import ForwardButton from '../../Components/onboarding/ForwardButton';
 import SocialMediaButton from '../../Components/onboarding/SocialMediaButton';
 
 export default function WelcomeScreen({ navigation }) {
+  const { t } = useTranslation();
+
   return (
     <LinearGradient colors={['#0a8bc2', '#33cc80']} style={styles.gradient}>
       <SafeAreaView>
@@ -17,27 +20,22 @@ export default function WelcomeScreen({ navigation }) {
           />
           <Card style={styles.card}>
             <Card.Content>
-              <Text variant="titleMedium">
-                Kuntarekrystä löytyy tuhansia avoimia työpaikkoja kaikkialta Suomesta.
-              </Text>
+              <Text variant="titleMedium">{t('welcome.title')}</Text>
 
               <View style={styles.infoContainer}>
                 <Text variant="bodyMedium" style={styles.infoText}>
-                  <Text style={styles.infoTextBold}>Työnhakijoille</Text> tarjoamme työvälineet
-                  työpaikkojen, sijaisuuksien ja keikkatöiden hakemiseen sekä tietoa työskentelystä
-                  kuntaorganisaatioissa ja hyvinvointialueilla.
+                  <Text style={styles.infoTextBold}>{t('welcome.forJobseekerTitle')}</Text>{' '}
+                  {t('welcome.forJobseekerText')}
                 </Text>
 
                 <Text variant="bodyMedium" style={styles.infoText}>
-                  <Text style={styles.infoTextBold}>Työnantajille</Text> - kunnille, kaupungeille,
-                  hyvinvointialueille, kuntayhtymille ja kuntien omistamille yrityksille - tarjoamme
-                  rekrytoinnin ohjelmisto- ja asiantuntijapalveluja, jotka sopivat ulkoiseen ja
-                  sisäiseen rekrytointiin sekä sijaisuuksien hallintaan.
+                  <Text style={styles.infoTextBold}>{t('welcome.forEmployerTitle')}</Text>{' '}
+                  {t('welcome.forEmployerText')}
                 </Text>
               </View>
               <Divider />
               <View style={styles.socialContainer}>
-                <Text variant="titleMedium">Löydä Kuntarekry somessa</Text>
+                <Text variant="titleMedium"> {t('welcome.findOnSocialMedia')}</Text>
                 <View style={styles.socialList}>
                   <SocialMediaButton icon="facebook" link="https://www.facebook.com/kuntarekry" />
                   <SocialMediaButton icon="twitter" link="https://twitter.com/kuntarekry" />

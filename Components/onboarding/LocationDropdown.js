@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useJobLocations } from '../../hooks/usejoblocations';
 
 export default function MunicipalityDropdown({ onChange }) {
+  const { t } = useTranslation();
   const { locations } = useJobLocations();
   const [items, setItems] = useState(locations);
   const [value, setValue] = useState(null);
@@ -35,9 +37,9 @@ export default function MunicipalityDropdown({ onChange }) {
         value: 'id',
       }}
       translation={{
-        PLACEHOLDER: 'Valitse paikkakunta',
-        SEARCH_PLACEHOLDER: 'Hae paikkakuntia',
-        NOTHING_TO_SHOW: 'Ei löytynyt mitään',
+        PLACEHOLDER: t('personalisation.location.placeholder'),
+        SEARCH_PLACEHOLDER: t('personalisation.location.searchPlaceholder'),
+        NOTHING_TO_SHOW: t('personalisation.location.noResults'),
       }}
     />
   );

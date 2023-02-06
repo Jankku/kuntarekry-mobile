@@ -1,0 +1,31 @@
+{
+    "welcome": {
+        "title": "Kuntarekry - Find jobs in Finland",
+        "forJobseekerTitle": "For Job Seekers",
+        "forJobseekerText": "we provide tools to find jobs and substitutes and information on working in the municipal sector and wellbeing services counties. Most job advertisements and application forms are available only in Finnish or Swedish.",
+        "forEmployerTitle": "For Employers",
+        "forEmployerText": "- municipalities, cities, joint municipal authorities, municipal-owned businesses and wellbeing services counties we provide recruitment software and expert services that are suitable for external and internal recruitment as well as recruitment management.",
+        "findOnSocialMedia": "You can also find us here",
+        "forward": "Forward",
+        "backward": "Backward"
+    },
+    "personalisation": {
+        "title": "Personalise your experience",
+        "language": {
+            "title": "Language",
+            "placeholder": "Choose language"
+        },
+        "location": {
+            "title": "Municipality",
+            "placeholder": "Choose municipality",
+            "searchPlaceholder": "Search municipalities",
+            "noResults": "No results"
+        },
+        "taskArea": {
+            "title": "Task area",
+            "placeholder": "Choose task area",
+            "searchPlaceholder": "Search task areas",
+            "noResults": "No results"
+        }
+    }
+}

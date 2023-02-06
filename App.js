@@ -29,6 +29,9 @@ import { JobLocationProvider } from './hooks/usejoblocations';
 import { JobTaskProvider } from './hooks/usejobtasks';
 import FavoritesScreen from './Screens/FavoritesScreen';
 import { lightTheme, navigationLightTheme } from './styles/theme';
+import { PersonalisationProvider } from './hooks/usepersonalisation';
+import 'intl-pluralrules';
+import './i18n/config';
 
 SplashScreen.preventAutoHideAsync().catch(console.warn);
 
@@ -88,42 +91,44 @@ function AppWrapper() {
   }
 
   return (
-    <JobAdvertisementProvider>
-      <JobLocationProvider>
-        <JobTaskProvider>
-          <PaperProvider theme={lightTheme}>
-            <StatusBar style="inverted" />
-            <NavigationContainer theme={navigationLightTheme} onReady={onReady}>
-              <Drawer.Navigator
-                useLegacyImplementation
-                drawerContent={(props) => <CustomDrawerContent {...props} />}
-                screenOptions={{
-                  header: (props) => <AppBar {...props} />,
-                  headerShown: onboardingDone,
-                }}
-              >
-                {onboardingDone === true ? (
-                  <>
-                    <Drawer.Screen
-                      name="Stack"
-                      component={StackScreen}
-                      options={{ headerShown: false, drawerItemStyle: { height: 0 } }}
-                    />
-                    <Drawer.Screen name="Työpaikat" component={JobListScreen} />
-                    <Drawer.Screen name="Työpaikat sijainnin mukaan" component={JobListScreen} />
-                    <Drawer.Screen name="Työpaikat tehtävän mukaan" component={JobListScreen} />
-                  </>
-                ) : (
-                  <>
-                    <Drawer.Screen name="Welcome" component={WelcomeScreen} />
-                    <Drawer.Screen name="Personalisation" component={PersonalisationScreen} />
-                  </>
-                )}
-              </Drawer.Navigator>
-            </NavigationContainer>
-          </PaperProvider>
-        </JobTaskProvider>
-      </JobLocationProvider>
-    </JobAdvertisementProvider>
+    <PersonalisationProvider>
+      <JobAdvertisementProvider>
+        <JobLocationProvider>
+          <JobTaskProvider>
+            <PaperProvider theme={lightTheme}>
+              <StatusBar style="inverted" />
+              <NavigationContainer theme={navigationLightTheme} onReady={onReady}>
+                <Drawer.Navigator
+                  useLegacyImplementation
+                  drawerContent={(props) => <CustomDrawerContent {...props} />}
+                  screenOptions={{
+                    header: (props) => <AppBar {...props} />,
+                    headerShown: onboardingDone,
+                  }}
+                >
+                  {onboardingDone === true ? (
+                    <>
+                      <Drawer.Screen
+                        name="Stack"
+                        component={StackScreen}
+                        options={{ headerShown: false, drawerItemStyle: { height: 0 } }}
+                      />
+                      <Drawer.Screen name="Työpaikat" component={JobListScreen} />
+                      <Drawer.Screen name="Työpaikat sijainnin mukaan" component={JobListScreen} />
+                      <Drawer.Screen name="Työpaikat tehtävän mukaan" component={JobListScreen} />
+                    </>
+                  ) : (
+                    <>
+                      <Drawer.Screen name="Welcome" component={WelcomeScreen} />
+                      <Drawer.Screen name="Personalisation" component={PersonalisationScreen} />
+                    </>
+                  )}
+                </Drawer.Navigator>
+              </NavigationContainer>
+            </PaperProvider>
+          </JobTaskProvider>
+        </JobLocationProvider>
+      </JobAdvertisementProvider>
+    </PersonalisationProvider>
   );
 }

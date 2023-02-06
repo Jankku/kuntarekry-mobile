@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useJobTasks } from '../../hooks/usejobtasks';
 
 export default function TaskDropdown({ onChange }) {
+  const { t } = useTranslation();
   const { tasks } = useJobTasks();
   const [items, setItems] = useState(tasks);
   const [value, setValue] = useState(null);
@@ -33,9 +35,9 @@ export default function TaskDropdown({ onChange }) {
         value: 'id',
       }}
       translation={{
-        PLACEHOLDER: 'Valitse tehtäväala',
-        SEARCH_PLACEHOLDER: 'Hae tehtäväaloja',
-        NOTHING_TO_SHOW: 'Ei löytynyt mitään',
+        PLACEHOLDER: t('personalisation.taskArea.placeholder'),
+        SEARCH_PLACEHOLDER: t('personalisation.taskArea.searchPlaceholder'),
+        NOTHING_TO_SHOW: t('personalisation.taskArea.noResults'),
       }}
     />
   );
