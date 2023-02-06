@@ -41,7 +41,5 @@ export function usePersonalisation() {
 }
 
 function parseValues(values) {
-  return values.map(({ key, value }) =>
-    key === LANGUAGE_KEY ? [key, value] : [key, JSON.parse(value)]
-  );
+  return values.map(([key, value]) => (key === LANGUAGE_KEY ? [key, value] : [key, Number(value)]));
 }
