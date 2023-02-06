@@ -121,7 +121,7 @@ export default function HomeScreen({ navigation }) {
       <View style={styles.row}>
         <Text style={styles.carouselheader}>Sinulle suositellut työpaikat</Text>
       </View>
-      <CarouselIndex navigation={navigation} carouselJobs={carouselJobs} />
+      <CarouselIndex carouselJobs={carouselJobs} />
       <ImageBackground source={kuvaPng} style={styles.imageBG}>
         <View style={styles.centerText}>
           <ImageBackground style={styles.containerAdd}>
