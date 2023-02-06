@@ -6,6 +6,8 @@ import kuntarekrylogo from '../assets/kuntarekrylogo.png';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import SocialMediaButton from './onboarding/SocialMediaButton';
+import fcgBluePng from '../assets/fcg-blue.png';
 
 export default function HomeScreenFooter() {
   const navigation = useNavigation();
@@ -119,32 +121,61 @@ export default function HomeScreenFooter() {
           style={{ height: 36, width: 185, marginLeft: '15%' }}
         ></Image>
         <Text style={styles.footerText}>
-          Kuntarekrystä löytyy tuhansia avoimia työpaikkoja kaikkialta Suomesta.
+          <Text style={styles.bold}>Kuntarekrystä</Text> löytyy tuhansia avoimia työpaikkoja
+          kaikkialta Suomesta.
         </Text>
         <Text style={styles.footerText}>
-          Työnhakijoille tarjoamme työvälineet työpaikkojen, sijaisuuksien ja keikkatöiden
-          hakemiseen sekä tietoa työskentelystä kunta-alalla.
+          <Text style={styles.bold}>Työnhakijoille</Text> tarjoamme työvälineet työpaikkojen,
+          sijaisuuksien ja keikkatöiden hakemiseen sekä tietoa työskentelystä kunta-alalla.
         </Text>
         <Text style={styles.footerText}>
-          Työnantajille - kunnille, kaupungeille, kuntayhtymille ja kuntien omistamille yrityksille
-          - tarjoamme rekrytoinnin ohjelmisto- ja asiantuntijapalveluja, jotka sopivat ulkoiseen ja
-          sisäiseen rekrytointiin sekä sijaisuuksien hallintaan.
+          <Text style={styles.bold}>Työnantajille</Text> - kunnille, kaupungeille, kuntayhtymille ja
+          kuntien omistamille yrityksille - tarjoamme rekrytoinnin ohjelmisto- ja
+          asiantuntijapalveluja, jotka sopivat ulkoiseen ja sisäiseen rekrytointiin sekä
+          sijaisuuksien hallintaan.
         </Text>
         <Text style={styles.footerText}>
-          Verkkopalvelussamme käytetään evästeitä käyttäjäkokemuksen parantamiseen. Käyttämällä
-          palvelua hyväksyt evästeiden käytön. Katso palvelun tietosuojaseloste, tietosuojalauseke
-          sekä saavutettavuusseloste.
+          Verkkopalvelussamme käytetään <Text style={styles.bold}>evästeitä</Text>{' '}
+          käyttäjäkokemuksen parantamiseen. Käyttämällä palvelua hyväksyt evästeiden käytön. Katso
+          palvelun <Text style={styles.blueText}>tietosuojaseloste, tietosuojalauseke</Text> sekä{' '}
+          <Text style={styles.blueText}>saavutettavuusseloste.</Text>
         </Text>
         <Text style={styles.footerText}>
-          Palautetta voit lähettää osoitteeseen: tuki@fcgtalent.fi
+          <Text style={styles.bold}>Palautetta</Text> voit lähettää osoitteeseen:{' '}
+          <Text style={styles.blueText}>tuki@fcgtalent.fi</Text>
         </Text>
-        <Text style={styles.footerText}>Löydät meidät myös täältä:</Text>
+        <Text style={styles.footerText}>
+          <Text style={styles.bold}>Löydät meidät myös täältä:</Text>
+        </Text>
+        <View style={{ flexDirection: 'row', marginLeft: '10%' }}>
+          <SocialMediaButton icon="facebook" link="https://www.facebook.com/kuntarekry" />
+          <SocialMediaButton icon="twitter" link="https://twitter.com/kuntarekry" />
+          <SocialMediaButton icon="instagram" link="https://www.instagram.com/kuntarekry/" />
+          <SocialMediaButton
+            icon="linkedin"
+            link="https://www.linkedin.com/company/kl-kuntarekry-oy"
+          />
+        </View>
+        <Image
+          source={fcgBluePng}
+          style={{ width: 85, height: 29, marginTop: 20, marginLeft: '15%' }}
+        ></Image>
+        <Text style={styles.footerText}>Kuntarekry-palvelun tuottaa FCG Talent Oy.</Text>
+        <Text style={styles.footerText}>
+          FCG Finnish Consulting Group Oy on osa Kuntaliitto-konsernia.
+        </Text>
       </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  blueText: {
+    color: '#35A9DB',
+  },
+  bold: {
+    fontWeight: 'bold',
+  },
   btn: {
     borderColor: 'white',
     borderWidth: 1,
