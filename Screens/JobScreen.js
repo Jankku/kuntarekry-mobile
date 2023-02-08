@@ -1,15 +1,15 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Avatar, List, Divider, Chip, IconButton } from 'react-native-paper';
+import { List, Divider, Chip, IconButton } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import dayjs from 'dayjs';
 import { colors } from '../styles/colors';
 import OpenURLButton from '../Components/OpenURLButton';
 import FavoriteButton from '../Components/FavoriteButton';
 import PrimaryButton from '../Components/PrimaryButton';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function JobScreen({ route, navigation }) {
   const job = route.params?.job ?? '';
-
   function Tags({ style, tag, filter }) {
     if (tag == null) {
       return;
@@ -41,9 +41,11 @@ export default function JobScreen({ route, navigation }) {
           <Text style={styles.organization}>{job.organization}</Text>
           <Text style={styles.title}>{job.title}</Text>
           <View style={styles.dateContainer}>
-            <Text style={styles.h3}>Hakuaika päättyy</Text>
-            <Avatar.Icon style={styles.h3} size={30} color="white" icon="calendar" />
-            <Text style={styles.h3}>{dayjs(job.publicationEnds).format('l LT')}</Text>
+            <Text style={styles.h3}>
+              Hakuaika päättyy{'  '}
+              <Icon name="calendar" size={16} /> {dayjs(job.publicationEnds).format('l')}{' '}
+              <Icon name="clock" size={16} /> {dayjs(job.publicationEnds).format('LT')}
+            </Text>
           </View>
           <PrimaryButton style={styles.button} buttonColor="white" textColor={colors.detailGreen}>
             Hae työpaikkaa
@@ -208,14 +210,14 @@ export default function JobScreen({ route, navigation }) {
       </View>
       <View style={styles.content}>
         <View style={styles.descContainer}>
-          <Avatar.Icon style={styles.h3} size={50} color={colors.detail} icon="email-outline" />
-          <Text style={styles.desc}>Yhteystietomme</Text>
+          <Icon name="email" size={22} color={colors.detail} />
+          <Text style={styles.desc}>{'    '}Yhteystietomme</Text>
         </View>
         <Text style={styles.desc}>{job.contacts}</Text>
         <Divider />
         <View style={styles.descContainer}>
-          <Avatar.Icon style={styles.h3} size={50} color={colors.detail} icon="briefcase-variant" />
-          <Text style={styles.desc}>Lisätietoja</Text>
+          <Icon name="briefcase-variant" size={22} color={colors.detail} />
+          <Text style={styles.desc}>{'    '}Lisätietoja</Text>
         </View>
         <Text style={styles.desc}>
           {job.organization}
@@ -280,7 +282,6 @@ const styles = StyleSheet.create({
   descContainer: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginHorizontal: -15,
   },
   detailIcon: {
     paddingHorizontal: 15,
@@ -290,7 +291,6 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   h3: {
-    backgroundColor: 'transparent',
     color: 'white',
     fontSize: 16,
   },

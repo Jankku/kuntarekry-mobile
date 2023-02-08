@@ -4,33 +4,37 @@ import dayjs from 'dayjs';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/colors';
 import FavoriteButton from './FavoriteButton';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useTranslation } from 'react-i18next';
 
 export default function JobListItem({ job }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   return (
-    <>
-      <Card style={styles.border} onPress={() => navigation.navigate('Job', { job: job })}>
-        <Card.Content>
-          <View style={styles.container}>
-            <FavoriteButton
-              job={job}
-              size={24}
-              buttonStyle={styles.button}
-              buttonColor={colors.detailGreen}
-            />
-            <View>
-              <Text style={styles.itemText}>{job.organization}</Text>
-              <Text style={styles.itemHeaderText}>{job.title}</Text>
-              <Text style={styles.itemText}>
-                Hakuaika päättyy{' '}
-                <Text style={styles.dateText}>{dayjs(job.publicationEnds).format('l LT')}</Text>
+    <Card style={styles.border} onPress={() => navigation.navigate('Job', { job: job })}>
+      <Card.Content>
+        <View style={styles.container}>
+          <FavoriteButton
+            job={job}
+            size={24}
+            buttonStyle={styles.button}
+            buttonColor={colors.detailGreen}
+          />
+          <View>
+            <Text style={styles.itemText}>{job.organization}</Text>
+            <Text style={styles.itemHeaderText}>{job.title}</Text>
+            <Text style={styles.itemText}>
+              {t('home.recommendedJobs.item.publicationEnds')}{' '}
+              <Text style={styles.dateText}>
+                <Icon name="calendar" size={14} /> {dayjs(job.publicationEnds).format('l')}{' '}
+                <Icon name="clock" size={14} /> {dayjs(job.publicationEnds).format('LT')}{' '}
               </Text>
-            </View>
+            </Text>
           </View>
-        </Card.Content>
-      </Card>
-    </>
+        </View>
+      </Card.Content>
+    </Card>
   );
 }
 
