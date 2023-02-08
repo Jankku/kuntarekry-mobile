@@ -1,10 +1,23 @@
 {
   "welcome": {
     "title": "Kuntarekrystä löytyy tuhansia avoimia työpaikkoja kaikkialta Suomesta.",
-    "forJobseekerTitle": "Työnhakijoille",
-    "forJobseekerText": "tarjoamme työvälineet työpaikkojen, sijaisuuksien ja keikkatöiden hakemiseen sekä tietoa työskentelystä kuntaorganisaatioissa ja hyvinvointialueilla.",
-    "forEmployerTitle": "Työnantajille",
-    "forEmployerText": "- kunnille, kaupungeille, hyvinvointialueille, kuntayhtymille ja kuntien omistamille yrityksille - tarjoamme rekrytoinnin ohjelmisto- ja asiantuntijapalveluja, jotka sopivat ulkoiseen ja sisäiseen rekrytointiin sekä sijaisuuksien hallintaan.",
+    "forJobSeeker": {
+      "title": "Työnhakijoille",
+      "text": "<title> tarjoamme työvälineet työpaikkojen, sijaisuuksien ja keikkatöiden hakemiseen sekä tietoa työskentelystä kuntaorganisaatioissa ja hyvinvointialueilla."
+    },
+    "forEmployer": {
+      "title": "Työnantajille",
+      "text": "<title> - kunnille, kaupungeille, hyvinvointialueille, kuntayhtymille ja kuntien omistamille yrityksille - tarjoamme rekrytoinnin ohjelmisto- ja asiantuntijapalveluja, jotka sopivat ulkoiseen ja sisäiseen rekrytointiin sekä sijaisuuksien hallintaan."
+    },
+    "privacyAndAccessibility": "Verkkopalvelussamme käytetään evästeitä käyttäjäkokemuksen parantamiseen. Käyttämällä palvelua hyväksyt evästeiden käytön. Katso palvelun <privacyPolicy> and <privacyNotice> and <accessibilityStatement>.",
+    "privacyPolicy": "tietosuojaseloste",
+    "privacyNotice": "tietosuojalauseke",
+    "accessibilityStatement": "saavutettavuusseloste",
+    "feedback": {
+      "firstWord": "Palautetta",
+      "text": "<firstWord> sivustosta voit lähettää osoitteeseen: <email>.",
+      "email": "tuki@kuntarekry.fi"
+    },
     "findOnSocialMedia": "Löydä Kuntarekry somessa"
   },
   "personalisation": {
@@ -64,6 +77,21 @@
         "lookingForWork": "Töitä hakemassa",
         "showAllNews": "Näytä kaikki"
       }
+    },
+    "footer": {
+      "popularRegions": "Suosituimmat maakunnat",
+      "popularCities": "Suosituimmat kunnat",
+      "popularTaskAreas": "Suosituimmat tehtäväalueet",
+      "fcgShort": "FCG",
+      "fcgLong": "FCG Finnish Consulting Group Oy",
+      "serviceName": "Kuntarekry",
+      "serviceProvidedText": "<serviceName>-palvelun tuottaa <fcgShort>.",
+      "fcgConcernText": "<fcgLong> on osa <kuntaliittoConcern>.",
+      "kuntaliittoConcern": "Kuntaliitto-konsernia",
+      "substitutionsFilled": "<number>\n Sijaisuuksia täytetty",
+      "visitsWeekly": "<number>\n Käyntiä viikossa",
+      "visitsYearly": "<number>\n Miljoonaa vuosittaista käyntiä",
+      "custoomerOrganisations": "<number>\n Asiakasorganisaatiota"
     }
   }
 }

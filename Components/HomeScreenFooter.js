@@ -1,5 +1,5 @@
-import { View, Text, ImageBackground, StyleSheet, Image } from 'react-native';
-import { Button } from 'react-native-paper';
+import { View, ImageBackground, StyleSheet, Image, Linking } from 'react-native';
+import { Button, Text } from 'react-native-paper';
 import KuntarekryPng from '../assets/Kuntarekry.png';
 import Suoss from '../assets/Suoss.png';
 import kuntarekrylogo from '../assets/kuntarekrylogo.png';
@@ -9,8 +9,11 @@ import { useNavigation } from '@react-navigation/native';
 import SocialMediaButton from './onboarding/SocialMediaButton';
 import fcgBluePng from '../assets/fcg-blue.png';
 import avainLippu from '../assets/avainlippu.png';
+import { useTranslation } from 'react-i18next';
+import * as WebBrowser from 'expo-web-browser';
 
 export default function HomeScreenFooter() {
+  const { t } = useTranslation(['translations', 'common']);
   const navigation = useNavigation();
   const { jobs } = useJobAdvertisements();
   //find most common regions top 5
@@ -49,11 +52,23 @@ export default function HomeScreenFooter() {
   const sortedTaskAreaCountArray = taskAreaCountArray.sort((a, b) => b[1] - a[1]);
   const top5TaskAreas = sortedTaskAreaCountArray.slice(0, 5);
 
+  const openPrivacyPolicy = () => {
+    WebBrowser.openBrowserAsync('https://www.kuntarekry.fi/fi/tietosuojaseloste/');
+  };
+
+  const openPrivacyNotice = () => {
+    WebBrowser.openBrowserAsync('https://www.kuntarekry.fi/fi/tietosuojalauseke/');
+  };
+
+  const openAccessibilityStatement = () => {
+    WebBrowser.openBrowserAsync('https://www.kuntarekry.fi/fi/saavutettavuusseloste/');
+  };
+
   return (
     <>
       <ImageBackground source={KuntarekryPng} style={styles.imageBG}></ImageBackground>
       <View style={{ backgroundColor: '#1D847E' }}>
-        <Text style={styles.heading}>Suosituimmat Maakunnat</Text>
+        <Text style={styles.heading}>{t('home.footer.popularRegions')}</Text>
         <View style={styles.container}>
           {top5Regions.map((region, i) => (
             <TouchableOpacity
@@ -72,9 +87,9 @@ export default function HomeScreenFooter() {
           onPress={() => navigation.navigate('Filter', { list: 'regions' })}
           style={styles.btn}
         >
-          <Text style={styles.btnText}>Näytä kaikki</Text>
+          <Text style={styles.btnText}>{t('showAll', { ns: 'common' })}</Text>
         </Button>
-        <Text style={styles.heading}>Suosituimmat kunnat</Text>
+        <Text style={styles.heading}>{t('home.footer.popularCities')}</Text>
         <View style={styles.container}>
           {top5Locations.map((location, i) => (
             <TouchableOpacity
@@ -91,9 +106,9 @@ export default function HomeScreenFooter() {
           onPress={() => navigation.navigate('Filter', { list: 'locations' })}
           style={styles.btn}
         >
-          <Text style={styles.btnText}>Näytä kaikki</Text>
+          <Text style={styles.btnText}>{t('showAll', { ns: 'common' })}</Text>
         </Button>
-        <Text style={styles.heading}>Suosituimmat Tehtäväalueet</Text>
+        <Text style={styles.heading}>{t('home.footer.popularTaskAreas')}</Text>
         <View style={styles.container}>
           {top5TaskAreas.map((taskArea, i) => (
             <TouchableOpacity
@@ -112,7 +127,7 @@ export default function HomeScreenFooter() {
           onPress={() => navigation.navigate('Filter', { list: 'taskAreas' })}
           style={styles.btn}
         >
-          <Text style={styles.btnText}>Näytä kaikki</Text>
+          <Text style={styles.btnText}>{t('showAll', { ns: 'common' })}</Text>
         </Button>
       </View>
       <Image source={Suoss} style={{ width: '100%', height: 100 }}></Image>
@@ -121,34 +136,51 @@ export default function HomeScreenFooter() {
           source={kuntarekrylogo}
           style={{ height: 36, width: 185, marginLeft: '15%' }}
         ></Image>
+        <Text style={styles.footerText}>{t('welcome.title')}</Text>
         <Text style={styles.footerText}>
-          <Text style={styles.bold}>Kuntarekrystä</Text> löytyy tuhansia avoimia työpaikkoja
-          kaikkialta Suomesta.
+          {t('welcome.forJobSeeker.text', {
+            title: <Text style={styles.bold}>{t('welcome.forJobSeeker.title')}</Text>,
+          })}
         </Text>
         <Text style={styles.footerText}>
-          <Text style={styles.bold}>Työnhakijoille</Text> tarjoamme työvälineet työpaikkojen,
-          sijaisuuksien ja keikkatöiden hakemiseen sekä tietoa työskentelystä kunta-alalla.
+          {t('welcome.forEmployer.text', {
+            title: <Text style={styles.bold}>{t('welcome.forEmployer.title')}</Text>,
+          })}
         </Text>
         <Text style={styles.footerText}>
-          <Text style={styles.bold}>Työnantajille</Text> - kunnille, kaupungeille, kuntayhtymille ja
-          kuntien omistamille yrityksille - tarjoamme rekrytoinnin ohjelmisto- ja
-          asiantuntijapalveluja, jotka sopivat ulkoiseen ja sisäiseen rekrytointiin sekä
-          sijaisuuksien hallintaan.
+          {t('welcome.privacyAndAccessibility', {
+            privacyPolicy: (
+              <Text style={styles.blueText} onPress={() => openPrivacyPolicy()}>
+                {t('welcome.privacyPolicy')}
+              </Text>
+            ),
+            privacyNotice: (
+              <Text style={styles.blueText} onPress={() => openPrivacyNotice()}>
+                {t('welcome.privacyNotice')}
+              </Text>
+            ),
+            accessibilityStatement: (
+              <Text style={styles.blueText} onPress={() => openAccessibilityStatement()}>
+                {t('welcome.accessibilityStatement')}
+              </Text>
+            ),
+          })}
         </Text>
         <Text style={styles.footerText}>
-          Verkkopalvelussamme käytetään <Text style={styles.bold}>evästeitä</Text>{' '}
-          käyttäjäkokemuksen parantamiseen. Käyttämällä palvelua hyväksyt evästeiden käytön. Katso
-          palvelun <Text style={styles.blueText}>tietosuojaseloste, tietosuojalauseke</Text> sekä{' '}
-          <Text style={styles.blueText}>saavutettavuusseloste.</Text>
+          {t('welcome.feedback.text', {
+            firstWord: <Text style={styles.bold}>{t('welcome.feedback.firstWord')}</Text>,
+            email: (
+              <Text
+                onPress={() => Linking.openURL('mailto:tuki@fcgtalent.fi')}
+                style={styles.blueText}
+              >
+                {t('welcome.feedback.email')}
+              </Text>
+            ),
+          })}
         </Text>
         <Text style={styles.footerText}>
-          <Text style={styles.bold}>Palautetta</Text> voit lähettää osoitteeseen:{' '}
-          <Text onPress={() => Linking.openURL('mailto:tuki@fcgtalent.fi')} style={styles.blueText}>
-            tuki@fcgtalent.fi
-          </Text>
-        </Text>
-        <Text style={styles.footerText}>
-          <Text style={styles.bold}>Löydät meidät myös täältä:</Text>
+          <Text style={styles.bold}>{t('welcome.findOnSocialMedia')}</Text>
         </Text>
         <View style={{ flexDirection: 'row', marginLeft: '10%' }}>
           <SocialMediaButton icon="facebook" link="https://www.facebook.com/kuntarekry" />
@@ -164,22 +196,40 @@ export default function HomeScreenFooter() {
           style={{ width: 85, height: 29, marginTop: 20, marginLeft: '15%' }}
         ></Image>
         <Text style={styles.footerText}>
-          <Text style={styles.blueText}>Kuntarekry</Text>-palvelun tuottaa{' '}
-          <Text style={styles.blueText}>FCG Talent Oy.</Text>
+          {t('home.footer.serviceProvidedText', {
+            serviceName: <Text style={styles.blueText}>{t('home.footer.serviceName')}</Text>,
+            fcgShort: <Text style={styles.blueText}>{t('home.footer.fcgShort')}</Text>,
+          })}
         </Text>
         <Text style={styles.footerText}>
-          <Text style={styles.blueText}>FCG Finnish Consulting Group Oy</Text> on osa{' '}
-          <Text style={styles.blueText}>Kuntaliitto-konsernia.</Text>
+          {t('home.footer.fcgConcernText', {
+            kuntaliittoConcern: (
+              <Text style={styles.blueText}>{t('home.footer.kuntaliittoConcern')}</Text>
+            ),
+            fcgLong: <Text style={styles.blueText}>{t('home.footer.fcgLong')}</Text>,
+          })}
         </Text>
         <View style={{ marginLeft: '15%' }}>
-          <Text style={styles.bigBlueText}>200 000+</Text>
-          <Text>Sijaisuutta täytetty</Text>
-          <Text style={styles.bigBlueText}>130 000+</Text>
-          <Text>Käyntiä viikossa</Text>
-          <Text style={styles.bigBlueText}>2,5+</Text>
-          <Text>Million vuosittaista kävijää</Text>
-          <Text style={styles.bigBlueText}>300+</Text>
-          <Text>Asiakasorganisaatiota</Text>
+          <Text>
+            {t('home.footer.substitutionsFilled', {
+              number: <Text style={styles.bigBlueText}>200 000+</Text>,
+            })}
+          </Text>
+          <Text>
+            {t('home.footer.visitsWeekly', {
+              number: <Text style={styles.bigBlueText}>130 000+</Text>,
+            })}
+          </Text>
+          <Text>
+            {t('home.footer.visitsYearly', {
+              number: <Text style={styles.bigBlueText}>6+</Text>,
+            })}
+          </Text>
+          <Text>
+            {t('home.footer.custoomerOrganisations', {
+              number: <Text style={styles.bigBlueText}>350+</Text>,
+            })}
+          </Text>
           <Image source={avainLippu} style={styles.flagImage}></Image>
         </View>
       </View>

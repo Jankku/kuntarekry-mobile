@@ -24,13 +24,19 @@ export default function WelcomeScreen({ navigation }) {
 
               <View style={styles.infoContainer}>
                 <Text variant="bodyMedium" style={styles.infoText}>
-                  <Text style={styles.infoTextBold}>{t('welcome.forJobseekerTitle')}</Text>{' '}
-                  {t('welcome.forJobseekerText')}
+                  {t('welcome.forJobSeeker.text', {
+                    title: (
+                      <Text style={styles.infoTextBold}>{t('welcome.forJobSeeker.title')}</Text>
+                    ),
+                  })}
                 </Text>
 
                 <Text variant="bodyMedium" style={styles.infoText}>
-                  <Text style={styles.infoTextBold}>{t('welcome.forEmployerTitle')}</Text>{' '}
-                  {t('welcome.forEmployerText')}
+                  {t('welcome.forEmployer.text', {
+                    title: (
+                      <Text style={styles.infoTextBold}>{t('welcome.forEmployer.title')}</Text>
+                    ),
+                  })}
                 </Text>
               </View>
               <Divider />

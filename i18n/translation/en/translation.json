@@ -1,10 +1,23 @@
 {
   "welcome": {
     "title": "Kuntarekry - Find jobs in Finland",
-    "forJobseekerTitle": "For Job Seekers",
-    "forJobseekerText": "we provide tools to find jobs and substitutes and information on working in the municipal sector and wellbeing services counties. Most job advertisements and application forms are available only in Finnish or Swedish.",
-    "forEmployerTitle": "For Employers",
-    "forEmployerText": "- municipalities, cities, joint municipal authorities, municipal-owned businesses and wellbeing services counties we provide recruitment software and expert services that are suitable for external and internal recruitment as well as recruitment management.",
+    "forJobSeeker": {
+      "title": "For Job Seekers",
+      "text": "<title> we provide tools to find jobs and substitutes and information on working in the municipal sector and wellbeing services counties. Most job advertisements and application forms are available only in Finnish or Swedish."
+    },
+    "forEmployer": {
+      "title": "For Employers",
+      "text": "<title> - municipalities, cities, joint municipal authorities, municipal-owned businesses and wellbeing services counties we provide recruitment software and expert services that are suitable for external and internal recruitment as well as recruitment management."
+    },
+    "privacyAndAccessibility": "Our web service uses cookies to improve the user experience. By using this service you agree to our use of cookies. <privacyPolicy> and <privacyNotice> and <accessibilityStatement>.",
+    "privacyPolicy": "Privacy policy",
+    "privacyNotice": "Privacy notice",
+    "accessibilityStatement": "Accessibility statement",
+    "feedback": {
+      "firstWord": "Feedback",
+      "text": "<firstWord>: <email>.",
+      "email": "tuki@kuntarekry.fi"
+    },
     "findOnSocialMedia": "You can also find us here"
   },
   "personalisation": {
@@ -51,7 +64,10 @@
         "publicationEnds": "Deadline for applications"
       }
     },
-    "extendedJobs": {},
+    "extendedJobs": {
+      "title": "Jobs recommended for you",
+      "description": "Would you be interested in some of these jobs?"
+    },
     "news": {
       "title": "News and events",
       "chips": {
@@ -60,6 +76,21 @@
         "workLife": " In working life",
         "lookingForWork": "Looking for a job"
       }
+    },
+    "footer": {
+      "popularRegions": "Popular regions",
+      "popularCities": "Popular cities",
+      "popularTaskAreas": "Popular professions",
+      "fcgShort": "FCG",
+      "fcgLong": "FCG Finnish Consulting Group Ab",
+      "serviceName": "Kuntarekry",
+      "serviceProvidedText": "<serviceName> is produced by <fcgShort>.",
+      "fcgConcernText": "<fcgLong> is a part of <kuntaliittoConcern>.",
+      "kuntaliittoConcern": "The Association of Finnish Local and Regional Authorities",
+      "substitutionsFilled": "<number>\n Substitute positions filled",
+      "visitsWeekly": "<number>\n Weekly visits",
+      "visitsYearly": "<number>\n Million yearly visits",
+      "custoomerOrganisations": "<number>\n Customer organisations"
     }
   }
 }
