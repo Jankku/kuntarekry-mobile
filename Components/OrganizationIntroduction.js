@@ -49,7 +49,11 @@ export default function OrganizationIntroduction() {
 
 const styles = StyleSheet.create({
   bgColor: {
+    alignItems: 'center',
     backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    margin: 10,
+    padding: 10,
   },
   bold: {
     fontWeight: 'bold',
@@ -61,8 +65,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: 10,
-    padding: 10,
   },
   description: {
     paddingBottom: 16,

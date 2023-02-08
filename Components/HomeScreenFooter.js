@@ -8,6 +8,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import SocialMediaButton from './onboarding/SocialMediaButton';
 import fcgBluePng from '../assets/fcg-blue.png';
+import avainLippu from '../assets/avainlippu.png';
 
 export default function HomeScreenFooter() {
   const navigation = useNavigation();
@@ -142,7 +143,9 @@ export default function HomeScreenFooter() {
         </Text>
         <Text style={styles.footerText}>
           <Text style={styles.bold}>Palautetta</Text> voit lähettää osoitteeseen:{' '}
-          <Text style={styles.blueText}>tuki@fcgtalent.fi</Text>
+          <Text onPress={() => Linking.openURL('mailto:tuki@fcgtalent.fi')} style={styles.blueText}>
+            tuki@fcgtalent.fi
+          </Text>
         </Text>
         <Text style={styles.footerText}>
           <Text style={styles.bold}>Löydät meidät myös täältä:</Text>
@@ -160,16 +163,35 @@ export default function HomeScreenFooter() {
           source={fcgBluePng}
           style={{ width: 85, height: 29, marginTop: 20, marginLeft: '15%' }}
         ></Image>
-        <Text style={styles.footerText}>Kuntarekry-palvelun tuottaa FCG Talent Oy.</Text>
         <Text style={styles.footerText}>
-          FCG Finnish Consulting Group Oy on osa Kuntaliitto-konsernia.
+          <Text style={styles.blueText}>Kuntarekry</Text>-palvelun tuottaa{' '}
+          <Text style={styles.blueText}>FCG Talent Oy.</Text>
         </Text>
+        <Text style={styles.footerText}>
+          <Text style={styles.blueText}>FCG Finnish Consulting Group Oy</Text> on osa{' '}
+          <Text style={styles.blueText}>Kuntaliitto-konsernia.</Text>
+        </Text>
+        <View style={{ marginLeft: '15%' }}>
+          <Text style={styles.bigBlueText}>200 000+</Text>
+          <Text>Sijaisuutta täytetty</Text>
+          <Text style={styles.bigBlueText}>130 000+</Text>
+          <Text>Käyntiä viikossa</Text>
+          <Text style={styles.bigBlueText}>2,5+</Text>
+          <Text>Million vuosittaista kävijää</Text>
+          <Text style={styles.bigBlueText}>300+</Text>
+          <Text>Asiakasorganisaatiota</Text>
+          <Image source={avainLippu} style={styles.flagImage}></Image>
+        </View>
       </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  bigBlueText: {
+    color: '#167FAC',
+    fontSize: 48,
+  },
   blueText: {
     color: '#35A9DB',
   },
@@ -193,6 +215,12 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     marginLeft: '15%',
     width: '100%',
+  },
+  flagImage: {
+    height: 69,
+    marginBottom: 20,
+    marginTop: 20,
+    width: 48,
   },
   footerText: {
     lineHeight: 19,
