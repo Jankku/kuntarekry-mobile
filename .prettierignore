@@ -2,7 +2,6 @@
 .expo
 .env
 .env.example
-*.json
 node_modules
 README.md
 package.json

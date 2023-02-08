@@ -4,7 +4,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { useJobLocations } from '../../hooks/usejoblocations';
 
 export default function MunicipalityDropdown({ onChange }) {
-  const { t } = useTranslation();
+  const { t } = useTranslation(['translations', 'common']);
   const { locations } = useJobLocations();
   const [items, setItems] = useState(locations);
   const [value, setValue] = useState(null);
@@ -39,7 +39,7 @@ export default function MunicipalityDropdown({ onChange }) {
       translation={{
         PLACEHOLDER: t('personalisation.location.placeholder'),
         SEARCH_PLACEHOLDER: t('personalisation.location.searchPlaceholder'),
-        NOTHING_TO_SHOW: t('personalisation.location.noResults'),
+        NOTHING_TO_SHOW: t('noResults', { ns: 'common' }),
       }}
     />
   );

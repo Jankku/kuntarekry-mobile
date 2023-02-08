@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import HomeScreen from './Screens/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -29,10 +29,12 @@ import { JobLocationProvider } from './hooks/usejoblocations';
 import { JobTaskProvider } from './hooks/usejobtasks';
 import FavoritesScreen from './Screens/FavoritesScreen';
 import { lightTheme, navigationLightTheme } from './styles/theme';
-import { PersonalisationProvider } from './hooks/usepersonalisation';
+import { PersonalisationProvider, usePersonalisation } from './hooks/usepersonalisation';
 import 'intl-pluralrules';
 import './i18n/config';
 import { FavoriteListProvider } from './hooks/usefavoritelist';
+import { useTranslation } from 'react-i18next';
+
 SplashScreen.preventAutoHideAsync().catch(console.warn);
 
 dayjs.extend(localizedFormat);
@@ -53,7 +55,9 @@ const Drawer = createDrawerNavigator();
 export default function App() {
   return (
     <OnboardingProvider>
-      <AppWrapper />
+      <PersonalisationProvider>
+        <AppWrapper />
+      </PersonalisationProvider>
     </OnboardingProvider>
   );
 }
@@ -79,6 +83,12 @@ function StackScreen() {
 
 function AppWrapper() {
   const { onboardingDone } = useOnboarding();
+  const { i18n } = useTranslation();
+  const { lang } = usePersonalisation();
+
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, [i18n, lang]);
 
   const onReady = useCallback(async () => {
     if (onboardingDone !== undefined) {
@@ -91,49 +101,44 @@ function AppWrapper() {
   }
 
   return (
-    <PersonalisationProvider>
-      <JobAdvertisementProvider>
-        <JobLocationProvider>
-          <JobTaskProvider>
-            <FavoriteListProvider>
-              <PaperProvider theme={lightTheme}>
-                <StatusBar style="inverted" />
-                <NavigationContainer theme={navigationLightTheme} onReady={onReady}>
-                  <Drawer.Navigator
-                    useLegacyImplementation
-                    drawerContent={(props) => <CustomDrawerContent {...props} />}
-                    screenOptions={{
-                      header: (props) => <AppBar {...props} />,
-                      headerShown: onboardingDone,
-                    }}
-                  >
-                    {onboardingDone === true ? (
-                      <>
-                        <Drawer.Screen
-                          name="Stack"
-                          component={StackScreen}
-                          options={{ headerShown: false, drawerItemStyle: { height: 0 } }}
-                        />
-                        <Drawer.Screen name="Työpaikat" component={JobListScreen} />
-                        <Drawer.Screen
-                          name="Työpaikat sijainnin mukaan"
-                          component={JobListScreen}
-                        />
-                        <Drawer.Screen name="Työpaikat tehtävän mukaan" component={JobListScreen} />
-                      </>
-                    ) : (
-                      <>
-                        <Drawer.Screen name="Welcome" component={WelcomeScreen} />
-                        <Drawer.Screen name="Personalisation" component={PersonalisationScreen} />
-                      </>
-                    )}
-                  </Drawer.Navigator>
-                </NavigationContainer>
-              </PaperProvider>
-            </FavoriteListProvider>
-          </JobTaskProvider>
-        </JobLocationProvider>
-      </JobAdvertisementProvider>
-    </PersonalisationProvider>
+    <JobAdvertisementProvider>
+      <JobLocationProvider>
+        <JobTaskProvider>
+          <FavoriteListProvider>
+            <PaperProvider theme={lightTheme}>
+              <StatusBar style="inverted" />
+              <NavigationContainer theme={navigationLightTheme} onReady={onReady}>
+                <Drawer.Navigator
+                  useLegacyImplementation
+                  drawerContent={(props) => <CustomDrawerContent {...props} />}
+                  screenOptions={{
+                    header: (props) => <AppBar {...props} />,
+                    headerShown: onboardingDone,
+                  }}
+                >
+                  {onboardingDone === true ? (
+                    <>
+                      <Drawer.Screen
+                        name="Stack"
+                        component={StackScreen}
+                        options={{ headerShown: false, drawerItemStyle: { height: 0 } }}
+                      />
+                      <Drawer.Screen name="Työpaikat" component={JobListScreen} />
+                      <Drawer.Screen name="Työpaikat sijainnin mukaan" component={JobListScreen} />
+                      <Drawer.Screen name="Työpaikat tehtävän mukaan" component={JobListScreen} />
+                    </>
+                  ) : (
+                    <>
+                      <Drawer.Screen name="Welcome" component={WelcomeScreen} />
+                      <Drawer.Screen name="Personalisation" component={PersonalisationScreen} />
+                    </>
+                  )}
+                </Drawer.Navigator>
+              </NavigationContainer>
+            </PaperProvider>
+          </FavoriteListProvider>
+        </JobTaskProvider>
+      </JobLocationProvider>
+    </JobAdvertisementProvider>
   );
 }

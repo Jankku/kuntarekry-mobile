@@ -1,0 +1,69 @@
+{
+  "welcome": {
+    "title": "Kuntarekrystä löytyy tuhansia avoimia työpaikkoja kaikkialta Suomesta.",
+    "forJobseekerTitle": "Työnhakijoille",
+    "forJobseekerText": "tarjoamme työvälineet työpaikkojen, sijaisuuksien ja keikkatöiden hakemiseen sekä tietoa työskentelystä kuntaorganisaatioissa ja hyvinvointialueilla.",
+    "forEmployerTitle": "Työnantajille",
+    "forEmployerText": "- kunnille, kaupungeille, hyvinvointialueille, kuntayhtymille ja kuntien omistamille yrityksille - tarjoamme rekrytoinnin ohjelmisto- ja asiantuntijapalveluja, jotka sopivat ulkoiseen ja sisäiseen rekrytointiin sekä sijaisuuksien hallintaan.",
+    "findOnSocialMedia": "Löydä Kuntarekry somessa"
+  },
+  "personalisation": {
+    "title": "Personoi kokemustasi",
+    "language": {
+      "title": "Kieli",
+      "placeholder": "Valitse kieli"
+    },
+    "location": {
+      "title": "Paikkakunta",
+      "placeholder": "Valitse paikkakunta",
+      "searchPlaceholder": "Hae paikkakuntia"
+    },
+    "taskArea": {
+      "title": "Tehtäväala",
+      "placeholder": "Valitse tehtäväala",
+      "searchPlaceholder": "Hae tehtäväalaa"
+    }
+  },
+  "home": {
+    "header": {
+      "open": "Avoimet",
+      "jobs": "Työpaikat",
+      "jobsAvailable": "avointa työpaikkaa",
+      "searchButton": "Hae työpaikkoja",
+      "searchPlaceholder": "Tehtävänimike, sijainti, ...",
+      "chips": {
+        "fullTime": "Kokoaikatyö",
+        "partTime": "Osa-aikatyö",
+        "summerJob": "Kesätyö",
+        "internship": "Harjoittelu",
+        "moreFilters": "Lisää rajauksia",
+        "employers": "Työnantajat",
+        "regions": "Maakunnat"
+      }
+    },
+    "recommendedJobs": {
+      "title": "Sinulle suositellut työpaikat",
+      "openApplication": "Avoin hakemus",
+      "openApplicationText": "Haluatko jättää avoimen hakemuksen? Klikkaa alta.",
+      "substitutions": "Keikkatöihin",
+      "substitutionsText": "Kiinnostaako keikkatyö? Klikkaa alta.",
+      "item": {
+        "publicationEnds": "Haku päättyy"
+      }
+    },
+    "extendedJobs": {
+      "title": "Laajennetut työpaikkailmoitukset",
+      "description": "Kiinnostaisiko jokin näistä työpaikoista?"
+    },
+    "news": {
+      "title": "Uutiset ja tapahtumat",
+      "chips": {
+        "now": "Ajankohtaista",
+        "events": "Tapahtumat",
+        "workLife": "Työelämä",
+        "lookingForWork": "Töitä hakemassa",
+        "showAllNews": "Näytä kaikki"
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@ const PersonalisationContext = createContext();
 
 export function PersonalisationProvider({ children }) {
   const { onboardingDone } = useOnboarding();
-  const [items, setItems] = useState();
+  const [items, setItems] = useState({});
 
   useEffect(() => {
     (async () => {
@@ -26,9 +26,8 @@ export function PersonalisationProvider({ children }) {
     })();
   }, [onboardingDone]);
 
-  const value = { items };
   return (
-    <PersonalisationContext.Provider value={value}>{children}</PersonalisationContext.Provider>
+    <PersonalisationContext.Provider value={items}>{children}</PersonalisationContext.Provider>
   );
 }
 

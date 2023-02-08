@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 
 export default function ForwardButton({ onPress }) {
-  const { t } = useTranslation();
+  const { t } = useTranslation(['common']);
 
   return (
     <Button
@@ -14,7 +14,7 @@ export default function ForwardButton({ onPress }) {
       style={styles.style}
       onPress={onPress}
     >
-      {t('welcome.forward')}
+      {t('forward')}
     </Button>
   );
 }

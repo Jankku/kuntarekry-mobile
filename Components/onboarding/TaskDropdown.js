@@ -4,7 +4,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { useJobTasks } from '../../hooks/usejobtasks';
 
 export default function TaskDropdown({ onChange }) {
-  const { t } = useTranslation();
+  const { t } = useTranslation(['translations', 'common']);
   const { tasks } = useJobTasks();
   const [items, setItems] = useState(tasks);
   const [value, setValue] = useState(null);
@@ -37,7 +37,7 @@ export default function TaskDropdown({ onChange }) {
       translation={{
         PLACEHOLDER: t('personalisation.taskArea.placeholder'),
         SEARCH_PLACEHOLDER: t('personalisation.taskArea.searchPlaceholder'),
-        NOTHING_TO_SHOW: t('personalisation.taskArea.noResults'),
+        NOTHING_TO_SHOW: t('noResults', { ns: 'common' }),
       }}
     />
   );

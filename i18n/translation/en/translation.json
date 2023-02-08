@@ -1,0 +1,65 @@
+{
+  "welcome": {
+    "title": "Kuntarekry - Find jobs in Finland",
+    "forJobseekerTitle": "For Job Seekers",
+    "forJobseekerText": "we provide tools to find jobs and substitutes and information on working in the municipal sector and wellbeing services counties. Most job advertisements and application forms are available only in Finnish or Swedish.",
+    "forEmployerTitle": "For Employers",
+    "forEmployerText": "- municipalities, cities, joint municipal authorities, municipal-owned businesses and wellbeing services counties we provide recruitment software and expert services that are suitable for external and internal recruitment as well as recruitment management.",
+    "findOnSocialMedia": "You can also find us here"
+  },
+  "personalisation": {
+    "title": "Personalise your experience",
+    "language": {
+      "title": "Language",
+      "placeholder": "Choose language"
+    },
+    "location": {
+      "title": "Municipality",
+      "placeholder": "Choose municipality",
+      "searchPlaceholder": "Search municipalities"
+    },
+    "taskArea": {
+      "title": "Task area",
+      "placeholder": "Choose task area",
+      "searchPlaceholder": "Search task areas"
+    }
+  },
+  "home": {
+    "header": {
+      "open": "Find",
+      "jobs": "Jobs",
+      "jobsAvailable": "Open jobs",
+      "searchButton": "Search jobs",
+      "searchPlaceholder": "Task area, location, ...",
+      "chips": {
+        "fullTime": "Full-time",
+        "partTime": "Part-time",
+        "summerJob": "Summer job",
+        "training": "Training",
+        "moreFilters": "More filters",
+        "employers": "Employers",
+        "regions": "Regions"
+      }
+    },
+    "recommendedJobs": {
+      "title": "Jobs recommended for you",
+      "openApplication": "Open application",
+      "openApplicationText": "Interested in open applications? Click below.",
+      "substitutions": "Substitutions",
+      "substitutionsText": "Intersted in temporary job? Click below.",
+      "item": {
+        "publicationEnds": "Deadline for applications"
+      }
+    },
+    "extendedJobs": {},
+    "news": {
+      "title": "News and events",
+      "chips": {
+        "now": "Now",
+        "events": "Events",
+        "workLife": " In working life",
+        "lookingForWork": "Looking for a job"
+      }
+    }
+  }
+}

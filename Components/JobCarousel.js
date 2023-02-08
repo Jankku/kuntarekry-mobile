@@ -1,16 +1,23 @@
 import Carousel from 'simple-carousel-react-native';
-import { Text, useWindowDimensions } from 'react-native';
+import { StyleSheet, useWindowDimensions } from 'react-native';
 import { colors } from '../styles/colors';
 import JobCarouselItem from './JobCarouselItem';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
+import { Text, useTheme } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
-export default function CarouselIndex() {
+export default function JobCarousel() {
+  const { t } = useTranslation(['common']);
+  const theme = useTheme();
+  const styles = makeStyles(theme);
   const { width } = useWindowDimensions();
   const { jobs } = useJobAdvertisements();
   const carouselJobs = jobs ? jobs.slice(0, 3).map((j) => j.jobAdvertisement) : [];
 
   return carouselJobs.length === 0 ? (
-    <Text>No Jobs</Text>
+    <Text variant="titleMedium" style={styles.noJobs}>
+      {t('noResults')}
+    </Text>
   ) : (
     <Carousel
       backgroundColor={colors.background}
@@ -24,3 +31,12 @@ export default function CarouselIndex() {
     </Carousel>
   );
 }
+
+const makeStyles = (theme) =>
+  StyleSheet.create({
+    noJobs: {
+      backgroundColor: theme.colors.background,
+      paddingBottom: 8,
+      textAlign: 'center',
+    },
+  });
