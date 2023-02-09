@@ -59,10 +59,7 @@
       "openApplication": "Open application",
       "openApplicationText": "Interested in open applications? Click below.",
       "substitutions": "Substitutions",
-      "substitutionsText": "Intersted in temporary job? Click below.",
-      "item": {
-        "publicationEnds": "Deadline for applications"
-      }
+      "substitutionsText": "Intersted in temporary job? Click below."
     },
     "extendedJobs": {
       "title": "Jobs recommended for you",
@@ -92,5 +89,18 @@
       "visitsYearly": "<number>\n Million yearly visits",
       "custoomerOrganisations": "<number>\n Customer organisations"
     }
+  },
+  "jobItem": {
+    "publicationEnds": "Deadline for applications"
+  },
+  "jobDetail": {
+    "applyToJob": "Apply to job",
+    "details": "Details",
+    "getToKnowEmployer": "Get to know the employer",
+    "anonymousRecruitment": "Anonymous recruitment",
+    "contact": "Contact details",
+    "moreInformation": "Further information",
+    "address": "Address",
+    "addressEmpty": "No address"
   }
 }

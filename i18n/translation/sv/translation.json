@@ -59,10 +59,7 @@
       "openApplication": "Öppen arbetsansökan",
       "openApplicationText": "Vill du lämna in en öppen ansökan? Klicka nedan.",
       "substitutions": "Vikariat",
-      "substitutionsText": "Är du intresserad av vikariat? Klicka nedan.",
-      "item": {
-        "publicationEnds": "Sök före"
-      }
+      "substitutionsText": "Är du intresserad av vikariat? Klicka nedan."
     },
     "extendedJobs": {
       "title": "Utökade jobbannonser",
@@ -92,5 +89,18 @@
       "visitsYearly": "<number>\n Miljoner besökare per år",
       "custoomerOrganisations": "<number>\n Arbetsgivare"
     }
+  },
+  "jobItem": {
+    "publicationEnds": "Sök före"
+  },
+  "jobDetail": {
+    "applyToJob": "Sök arbete",
+    "details": "Detaljer",
+    "getToKnowEmployer": "Lär känna arbetsgivaren",
+    "anonymousRecruitment": "Anonym rekrytering",
+    "contact": "Kontaktinformation",
+    "moreInformation": "Tilläggsuppgifter",
+    "address": "Adress",
+    "addressEmpty": "Ingen adress"
   }
 }

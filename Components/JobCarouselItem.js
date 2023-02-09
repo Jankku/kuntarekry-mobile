@@ -23,7 +23,7 @@ export default function JobCarouselItem({ job, style }) {
           <Text style={styles.text}>{job?.profitCenter}</Text>
           <Text style={styles.title}>{job?.title}</Text>
           <Text style={styles.text}>
-            {t('home.recommendedJobs.item.publicationEnds')}{' '}
+            {t('jobItem.publicationEnds')}{' '}
             <Text style={styles.dateText}>
               <Icon name="calendar" size={14} /> {dayjs(job.publicationEnds).format('l')}{' '}
               <Icon name="clock" size={14} /> {dayjs(job.publicationEnds).format('LT')}{' '}

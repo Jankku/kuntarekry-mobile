@@ -25,7 +25,7 @@ export default function JobListItem({ job }) {
             <Text style={styles.itemText}>{job.organization}</Text>
             <Text style={styles.itemHeaderText}>{job.title}</Text>
             <Text style={styles.itemText}>
-              {t('home.recommendedJobs.item.publicationEnds')}{' '}
+              {t('jobItem.publicationEnds')}{' '}
               <Text style={styles.dateText}>
                 <Icon name="calendar" size={14} /> {dayjs(job.publicationEnds).format('l')}{' '}
                 <Icon name="clock" size={14} /> {dayjs(job.publicationEnds).format('LT')}{' '}

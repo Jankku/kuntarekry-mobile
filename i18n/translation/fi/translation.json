@@ -59,10 +59,7 @@
       "openApplication": "Avoin hakemus",
       "openApplicationText": "Haluatko jättää avoimen hakemuksen? Klikkaa alta.",
       "substitutions": "Keikkatöihin",
-      "substitutionsText": "Kiinnostaako keikkatyö? Klikkaa alta.",
-      "item": {
-        "publicationEnds": "Haku päättyy"
-      }
+      "substitutionsText": "Kiinnostaako keikkatyö? Klikkaa alta."
     },
     "extendedJobs": {
       "title": "Laajennetut työpaikkailmoitukset",
@@ -74,8 +71,7 @@
         "now": "Ajankohtaista",
         "events": "Tapahtumat",
         "workLife": "Työelämä",
-        "lookingForWork": "Töitä hakemassa",
-        "showAllNews": "Näytä kaikki"
+        "lookingForWork": "Töitä hakemassa"
       }
     },
     "footer": {
@@ -93,5 +89,18 @@
       "visitsYearly": "<number>\n Miljoonaa vuosittaista käyntiä",
       "custoomerOrganisations": "<number>\n Asiakasorganisaatiota"
     }
+  },
+  "jobItem": {
+    "publicationEnds": "Haku päättyy"
+  },
+  "jobDetail": {
+    "applyToJob": "Hae työpaikkaa",
+    "details": "Lisätietoja",
+    "getToKnowEmployer": "Tutustu työnantajaan",
+    "anonymousRecruitment": "Anonyymi rekrytointi",
+    "contact": "Yhteystietomme",
+    "moreInformation": "Lisätietoja",
+    "address": "Osoite",
+    "addressEmpty": "Ei osoitetta"
   }
 }
