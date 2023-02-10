@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "lint": "eslint --ext .js,.jsx .",
     "lint:fix": "eslint --fix --ext .js,.jsx .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "build:preview": "eas build -e preview -p android"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.17.3",
