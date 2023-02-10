@@ -34,6 +34,7 @@ import 'intl-pluralrules';
 import './i18n/config';
 import { FavoriteListProvider } from './hooks/usefavoritelist';
 import { useTranslation } from 'react-i18next';
+import LanguageSelector from './Components/LanguageSelector';
 
 SplashScreen.preventAutoHideAsync().catch(console.warn);
 
@@ -46,6 +47,7 @@ function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
+      <LanguageSelector />
     </DrawerContentScrollView>
   );
 }
