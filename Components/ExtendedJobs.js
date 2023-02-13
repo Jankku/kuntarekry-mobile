@@ -5,8 +5,10 @@ import Kuva2 from '../assets/Rectangle69(1).png';
 import Kuva3 from '../assets/Rectangle96.png';
 import { useNavigation } from '@react-navigation/native';
 import PrimaryButton from './PrimaryButton';
+import { useTranslation } from 'react-i18next';
 
 export default function ExtendedJobs() {
+  const { t } = useTranslation(['translations', 'common']);
   const navigation = useNavigation();
   const { jobs } = useJobAdvertisements();
   // filter jobs with jobAdvertisement and profitcenter
@@ -21,8 +23,8 @@ export default function ExtendedJobs() {
   const images = [Kuva1, Kuva2, Kuva3];
   return (
     <View style={styles.container}>
-      <Text style={styles.topText}>LAAJENNETUT TYÖPAIKKAILMOITUKSET</Text>
-      <Text style={styles.headerText}>Kiinnostaisiko jokin näistä työpaikoista?</Text>
+      <Text style={styles.topText}>{t('home.extendedJobs.title')}</Text>
+      <Text style={styles.headerText}>{t('home.extendedJobs.description')}</Text>
       {randomJobs.map((job, index) => (
         <View key={index} style={styles.jobContainer}>
           <Image source={images[index]} />
@@ -37,7 +39,7 @@ export default function ExtendedJobs() {
                 })
               }
             >
-              Katso lisää
+              {t('seeMore', { ns: 'common' })}
             </PrimaryButton>
           </View>
         </View>

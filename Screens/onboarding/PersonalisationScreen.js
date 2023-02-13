@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { Card, Divider, Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -10,21 +11,23 @@ import LanguageDropdown from '../../Components/onboarding/LanguageDropdown';
 import LocationDropdown from '../../Components/onboarding/LocationDropdown';
 import TaskDropdown from '../../Components/onboarding/TaskDropdown';
 import { useOnboarding } from '../../hooks/useonboarding';
-
-const LANGUAGE_KEY = 'lang';
-const LOCATION_KEY = 'location';
-const TASK_KEY = 'task';
+import { LANGUAGE_KEY, LOCATION_KEY, TASK_KEY } from '../../hooks/usepersonalisation';
 
 export default function PersonalisationScreen({ navigation }) {
+  const { t, i18n } = useTranslation();
   const { finishOnboarding } = useOnboarding();
 
-  const onChangeLanguage = useCallback(async (value) => {
-    try {
-      await AsyncStorage.setItem(LANGUAGE_KEY, value);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
+  const onChangeLanguage = useCallback(
+    async (value) => {
+      try {
+        await AsyncStorage.setItem(LANGUAGE_KEY, String(value));
+        await i18n.changeLanguage(value);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [i18n]
+  );
 
   const onChangeLocation = useCallback(async (value) => {
     try {
@@ -54,20 +57,20 @@ export default function PersonalisationScreen({ navigation }) {
 
           <Card style={styles.card}>
             <Card.Content>
-              <Text variant="titleLarge">Personoi kokemustasi</Text>
+              <Text variant="titleLarge">{t('personalisation.title')}</Text>
 
               <View style={styles.section}>
-                <Text variant="titleMedium">Kieli</Text>
+                <Text variant="titleMedium">{t('personalisation.language.title')}</Text>
                 <LanguageDropdown onChange={onChangeLanguage} />
               </View>
 
               <View style={styles.section}>
-                <Text variant="titleMedium">Paikkakunta</Text>
+                <Text variant="titleMedium">{t('personalisation.location.title')}</Text>
                 <LocationDropdown onChange={onChangeLocation} />
               </View>
               <Divider />
               <View style={styles.section}>
-                <Text variant="titleMedium">Tehtäväala</Text>
+                <Text variant="titleMedium">{t('personalisation.taskArea.title')}</Text>
                 <TaskDropdown onChange={onChangeTask} />
               </View>
             </Card.Content>

@@ -1,7 +1,10 @@
+import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 
 export default function ForwardButton({ onPress }) {
+  const { t } = useTranslation(['common']);
+
   return (
     <Button
       uppercase
@@ -11,7 +14,7 @@ export default function ForwardButton({ onPress }) {
       style={styles.style}
       onPress={onPress}
     >
-      Eteenpäin
+      {t('forward')}
     </Button>
   );
 }

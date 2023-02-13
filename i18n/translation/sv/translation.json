@@ -1,0 +1,106 @@
+{
+  "welcome": {
+    "title": "Kuntarekry erbjuder åt sökanden tusentals lediga jobb runtom i landet.",
+    "forJobSeeker": {
+      "title": "Åt arbetssökande",
+      "text": "<title> erbjuder vi lätta elektroniska redskap för jobb- och vikariatsökning samt information om hur det är att arbeta på kommunsektorn och välfärdsområdena."
+    },
+    "forEmployer": {
+      "title": "Åt arbetsgivarna",
+      "text": "<title> - kommunerna, städerna, samkommunerna, kommunägda företag och välräfdsområdena – erbjuder Kuntarekry programvaru- och experttjänster som är ägnade åt såväl extern som intern rekrytering samt åt vikariehanteringen."
+    },
+    "privacyAndAccessibility": "Vår webbplats använder cookies för att förbättra användarupplevelsen. Genom att använda tjänsten godkänner du användningen av cookies. <privacyPolicy> and <privacyNotice> and <accessibilityStatement>.",
+    "privacyPolicy": "Dataskyddsutdrag",
+    "privacyNotice": "Integritetsdeklaration",
+    "accessibilityStatement": "Tillgänglighetsrapport",
+    "feedback": {
+      "firstWord": "Feedback",
+      "text": "<firstWord> om webbplatsen kan skickas till adressen: <email>.",
+      "email": "tuki@kuntarekry.fi"
+    },
+    "findOnSocialMedia": "Du kan också hitta oss här"
+  },
+  "personalisation": {
+    "title": "Personalisera din erfarenhet",
+    "language": {
+      "title": "Språk",
+      "placeholder": "Välj språk"
+    },
+    "location": {
+      "title": "Ort",
+      "placeholder": "Välj ort",
+      "searchPlaceholder": "Hämta ort"
+    },
+    "taskArea": {
+      "title": "Uppgiftsområden",
+      "placeholder": "Välj uppgiftsområden",
+      "searchPlaceholder": "Hämta uppgiftsområden"
+    }
+  },
+  "home": {
+    "header": {
+      "open": "Kommunsektorns",
+      "jobs": "Lediga jobb",
+      "jobsAvailable": "lediga arbetsplatser",
+      "searchButton": "Sök jobb",
+      "searchPlaceholder": "Uppgiftsområden, ort, ...",
+      "chips": {
+        "fullTime": "heltidsarbete",
+        "partTime": "deltidsarbete",
+        "summerJob": "Sommarjobb",
+        "training": "Praktik",
+        "moreFilters": "Mer silar",
+        "employers": "Arbetsgivare",
+        "regions": "Landskap"
+      }
+    },
+    "recommendedJobs": {
+      "title": "Arbetsplatser som rekommenderas",
+      "openApplication": "Öppen arbetsansökan",
+      "openApplicationText": "Vill du lämna in en öppen ansökan? Klicka nedan.",
+      "substitutions": "Vikariat",
+      "substitutionsText": "Är du intresserad av vikariat? Klicka nedan."
+    },
+    "extendedJobs": {
+      "title": "Utökade jobbannonser",
+      "description": "Skulle någon av dessa arbetstillfällen vara intresserad?"
+    },
+    "news": {
+      "title": "Aktuellt",
+      "chips": {
+        "now": "Aktuellt",
+        "events": "Evenemang",
+        "workLife": "Arbetsliv",
+        "lookingForWork": "Tips för jobbsökning"
+      }
+    },
+    "footer": {
+      "popularRegions": "Populäraste landskapen",
+      "popularCities": "Populäraste kommunerna",
+      "popularTaskAreas": "Populäraste uppgiftsområdena",
+      "fcgShort": "FCG",
+      "fcgLong": "FCG Finnish Consulting Group Ab",
+      "serviceName": "Kuntarekry",
+      "serviceProvidedText": "<serviceName>-tjänsten produceras av <fcgShort>.",
+      "fcgConcernText": "<fcgLong> är en del av <kuntaliittoConcern>.",
+      "kuntaliittoConcern": "Kommunförbundskoncernen",
+      "substitutionsFilled": "<number>\n Fyllnad av vikariat",
+      "visitsWeekly": "<number>\n Viktariat i veckan",
+      "visitsYearly": "<number>\n Miljoner besökare per år",
+      "custoomerOrganisations": "<number>\n Arbetsgivare"
+    }
+  },
+  "jobItem": {
+    "publicationEnds": "Sök före"
+  },
+  "jobDetail": {
+    "applyToJob": "Sök arbete",
+    "details": "Detaljer",
+    "getToKnowEmployer": "Lär känna arbetsgivaren",
+    "anonymousRecruitment": "Anonym rekrytering",
+    "contact": "Kontaktinformation",
+    "moreInformation": "Tilläggsuppgifter",
+    "address": "Adress",
+    "addressEmpty": "Ingen adress"
+  }
+}

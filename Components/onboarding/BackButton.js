@@ -1,7 +1,10 @@
+import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 
 export default function BackButton({ onPress }) {
+  const { t } = useTranslation(['common']);
+
   return (
     <Button
       uppercase
@@ -10,7 +13,7 @@ export default function BackButton({ onPress }) {
       contentStyle={styles.contentStyle}
       onPress={onPress}
     >
-      Takaisin
+      {t('backward')}
     </Button>
   );
 }

@@ -1,33 +1,45 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Avatar, List, Divider, Chip, IconButton } from 'react-native-paper';
+import { List, Divider, Chip, IconButton } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import dayjs from 'dayjs';
 import { colors } from '../styles/colors';
 import OpenURLButton from '../Components/OpenURLButton';
 import FavoriteButton from '../Components/FavoriteButton';
 import PrimaryButton from '../Components/PrimaryButton';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/core';
+
+function Tags({ style, tag, filter }) {
+  const navigation = useNavigation();
+  if (tag == null) return;
+  const tags = tag.split(', ').filter((tag) => tag.length > 0);
+  return tags.map((tagInfo) => (
+    <Chip
+      key={tagInfo}
+      style={[style, styles.tag]}
+      textStyle={styles.tagText}
+      onPress={() => navigation.navigate('Jobs', { buttonJobQuery: tagInfo, filter: filter })}
+    >
+      {tagInfo}
+    </Chip>
+  ));
+}
+
+function formatAddress(address, postalCode, postalArea) {
+  const fullAddress = [];
+  if (address) fullAddress.push(address);
+  if (postalCode) fullAddress.push(postalCode);
+  if (postalArea) fullAddress.push(postalArea);
+
+  return fullAddress.join(', ');
+}
 
 export default function JobScreen({ route, navigation }) {
+  const { t } = useTranslation();
   const job = route.params?.job ?? '';
-
-  function Tags({ style, tag, filter }) {
-    if (tag == null) {
-      return;
-    }
-    const tags = tag.split(/\s*,\s*/);
-    const filteredTags = tags.filter((tag) => tag.length > 0);
-
-    return filteredTags.map((tagInfo) => (
-      <Chip
-        key={tagInfo}
-        style={style}
-        textStyle={styles.tagText}
-        onPress={() => navigation.navigate('Jobs', { buttonJobQuery: tagInfo, filter: filter })}
-      >
-        {tagInfo}
-      </Chip>
-    ));
-  }
+  const address =
+    formatAddress(job.address, job.postalCode, job.postalArea) || t('jobDetail.addressEmpty');
 
   return (
     <ScrollView>
@@ -41,12 +53,15 @@ export default function JobScreen({ route, navigation }) {
           <Text style={styles.organization}>{job.organization}</Text>
           <Text style={styles.title}>{job.title}</Text>
           <View style={styles.dateContainer}>
-            <Text style={styles.h3}>Hakuaika päättyy</Text>
-            <Avatar.Icon style={styles.h3} size={30} color="white" icon="calendar" />
-            <Text style={styles.h3}>{dayjs(job.publicationEnds).format('l LT')}</Text>
+            <Text style={styles.h3}>
+              {t('jobItem.publicationEnds')}
+              {'  '}
+              <Icon name="calendar" size={16} /> {dayjs(job.publicationEnds).format('l')}{' '}
+              <Icon name="clock" size={16} /> {dayjs(job.publicationEnds).format('LT')}
+            </Text>
           </View>
           <PrimaryButton style={styles.button} buttonColor="white" textColor={colors.detailGreen}>
-            Hae työpaikkaa
+            {t('jobDetail.applyToJob')}
           </PrimaryButton>
         </View>
         <View style={styles.buttons}>
@@ -61,7 +76,7 @@ export default function JobScreen({ route, navigation }) {
       </LinearGradient>
       <View style={styles.content}>
         <Text style={styles.desc}>{job.jobDesc}</Text>
-        <Text style={styles.readMore}>Lisätietoja</Text>
+        <Text style={styles.readMore}>{t('jobDetail.details')}</Text>
         <OpenURLButton url={job.internetLink} style={styles.link} />
         <View style={styles.buttonOrganization}>
           <PrimaryButton
@@ -69,7 +84,7 @@ export default function JobScreen({ route, navigation }) {
             textColor="white"
             onPress={() => navigation.navigate('Organization', { org: job.profitCenter })}
           >
-            Tutustu työnantajaan
+            {t('jobDetail.getToKnowEmployer')}
           </PrimaryButton>
         </View>
       </View>
@@ -81,7 +96,7 @@ export default function JobScreen({ route, navigation }) {
               title={() => (
                 <View style={styles.tagRow}>
                   <Chip style={styles.tagProfession} textStyle={styles.tagText}>
-                    Anonyymi Rekrytointi
+                    {t('jobDetail.anonymousRecruitment')}
                   </Chip>
                 </View>
               )}
@@ -208,31 +223,29 @@ export default function JobScreen({ route, navigation }) {
       </View>
       <View style={styles.content}>
         <View style={styles.descContainer}>
-          <Avatar.Icon style={styles.h3} size={50} color={colors.detail} icon="email-outline" />
-          <Text style={styles.desc}>Yhteystietomme</Text>
+          <Icon name="email" size={22} color={colors.detail} />
+          <Text style={styles.desc}>
+            {'    '}
+            {t('jobDetail.contact')}
+          </Text>
         </View>
         <Text style={styles.desc}>{job.contacts}</Text>
         <Divider />
         <View style={styles.descContainer}>
-          <Avatar.Icon style={styles.h3} size={50} color={colors.detail} icon="briefcase-variant" />
-          <Text style={styles.desc}>Lisätietoja</Text>
+          <Icon name="briefcase-variant" size={22} color={colors.detail} />
+          <Text style={styles.desc}>
+            {'    '}
+            {t('jobDetail.moreInformation')}
+          </Text>
         </View>
         <Text style={styles.desc}>
           {job.organization}
           {'\n\n'}
           {job.organizationDesc}
         </Text>
-        {job.address ? (
-          <Text style={styles.address}>
-            Osoite: {job.address}, {job.postalCode} {job.postalArea}
-          </Text>
-        ) : job.postalCode ? (
-          <Text style={styles.address}>
-            Osoite: {job.postalCode} {job.postalArea}
-          </Text>
-        ) : (
-          <></>
-        )}
+        <Text style={styles.address}>
+          {t('jobDetail.address')}: {address}
+        </Text>
       </View>
     </ScrollView>
   );
@@ -249,7 +262,7 @@ const styles = StyleSheet.create({
     marginHorizontal: '25%',
   },
   buttonOrganization: {
-    marginHorizontal: '20%',
+    marginHorizontal: '12%',
     marginTop: 15,
   },
   buttons: {
@@ -280,7 +293,6 @@ const styles = StyleSheet.create({
   descContainer: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginHorizontal: -15,
   },
   detailIcon: {
     paddingHorizontal: 15,
@@ -290,7 +302,6 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   h3: {
-    backgroundColor: 'transparent',
     color: 'white',
     fontSize: 16,
   },
@@ -314,25 +325,23 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '400',
   },
+  tag: {
+    margin: '2%',
+  },
   tagEmployment: {
     backgroundColor: '#fad6d4',
-    margin: '2%',
   },
   tagEmploymentCategory: {
     backgroundColor: '#faeee3',
-    margin: '2%',
   },
   tagEmploymentType: {
     backgroundColor: '#f1f5f8',
-    margin: '2%',
   },
   tagLocation: {
     backgroundColor: '#d4effa',
-    margin: '2%',
   },
   tagProfession: {
     backgroundColor: '#d0f5dc',
-    margin: '2%',
   },
   tagRow: {
     flexDirection: 'row',

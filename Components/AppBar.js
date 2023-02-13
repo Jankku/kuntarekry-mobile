@@ -2,8 +2,11 @@ import { Appbar, Badge } from 'react-native-paper';
 import { colors } from '../styles/colors';
 import { StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import { useFavoriteList } from '../hooks/usefavoritelist';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 export default function AppBar({ navigation, back }) {
+  // eslint-disable-next-line no-unused-vars
+  const { favorites } = useFavoriteList();
   return (
     <LinearGradient colors={['#0a8bc2', '#33cc80']} start={{ x: 0.9, y: 0.8 }} end={{ x: 0, y: 0 }}>
       <Appbar.Header style={styles.header} mode={'center-aligned'}>
@@ -16,16 +19,17 @@ export default function AppBar({ navigation, back }) {
             onPress={() => navigation.openDrawer()}
           />
         )}
-        <Image style={styles.image} source={require('../assets/logo.png')} />
+        <TouchableOpacity style={styles.touchable} onPress={() => navigation.navigate('Home')}>
+          <Image style={styles.image} source={require('../assets/logo.png')} />
+        </TouchableOpacity>
         <Appbar.Action
           color={colors.onPrimary}
           icon="heart"
           onPress={() => navigation.navigate('Favorites')}
         />
-        <Badge size={18} style={styles.badge}>
-          0
+        <Badge size={18} style={styles.badge} visible={favorites.length > 0 ? true : false}>
+          {favorites.length}
         </Badge>
-        <Appbar.Action color={colors.onPrimary} icon="dots-vertical" onPress={() => {}} />
       </Appbar.Header>
     </LinearGradient>
   );
@@ -42,9 +46,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   image: {
-    height: '40%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    width: '40%',
+    height: '75%',
+    width: '60%',
+  },
+  touchable: {
+    alignItems: 'center',
+    marginTop: 10,
+    width: 250,
   },
 });

@@ -8,7 +8,7 @@ import { View, Button, Text, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../styles/colors';
 
-export default function JobsListScreen({ navigation, route }) {
+export default function JobsListScreen({ route }) {
   const searchQuery = route.params?.searchQuery ?? '';
   const buttonJobQuery = route.params?.buttonJobQuery ?? '';
   const filter = route.params?.filter ?? '';
@@ -177,10 +177,7 @@ export default function JobsListScreen({ navigation, route }) {
             ))}
         </ScrollView>
       </View>
-      <Jobs
-        navigation={navigation}
-        data={userFilters.length > 0 ? filteredSearchJobs : filteredJobs}
-      />
+      <Jobs data={userFilters.length > 0 ? filteredSearchJobs : filteredJobs} />
     </>
   );
 }

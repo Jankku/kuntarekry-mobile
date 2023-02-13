@@ -1,13 +1,15 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const languages = [
-  { label: 'Suomi', value: 'fi_FI' },
-  { label: 'Svenska', value: 'sv_SE' },
-  { label: 'English', value: 'en_US' },
+  { label: 'Suomi', value: 'fi' },
+  { label: 'Svenska', value: 'sv' },
+  { label: 'English', value: 'en' },
 ];
 
 export default function LanguageDropdown({ onChange }) {
+  const { t } = useTranslation();
   const [items, setItems] = useState(languages);
   const [value, setValue] = useState(null);
   const [open, setOpen] = useState(false);
@@ -28,7 +30,7 @@ export default function LanguageDropdown({ onChange }) {
       zIndex={3000}
       zIndexInverse={1000}
       translation={{
-        PLACEHOLDER: 'Valitse kieli',
+        PLACEHOLDER: t('personalisation.language.placeholder'),
       }}
     />
   );
