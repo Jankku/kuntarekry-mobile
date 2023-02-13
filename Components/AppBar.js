@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   badge: {
     backgroundColor: 'rgba(0,86,68,.6)',
     position: 'absolute',
-    right: 58,
+    right: 4,
     top: 14,
   },
   header: {

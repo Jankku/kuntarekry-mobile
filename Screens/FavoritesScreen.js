@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   list: {
-    marginHorizontal: 8,
+    marginHorizontal: 3,
   },
   text: {
     fontSize: 16,

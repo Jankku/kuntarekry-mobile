@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     borderColor: 'lightgrey',
     borderStyle: 'solid',
     borderWidth: 1,
+    marginHorizontal: 4,
     marginVertical: 1,
   },
   button: {
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: 'row',
-    paddingVertical: 8,
+    paddingVertical: 5,
     width: '80%',
   },
   dateText: {

@@ -1,10 +1,9 @@
-import { useMemo } from 'react';
-import { Title, Chip } from 'react-native-paper';
+import { useMemo, useState } from 'react';
+import { Title, Chip, IconButton, Button, Divider } from 'react-native-paper';
 import Jobs from '../Components/Jobs';
 import useFilterJobs from '../hooks/usefilterjobs';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
-import { useState } from 'react';
-import { View, Button, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../styles/colors';
 
@@ -20,6 +19,23 @@ export default function JobsListScreen({ route }) {
   const [newFilterValue, setNewFilterValue] = useState('');
   const [newFilterOptions, setNewFilterOptions] = useState([]);
   const [showOptions, setShowOptions] = useState(true);
+
+  const [showSortSelector, setShowSortSelector] = useState(false);
+  const [activeSortType, setActiveSortType] = useState(null);
+
+  const filterType = [
+    { label: 'Työsuhde', value: 'employment' },
+    { label: 'Työnantaja', value: 'profitCenter' },
+    { label: 'Sijainti', value: 'region' },
+    { label: 'Tehtäväalueet', value: 'taskArea' },
+  ];
+
+  const sortType = [
+    { label: 'Uusin ensin', value: 'newest' },
+    { label: 'Hakuaika päättyy', value: 'endTime' },
+    { label: 'Työnantaja', value: 'employer' },
+    { label: 'Sijainti', value: 'location' },
+  ];
 
   const addFilter = (newFilter) => {
     setUserFilters([...userFilters, newFilter]);
@@ -93,13 +109,50 @@ export default function JobsListScreen({ route }) {
 
   return (
     <>
-      <Title>
-        {searchQuery
-          ? `Ilmoitukset hakusanalla: ${searchQuery}`
-          : buttonJobQuery
-          ? `Ilmoitukset kategorialla: `
-          : 'Kaikki ilmoitukset'}{' '}
-      </Title>
+      <View style={styles.topContainer}>
+        <Title>
+          {searchQuery
+            ? `Ilmoitukset hakusanalla: ${searchQuery}`
+            : buttonJobQuery
+            ? `Ilmoitukset kategorialla: `
+            : 'Kaikki ilmoitukset '}
+          <Text style={styles.number}>
+            {' '}
+            {userFilters.length > 0 ? filteredSearchJobs.length : filteredJobs.length}
+          </Text>
+        </Title>
+        <IconButton
+          style={styles.arrow}
+          icon="swap-vertical"
+          mode="contained"
+          size={30}
+          containerColor={showSortSelector ? colors.detail : 'white'}
+          iconColor={showSortSelector ? 'white' : colors.detail}
+          onPress={() => setShowSortSelector(!showSortSelector)}
+        />
+        {showSortSelector && (
+          <View style={styles.sortSelector}>
+            {sortType.map((sortType) => (
+              <TouchableOpacity
+                key={sortType.value}
+                onPress={() => {
+                  setActiveSortType(sortType.value);
+                  setShowSortSelector(false);
+                }}
+              >
+                <Text
+                  style={[
+                    styles.sortItem,
+                    sortType.value === activeSortType ? styles.activeSortItem : null,
+                  ]}
+                >
+                  {sortType.label}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+      </View>
       <View style={styles.containerFilters}>
         <ScrollView horizontal={true}>
           {userFilters.length > 0 &&
@@ -112,51 +165,20 @@ export default function JobsListScreen({ route }) {
       </View>
       <View>
         <ScrollView horizontal={true} style={styles.containerOptions}>
-          {!filterKeyInUse('employment') && (
-            <Chip
-              style={styles.chipButton}
-              onPress={() => {
-                setShowOptions(true);
-                setNewFilterKey('employment');
-              }}
-            >
-              <Text>Työsuhde</Text>
-            </Chip>
-          )}
-          {!filterKeyInUse('profitCenter') && (
-            <Chip
-              style={styles.chipButton}
-              onPress={() => {
-                setShowOptions(true);
-                setNewFilterKey('profitCenter');
-              }}
-            >
-              <Text>Työnantaja</Text>
-            </Chip>
-          )}
-          {!filterKeyInUse('region') && (
-            <Chip
-              style={styles.chipButton}
-              // eslint-disable-next-line prettier/prettier
-              onPress={() => {
-                setShowOptions(true);
-                setNewFilterKey('region');
-              }}
-            >
-              <Text>Sijainti</Text>
-            </Chip>
-          )}
-          {!filterKeyInUse('taskArea') && (
-            <Chip
-              style={styles.chipButton}
-              // eslint-disable-next-line prettier/prettier
-              onPress={() => {
-                setShowOptions(true);
-                setNewFilterKey('taskArea');
-              }}
-            >
-              <Text>Tehtäväalueet</Text>
-            </Chip>
+          {filterType.map(
+            (filter) =>
+              !filterKeyInUse(filter.value) && (
+                <Chip
+                  key={filter.value}
+                  style={styles.chipButton}
+                  onPress={() => {
+                    setShowOptions(true);
+                    setNewFilterKey(filter.value);
+                  }}
+                >
+                  <Text>{filter.label}</Text>
+                </Chip>
+              )
           )}
         </ScrollView>
       </View>
@@ -166,22 +188,40 @@ export default function JobsListScreen({ route }) {
             newFilterOptions.length > 0 &&
             newFilterOptions.map((o) => (
               <Button
+                buttonColor="white"
+                textColor="black"
                 key={o}
-                title={`${o}`}
+                uppercase
                 onPress={() => {
                   setNewFilterValue(o);
                   setShowOptions(false);
                   submitFilter(o);
                 }}
-              />
+              >
+                {`${o}`}
+              </Button>
             ))}
         </ScrollView>
+        <Divider />
       </View>
-      <Jobs data={userFilters.length > 0 ? filteredSearchJobs : filteredJobs} />
+      <Jobs
+        data={userFilters.length > 0 ? filteredSearchJobs : filteredJobs}
+        sortType={activeSortType}
+      />
     </>
   );
 }
 const styles = StyleSheet.create({
+  activeSortItem: {
+    backgroundColor: colors.detail,
+    color: 'white',
+  },
+  arrow: {
+    height: 36,
+    position: 'absolute',
+    right: 0,
+    width: 36,
+  },
   chipButton: {
     backgroundColor: colors.detailGreen,
     marginHorizontal: 5,
@@ -195,12 +235,36 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 15,
   },
+  number: {
+    color: colors.detail,
+  },
   optionContainer: {
     height: 'auto',
     maxHeight: 250,
   },
   redButton: {
-    backgroundColor: 'red',
+    backgroundColor: '#e3342f',
     marginHorizontal: 5,
+  },
+  sortItem: {
+    fontSize: 16,
+    paddingHorizontal: 5,
+    paddingVertical: 8,
+  },
+  sortSelector: {
+    backgroundColor: 'white',
+    borderRadius: 5,
+    elevation: 5,
+    padding: 5,
+    position: 'absolute',
+    right: 5,
+    top: 45,
+    width: 145,
+    zIndex: 1,
+  },
+  topContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    margin: 5,
   },
 });
