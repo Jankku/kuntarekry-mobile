@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import HomeScreen from './Screens/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -8,7 +8,7 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { List, Provider as PaperProvider } from 'react-native-paper';
 import AppBar from './Components/AppBar';
 import JobListScreen from './Screens/JobListScreen';
 import JobScreen from './Screens/JobScreen';
@@ -29,6 +29,7 @@ import { JobLocationProvider } from './hooks/usejoblocations';
 import { JobTaskProvider } from './hooks/usejobtasks';
 import FavoritesScreen from './Screens/FavoritesScreen';
 import { lightTheme, navigationLightTheme } from './styles/theme';
+import { LinearGradient } from 'expo-linear-gradient';
 import { PersonalisationProvider, usePersonalisation } from './hooks/usepersonalisation';
 import 'intl-pluralrules';
 import './i18n/config';
@@ -43,18 +44,84 @@ dayjs.extend(timezone);
 dayjs.locale('fi');
 dayjs.tz.setDefault('Europe/Helsinki');
 
-function CustomDrawerContent(props) {
+function CustomDrawerContent (props) {
   return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
+    <LinearGradient
+      style={{ flex: 1 }}
+      colors={['#0a8bc2', '#33cc80']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0.0, y: 1.9 }}
+    >
+      <DrawerContentScrollView {...props}>
+        <DrawerItemList {...props} />
+        <List.Section>
+          <List.Accordion
+            theme={{
+              colors: {
+                background: 'transparent',
+              },
+            }}
+            right={(props) =>
+              props.isExpanded === false ? (
+                <List.Icon {...props} color={'white'} icon='plus' />
+              ) : (
+                <List.Icon {...props} color={'white'} icon='minus' />
+              )
+            }
+            titleStyle={{ color: 'white' }}
+            title='Työpaikat sijainnin mukaan'
+          >
+            <List.Item titleStyle={{ color: 'white' }} title='Ahvenanmaa' />
+            <List.Item titleStyle={{ color: 'white' }} title='Etelä-Karjala' />
+            <List.Item titleStyle={{ color: 'white' }} title='Etelä-Pohjanmaa' />
+            <List.Item titleStyle={{ color: 'white' }} title='Etelä-Savo' />
+            <List.Item titleStyle={{ color: 'white' }} title='Kainuu' />
+            <List.Item titleStyle={{ color: 'white' }} title='Kanta-Häme' />
+            <List.Item titleStyle={{ color: 'white' }} title='Keski-Pohjanmaa' />
+            <List.Item titleStyle={{ color: 'white' }} title='Keski-Suomi' />
+            <List.Item titleStyle={{ color: 'white' }} title='Kymenlaakso' />
+            <List.Item titleStyle={{ color: 'white' }} title='Lappi' />
+            <List.Item titleStyle={{ color: 'white' }} title='Pirkanmaa' />
+            <List.Item titleStyle={{ color: 'white' }} title='Pohjanmaa' />
+            <List.Item titleStyle={{ color: 'white' }} title='Pohjois-Karjala' />
+            <List.Item titleStyle={{ color: 'white' }} title='Pohjois-Pohjanmaa' />
+            <List.Item titleStyle={{ color: 'white' }} title='Pohjois-Savo' />
+            <List.Item titleStyle={{ color: 'white' }} title='Päijät-Häme' />
+            <List.Item titleStyle={{ color: 'white' }} title='Satakunta' />
+            <List.Item titleStyle={{ color: 'white' }} title='Uusimaa' />
+            <List.Item titleStyle={{ color: 'white' }} title='Varsinais-Suomi' />
+            <List.Item titleStyle={{ color: 'white' }} title='Ulkomaat' />
+          </List.Accordion>
+
+          <List.Accordion
+            theme={{ colors: { background: 'transparent' } }}
+            right={(props) =>
+              props.isExpanded === false ? (
+                <List.Icon {...props} color={'white'} icon='plus' />
+              ) : (
+                <List.Icon {...props} color={'white'} icon='minus' />
+              )
+            }
+            titleStyle={{ color: 'white' }}
+            title='Työpaikat tehtävän mukaan'
+          >
+            <List.Item titleStyle={{ color: 'white' }} title='Hallinto- ja toimistotyö' />
+            <List.Item titleStyle={{ color: 'white' }} title='Opetus- ja kulttuuriala' />
+            <List.Item titleStyle={{ color: 'white' }} title='Sosiaaliala' />
+            <List.Item titleStyle={{ color: 'white' }} title='Tekninen ala' />
+            <List.Item titleStyle={{ color: 'white' }} title='Terveydenhuoltoala' />
+            <List.Item titleStyle={{ color: 'white' }} title='Vapaaehtoistyö' />
+          </List.Accordion>
+        </List.Section>
+      </DrawerContentScrollView>
       <LanguageSelector />
-    </DrawerContentScrollView>
+    </LinearGradient>
   );
 }
 
 const Drawer = createDrawerNavigator();
 
-export default function App() {
+export default function App () {
   return (
     <OnboardingProvider>
       <PersonalisationProvider>
@@ -66,24 +133,24 @@ export default function App() {
 
 const Stack = createStackNavigator();
 
-function StackScreen() {
+function StackScreen () {
   return (
     <Stack.Navigator
       screenOptions={{
         header: (props) => <AppBar {...props} />,
       }}
     >
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Jobs" component={JobListScreen} />
-      <Stack.Screen name="Job" component={JobScreen} />
-      <Stack.Screen name="Filter" component={JobFilterScreen} />
-      <Stack.Screen name="Organization" component={OrganizationScreen} />
-      <Stack.Screen name="Favorites" component={FavoritesScreen} />
+      <Stack.Screen name='Home' component={HomeScreen} />
+      <Stack.Screen name='Jobs' component={JobListScreen} />
+      <Stack.Screen name='Job' component={JobScreen} />
+      <Stack.Screen name='Filter' component={JobFilterScreen} />
+      <Stack.Screen name='Organization' component={OrganizationScreen} />
+      <Stack.Screen name='Favorites' component={FavoritesScreen} />
     </Stack.Navigator>
   );
 }
 
-function AppWrapper() {
+function AppWrapper () {
   const { onboardingDone } = useOnboarding();
   const { i18n } = useTranslation();
   const { lang } = usePersonalisation();
@@ -108,7 +175,7 @@ function AppWrapper() {
         <JobTaskProvider>
           <FavoriteListProvider>
             <PaperProvider theme={lightTheme}>
-              <StatusBar style="inverted" />
+              <StatusBar style='inverted' />
               <NavigationContainer theme={navigationLightTheme} onReady={onReady}>
                 <Drawer.Navigator
                   useLegacyImplementation
@@ -116,23 +183,27 @@ function AppWrapper() {
                   screenOptions={{
                     header: (props) => <AppBar {...props} />,
                     headerShown: onboardingDone,
+                    drawerContentContainerStyle: {
+                      backgroundColor: '#c6cbef',
+                    },
+                    drawerActiveTintColor: 'white',
+                    drawerInactiveTintColor: 'white',
                   }}
                 >
                   {onboardingDone === true ? (
                     <>
                       <Drawer.Screen
-                        name="Stack"
+                        name='Stack'
                         component={StackScreen}
                         options={{ headerShown: false, drawerItemStyle: { height: 0 } }}
                       />
-                      <Drawer.Screen name="Työpaikat" component={JobListScreen} />
-                      <Drawer.Screen name="Työpaikat sijainnin mukaan" component={JobListScreen} />
-                      <Drawer.Screen name="Työpaikat tehtävän mukaan" component={JobListScreen} />
+                      <Drawer.Screen name='Työpaikat' component={JobListScreen} />
+                      <Drawer.Screen name='Uusimmat työpaikat' component={JobListScreen} />
                     </>
                   ) : (
                     <>
-                      <Drawer.Screen name="Welcome" component={WelcomeScreen} />
-                      <Drawer.Screen name="Personalisation" component={PersonalisationScreen} />
+                      <Drawer.Screen name='Welcome' component={WelcomeScreen} />
+                      <Drawer.Screen name='Personalisation' component={PersonalisationScreen} />
                     </>
                   )}
                 </Drawer.Navigator>

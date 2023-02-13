@@ -4,9 +4,10 @@ import { StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFavoriteList } from '../hooks/usefavoritelist';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+
 export default function AppBar({ navigation, back }) {
-  // eslint-disable-next-line no-unused-vars
   const { favorites } = useFavoriteList();
+
   return (
     <LinearGradient colors={['#0a8bc2', '#33cc80']} start={{ x: 0.9, y: 0.8 }} end={{ x: 0, y: 0 }}>
       <Appbar.Header style={styles.header} mode={'center-aligned'}>
@@ -19,9 +20,11 @@ export default function AppBar({ navigation, back }) {
             onPress={() => navigation.openDrawer()}
           />
         )}
-        <TouchableOpacity style={styles.touchable} onPress={() => navigation.navigate('Home')}>
-          <Image style={styles.image} source={require('../assets/logo.png')} />
+
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <Image style={styles.image} resizeMode="contain" source={require('../assets/logo.png')} />
         </TouchableOpacity>
+
         <Appbar.Action
           color={colors.onPrimary}
           icon="heart"
@@ -44,14 +47,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: 'transparent',
+    justifyContent: 'space-between',
   },
-  image: {
-    height: '75%',
-    width: '60%',
-  },
-  touchable: {
-    alignItems: 'center',
-    marginTop: 10,
-    width: 250,
-  },
+  image: { width: 150 },
 });
