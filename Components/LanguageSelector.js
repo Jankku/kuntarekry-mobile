@@ -4,7 +4,8 @@ import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IconButton } from 'react-native-paper';
-export default function LanguageSelector () {
+
+export default function LanguageSelector() {
   const { i18n } = useTranslation();
   const [showLanguageSelector, setShowLanguageSelector] = useState(false);
   const languageIcons = {
@@ -26,11 +27,6 @@ export default function LanguageSelector () {
   );
   return (
     <View style={{ margin: 10 }}>
-      <IconButton
-        style={{ marginLeft: 0, marginRight: 0 }}
-        icon={() => <Image style={styles.flagIcon} source={languageIcons[i18n.language]} />}
-        onPress={() => setShowLanguageSelector(!showLanguageSelector)}
-      />
       {showLanguageSelector && (
         <View style={styles.languageSelector}>
           {Object.keys(languageIcons).map((language) => (
@@ -47,6 +43,11 @@ export default function LanguageSelector () {
           ))}
         </View>
       )}
+      <IconButton
+        style={{ marginLeft: 0, marginRight: 0 }}
+        icon={() => <Image style={styles.flagIcon} source={languageIcons[i18n.language]} />}
+        onPress={() => setShowLanguageSelector(!showLanguageSelector)}
+      />
     </View>
   );
 }
