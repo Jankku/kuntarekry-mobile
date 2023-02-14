@@ -60,7 +60,7 @@ export default function JobList({ data, sortType }) {
 
       <Divider />
       <View style={styles.footerContainer}>
-        <Button mode="outlined" icon="arrow-left" onPress={goBackward}>
+        <Button compact mode="outlined" icon="arrow-left" onPress={goBackward}>
           {t('backward')}
         </Button>
 
@@ -69,6 +69,7 @@ export default function JobList({ data, sortType }) {
         </Text>
 
         <Button
+          compact
           mode="outlined"
           icon="arrow-right"
           contentStyle={{ flexDirection: 'row-reverse' }}
