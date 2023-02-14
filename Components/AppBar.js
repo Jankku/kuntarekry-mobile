@@ -30,7 +30,7 @@ export default function AppBar({ navigation, back }) {
           icon="heart"
           onPress={() => navigation.navigate('Favorites')}
         />
-        <Badge size={18} style={styles.badge} visible={favorites.length > 0 ? true : false}>
+        <Badge size={18} style={styles.badge} visible={favorites.length > 0}>
           {favorites.length}
         </Badge>
       </Appbar.Header>
@@ -40,14 +40,14 @@ export default function AppBar({ navigation, back }) {
 
 const styles = StyleSheet.create({
   badge: {
-    backgroundColor: 'rgba(0,86,68,.6)',
+    backgroundColor: 'rgba(0, 86, 68, 0.7)',
     position: 'absolute',
-    right: 4,
-    top: 14,
+    right: 10,
+    top: 12,
   },
   header: {
     backgroundColor: 'transparent',
     justifyContent: 'space-between',
   },
-  image: { width: 150 },
+  image: { height: 50, width: 150 },
 });
