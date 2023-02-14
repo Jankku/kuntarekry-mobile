@@ -93,6 +93,11 @@
   "jobItem": {
     "publicationEnds": "Sök före"
   },
+  "jobList": {
+    "searchQueryFilterText": "Jobbannonser med sökord: <searchQuery>",
+    "categoryFilterText": "Jobbannonser med kategori: <category>",
+    "allApplicationsText": "Alla jobbannonser"
+  },
   "jobDetail": {
     "applyToJob": "Sök arbete",
     "details": "Detaljer",

@@ -93,6 +93,11 @@
   "jobItem": {
     "publicationEnds": "Haku päättyy"
   },
+  "jobList": {
+    "searchQueryFilterText": "Ilmoitukset hakusanalla: <searchQuery>",
+    "categoryFilterText": "Ilmoitukset kategorialla: <category>",
+    "allApplicationsText": "Kaikki ilmoitukset"
+  },
   "jobDetail": {
     "applyToJob": "Hae työpaikkaa",
     "details": "Lisätietoja",

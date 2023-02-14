@@ -1,7 +1,7 @@
 import { StyleSheet, FlatList, Text } from 'react-native';
 import { Title, FAB } from 'react-native-paper';
 import { clearStoredList, useFavoriteList } from '../hooks/usefavoritelist';
-import JobListItem from '../Components/JobListItem';
+import JobListItem from '../Components/joblist/JobListItem';
 import { colors } from '../styles/colors';
 
 export default function FavoritesScreen() {

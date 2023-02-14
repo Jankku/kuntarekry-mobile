@@ -1,13 +1,17 @@
 import { useMemo, useState } from 'react';
-import { Title, Chip, IconButton, Button, Divider } from 'react-native-paper';
-import Jobs from '../Components/Jobs';
+import { Title, Chip, useTheme, IconButton, Button, Divider } from 'react-native-paper';
+import JobList from '../Components/joblist/JobList';
 import useFilterJobs from '../hooks/usefilterjobs';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../styles/colors';
+import { useTranslation } from 'react-i18next';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function JobsListScreen({ route }) {
+  const theme = useTheme();
+  const { t } = useTranslation();
   const searchQuery = route.params?.searchQuery ?? '';
   const buttonJobQuery = route.params?.buttonJobQuery ?? '';
   const filter = route.params?.filter ?? '';
@@ -21,7 +25,7 @@ export default function JobsListScreen({ route }) {
   const [showOptions, setShowOptions] = useState(true);
 
   const [showSortSelector, setShowSortSelector] = useState(false);
-  const [activeSortType, setActiveSortType] = useState(null);
+  const [activeSortType, setActiveSortType] = useState('newest');
 
   const filterType = [
     { label: 'Työsuhde', value: 'employment' },
@@ -97,7 +101,6 @@ export default function JobsListScreen({ route }) {
   const filterKeyInUse = (key) => userFilters.some((f) => f.key === key);
 
   const submitFilter = (o) => {
-    console.log(newFilterKey, o);
     if (newFilterKey && o) {
       addFilter({ key: newFilterKey, value: o });
     }
@@ -110,16 +113,18 @@ export default function JobsListScreen({ route }) {
   return (
     <>
       <View style={styles.topContainer}>
-        <Title>
+        <Icon name="magnify" size={24} color={theme.colors.primary} />
+        <Title style={{ paddingLeft: 8 }}>
           {searchQuery
-            ? `Ilmoitukset hakusanalla: ${searchQuery}`
+            ? t('jobList.searchQueryFilterText', { searchQuery })
             : buttonJobQuery
-            ? `Ilmoitukset kategorialla: `
-            : 'Kaikki ilmoitukset '}
+            ? t('jobList.categoryFilterText', { category: buttonJobQuery })
+            : t('jobList.allApplicationsText')}{' '}
+          (
           <Text style={styles.number}>
-            {' '}
             {userFilters.length > 0 ? filteredSearchJobs.length : filteredJobs.length}
           </Text>
+          )
         </Title>
         <IconButton
           style={styles.arrow}
@@ -204,7 +209,8 @@ export default function JobsListScreen({ route }) {
         </ScrollView>
         <Divider />
       </View>
-      <Jobs
+      <Divider />
+      <JobList
         data={userFilters.length > 0 ? filteredSearchJobs : filteredJobs}
         sortType={activeSortType}
       />
@@ -260,11 +266,12 @@ const styles = StyleSheet.create({
     right: 5,
     top: 45,
     width: 145,
-    zIndex: 1,
+    zIndex: 100,
   },
   topContainer: {
-    alignItems: 'center',
+    alignItems: 'baseline',
     flexDirection: 'row',
-    margin: 5,
+    paddingLeft: 8,
+    paddingTop: 8,
   },
 });

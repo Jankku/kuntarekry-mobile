@@ -93,6 +93,11 @@
   "jobItem": {
     "publicationEnds": "Deadline for applications"
   },
+  "jobList": {
+    "searchQueryFilterText": "Search query: <searchQuery>",
+    "categoryFilterText": "Category: <category>",
+    "allApplicationsText": "All applications"
+  },
   "jobDetail": {
     "applyToJob": "Apply to job",
     "details": "Details",
