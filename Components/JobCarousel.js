@@ -53,6 +53,7 @@ export default function JobCarousel() {
       .map((j) => j.jobAdvertisement);
     setCarouselJobs(jobsFromLocationSlice);
   };
+
   return carouselJobs.length === 0 ? (
     <Text variant="titleMedium" style={styles.noJobs}>
       {t('noResults')}

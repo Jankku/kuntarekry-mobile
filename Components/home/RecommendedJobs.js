@@ -1,5 +1,5 @@
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { ImageBackground, StyleSheet, View } from 'react-native';
+import { Text, useTheme } from 'react-native-paper';
 import JobCarousel from '../JobCarousel';
 import kuvaPng from '../../assets/Rectangle90.png';
 import PrimaryButton from '../PrimaryButton';
@@ -13,19 +13,24 @@ export default function RecommendedJobs() {
   return (
     <>
       <View style={styles.titleContainer}>
-        <Text style={styles.carouselheader}>{t('home.recommendedJobs.title')}</Text>
+        <Text variant="titleLarge">{t('home.recommendedJobs.title')}</Text>
       </View>
       <JobCarousel />
       <ImageBackground source={kuvaPng} style={styles.imageBackground}>
         <View style={styles.centerText}>
           <ImageBackground style={styles.cardContainer}>
-            <Text style={styles.cardTitle}>{t('home.recommendedJobs.openApplication')}</Text>
-            <Text style={styles.cardText}>{t('home.recommendedJobs.openApplicationText')}</Text>
+            <Text variant="titleLarge">{t('home.recommendedJobs.openApplication')}</Text>
+            <Text variant="bodyLarge" style={styles.cardText}>
+              {t('home.recommendedJobs.openApplicationText')}
+            </Text>
             <PrimaryButton>{t('home.recommendedJobs.openApplication')}</PrimaryButton>
           </ImageBackground>
+
           <ImageBackground style={styles.cardContainer}>
-            <Text style={styles.cardTitle}>{t('home.recommendedJobs.substitutions')}</Text>
-            <Text style={styles.cardText}>{t('home.recommendedJobs.substitutionsText')}</Text>
+            <Text variant="titleLarge">{t('home.recommendedJobs.substitutions')}</Text>
+            <Text variant="bodyLarge" style={styles.cardText}>
+              {t('home.recommendedJobs.substitutionsText')}
+            </Text>
             <PrimaryButton>{t('home.recommendedJobs.substitutions')}</PrimaryButton>
           </ImageBackground>
         </View>
@@ -40,24 +45,13 @@ const makeStyles = (theme) =>
       alignItems: 'center',
       backgroundColor: 'white',
       borderRadius: 10,
-      margin: 16,
+      marginVertical: 16,
       padding: 16,
-      width: '88%',
+      width: '80%',
     },
     cardText: {
-      color: 'black',
-      fontSize: 17,
       paddingBottom: 16,
       paddingTop: 8,
-    },
-    cardTitle: {
-      color: 'black',
-      fontSize: 22,
-    },
-    carouselheader: {
-      color: 'black',
-      fontSize: 24,
-      fontWeight: '400',
     },
     centerText: {
       alignItems: 'center',
