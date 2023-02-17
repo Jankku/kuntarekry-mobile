@@ -107,5 +107,10 @@
     "moreInformation": "Further information",
     "address": "Address",
     "addressEmpty": "No address"
+  },
+  "favorites": {
+    "title": "Favorites",
+    "listEmpty": "You don't have any favorites yet. Click the heart icon on a job advertisement to add the job to your favorites.",
+    "clear": "Clear favorites"
   }
 }
