@@ -107,5 +107,10 @@
     "moreInformation": "Tilläggsuppgifter",
     "address": "Adress",
     "addressEmpty": "Ingen adress"
+  },
+  "favorites": {
+    "title": "Favoriter",
+    "listEmpty": "Du har inga favoriter. Klicka på ditt hjärta bredvid annonsen om jobbet för att spara annonsen till dina favoriter.",
+    "clear": "Tömma favoriter"
   }
 }

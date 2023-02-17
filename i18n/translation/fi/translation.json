@@ -107,5 +107,10 @@
     "moreInformation": "Lisätietoja",
     "address": "Osoite",
     "addressEmpty": "Ei osoitetta"
+  },
+  "favorites": {
+    "title": "Suosikit",
+    "listEmpty": "Sinulla ei ole tallennettuja suosikkeja. Napauta sydäntä ilmoituksen vierestä tallentaaksesi ilmoituksen suosikkeihin.",
+    "clear": "Tyhjennä suosikit"
   }
 }
