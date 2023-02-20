@@ -14,7 +14,9 @@ export default function JobsListScreen({ route }) {
   const { t } = useTranslation();
   const searchQuery = route.params?.searchQuery ?? '';
   const buttonJobQuery = route.params?.buttonJobQuery ?? '';
+  const buttonJobQuery2 = route.params?.buttonJobQuery2 ?? '';
   const filter = route.params?.filter ?? '';
+  const filter2 = route.params?.filter2 ?? '';
   const { jobs } = useJobAdvertisements();
   const filteredJobs = useFilterJobs(jobs, searchQuery);
   const [userFilters, setUserFilters] = useState([]);
@@ -47,9 +49,13 @@ export default function JobsListScreen({ route }) {
 
   useMemo(() => {
     if (filter) {
-      setUserFilters([{ key: filter, value: buttonJobQuery.toLowerCase() }]);
+      const filters = [{ key: filter, value: buttonJobQuery.toLowerCase() }];
+      if (filter2 && buttonJobQuery2) {
+        filters.push({ key: filter2, value: buttonJobQuery2.toLowerCase() });
+      }
+      setUserFilters(filters);
     }
-  }, [filter, buttonJobQuery]);
+  }, [filter, buttonJobQuery, filter2, buttonJobQuery2]);
 
   useMemo(() => {
     if (newFilterKey) {
