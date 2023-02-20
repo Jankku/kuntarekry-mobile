@@ -25,36 +25,22 @@ export default function JobCarousel() {
   const [task, setTask] = useState(null);
   const { tasks } = useJobTasks();
   const { locations } = useJobLocations();
-  const getLocation = async () => {
-    try {
-      const value = await AsyncStorage.getItem(LOCATION_KEY);
-      if (value !== null) {
-        setLocation(value);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  const getTask = async () => {
-    try {
-      const value = await AsyncStorage.getItem(TASK_KEY);
-      if (value !== null) {
-        setTask(value);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+
   useEffect(() => {
-    getLocation();
-    getTask();
+    (async () => {
+      const location1 = await AsyncStorage.getItem(LOCATION_KEY);
+      const taskArea1 = await AsyncStorage.getItem(TASK_KEY);
+      setLocation(location1);
+      setTask(taskArea1);
+    })();
   }, []);
 
   useEffect(() => {
     if (locations.length > 0 && tasks.length > 0) {
       findLocationAndTaskName(location, task);
     }
-  }, [locations, tasks]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locations, tasks, location, task]);
 
   const findLocationAndTaskName = (location, task) => {
     if (location && task) {
