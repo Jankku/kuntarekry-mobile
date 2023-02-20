@@ -1,5 +1,5 @@
 import { Text, StyleSheet, View } from 'react-native';
-import { useReducer, useState, useEffect } from 'react';
+import { useReducer, useState } from 'react';
 import { Searchbar, Chip, Button, useTheme } from 'react-native-paper';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -11,11 +11,7 @@ import { useTranslation } from 'react-i18next';
 import RecommendedJobs from '../Components/home/RecommendedJobs';
 import SearchButton from '../Components/home/SearchButton';
 import News from '../Components/home/News';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LOCATION_KEY, TASK_KEY } from '../hooks/usepersonalisation';
-import { useJobLocations } from '../hooks/usejoblocations';
-import { useJobTasks } from '../hooks/usejobtasks';
-
+import { usePersonalizationChips } from '../hooks/usePersonalizationChips';
 export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();
   const theme = useTheme();
@@ -24,51 +20,8 @@ export default function HomeScreen({ navigation }) {
   const jobCount = jobs.length ?? 0;
   const [searchQuery, setSearchQuery] = useState('');
   const [filtersHidden, toggleFilters] = useReducer((prev) => !prev, true);
-  const [location, setLocation] = useState(null);
-  const [locationNumber, setLocationNumber] = useState(null);
-  const [task, setTask] = useState(null);
-  const [taskNumber, setTaskNumber] = useState(null);
-  const { tasks } = useJobTasks();
-  const { locations } = useJobLocations();
 
-  useEffect(() => {
-    (async () => {
-      const location1 = await AsyncStorage.getItem(LOCATION_KEY);
-      const taskArea1 = await AsyncStorage.getItem(TASK_KEY);
-      setLocationNumber(location1);
-      setTaskNumber(taskArea1);
-    })();
-  }, []);
-
-  useEffect(() => {
-    if (locations.length > 0 && tasks.length > 0) {
-      findLocationAndTaskName(locationNumber, taskNumber);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [locations, tasks, locationNumber, taskNumber]);
-
-  const findLocationAndTaskName = (location, task) => {
-    if (location !== null) {
-      const foundLocation = locations.find((l) => l.id === parseInt(location));
-      if (foundLocation !== undefined) {
-        const locationName = foundLocation.name;
-        console.log(locationName);
-        if (locationName) {
-          setLocation(locationName);
-        }
-      }
-    }
-    if (task !== null) {
-      const foundTask = tasks.find((t) => t.id === parseInt(task));
-      if (foundTask !== undefined) {
-        const taskName = foundTask.name;
-        console.log(taskName);
-        if (taskName) {
-          setTask(taskName);
-        }
-      }
-    }
-  };
+  const { personalizationChips } = usePersonalizationChips();
 
   const filterChips = [
     { label: t('home.header.chips.fullTime'), query: 'Kokoaikatyö' },
@@ -76,31 +29,6 @@ export default function HomeScreen({ navigation }) {
     { label: t('home.header.chips.summerJob'), query: 'Kesätyö' },
     { label: t('home.header.chips.training'), query: 'Harjoittelu' },
   ];
-  const personalizationChips = [];
-
-  if (location) {
-    personalizationChips.push({
-      label: location,
-      query: location,
-      filter: 'location',
-    });
-  }
-  if (task) {
-    personalizationChips.push({
-      label: task,
-      query: task,
-      filter: 'taskArea',
-    });
-  }
-  if (location && task) {
-    personalizationChips.push({
-      label: `${location} & ${task}`,
-      query: location,
-      query2: task,
-      filter: 'location',
-      filter2: 'taskArea',
-    });
-  }
 
   const onJobCountPress = () => navigation.navigate('Jobs');
 
