@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LOCATION_KEY, TASK_KEY } from './usepersonalisation';
 
-export function usePersonalizationChips() {
+export default function usePersonalizationChips() {
   const { tasks } = useJobTasks();
   const { locations } = useJobLocations();
   const [location, setLocation] = useState(null);

@@ -11,9 +11,8 @@ import { useTranslation } from 'react-i18next';
 import RecommendedJobs from '../Components/home/RecommendedJobs';
 import SearchButton from '../Components/home/SearchButton';
 import News from '../Components/home/News';
-import { usePersonalizationChips } from '../hooks/usepersonalizationchips';
-// eslint-disable-next-line no-unused-vars
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import usePersonalizationChips from '../hooks/usepersonalizationchips';
+
 export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();
   const theme = useTheme();
