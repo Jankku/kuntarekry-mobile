@@ -1,8 +1,9 @@
-import { ScrollView } from 'react-native-gesture-handler';
-import { Title, Text, Card } from 'react-native-paper';
-import { StyleSheet, View } from 'react-native';
+import { Title, Text, Divider } from 'react-native-paper';
+import { FlatList, Pressable, StyleSheet } from 'react-native';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { colors } from '../styles/colors';
+import ListEmpty from '../Components/joblist/ListEmpty';
+import { useNavigation } from '@react-navigation/native';
 
 const routeParamToField = {
   organizations: 'profitCenter',
@@ -11,7 +12,7 @@ const routeParamToField = {
   taskAreas: 'taskArea',
 };
 
-export default function JobFilterScreen({ navigation, route }) {
+export default function JobFilterScreen({ route }) {
   const { jobs } = useJobAdvertisements();
   const list = jobs
     .filter((jobAd) => {
@@ -42,41 +43,48 @@ export default function JobFilterScreen({ navigation, route }) {
 
   return (
     <>
-      <ScrollView>
-        <Title style={styles.title}>
-          {route.params.list === 'regions'
-            ? 'Kaikki maakunnat'
-            : route.params.list === 'organizations'
-            ? 'Kaikki työnantajat'
-            : route.params.list === 'taskAreas'
-            ? 'Kaikki tehtäväalueet'
-            : 'Kaikki kunnat'}
-        </Title>
-        {list.map((item, index) => (
-          <View key={index} style={styles.border}>
-            <Card
-              style={styles.listItem}
-              key={index}
-              onPress={() => {
-                if (route.params.list === 'regions') {
-                  navigation.navigate('Jobs', { buttonJobQuery: item, filter: 'region' });
-                } else if (route.params.list === 'organizations') {
-                  navigation.navigate('Organization', { org: item });
-                } else if (route.params.list === 'locations') {
-                  navigation.navigate('Jobs', { buttonJobQuery: item, filter: 'location' });
-                } else if (route.params.list === 'taskAreas') {
-                  navigation.navigate('Jobs', { buttonJobQuery: item, filter: 'taskArea' });
-                }
-              }}
-            >
-              <Card.Content>
-                <Text style={styles.listText}>{item}</Text>
-              </Card.Content>
-            </Card>
-          </View>
-        ))}
-      </ScrollView>
+      <Title style={styles.title}>
+        {route.params.list === 'regions'
+          ? 'Kaikki maakunnat'
+          : route.params.list === 'organizations'
+          ? 'Kaikki työnantajat'
+          : route.params.list === 'taskAreas'
+          ? 'Kaikki tehtäväalueet'
+          : 'Kaikki kunnat'}
+      </Title>
+      <FlatList
+        data={list}
+        ItemSeparatorComponent={<Divider />}
+        ListEmptyComponent={<ListEmpty />}
+        renderItem={({ item }) => <JobFilterListItem item={item} listParam={route.params.list} />}
+        keyExtractor={(_, index) => index}
+        contentContainerStyle={{ paddingHorizontal: 8, paddingBottom: 16 }}
+      />
     </>
+  );
+}
+
+function JobFilterListItem({ item, listParam }) {
+  const navigation = useNavigation();
+
+  return (
+    <Pressable
+      android_ripple={{ borderless: false }}
+      style={styles.listItem}
+      onPress={() => {
+        if (listParam === 'regions') {
+          navigation.navigate('Jobs', { buttonJobQuery: item, filter: 'region' });
+        } else if (listParam === 'organizations') {
+          navigation.navigate('Organization', { org: item });
+        } else if (listParam === 'locations') {
+          navigation.navigate('Jobs', { buttonJobQuery: item, filter: 'location' });
+        } else if (listParam === 'taskAreas') {
+          navigation.navigate('Jobs', { buttonJobQuery: item, filter: 'taskArea' });
+        }
+      }}
+    >
+      <Text variant="bodyMedium">{item}</Text>
+    </Pressable>
   );
 }
 
@@ -88,13 +96,8 @@ const styles = StyleSheet.create({
     marginVertical: 2,
   },
   listItem: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    margin: 2,
-    padding: 0,
-  },
-  listText: {
-    fontSize: 16,
+    paddingHorizontal: 8,
+    paddingVertical: 12,
   },
   title: {
     marginHorizontal: '2%',
