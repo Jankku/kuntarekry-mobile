@@ -7,6 +7,7 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
+  DrawerItem,
 } from '@react-navigation/drawer';
 import { List, Provider as PaperProvider } from 'react-native-paper';
 import AppBar from './Components/AppBar';
@@ -45,6 +46,14 @@ dayjs.locale('fi');
 dayjs.tz.setDefault('Europe/Helsinki');
 
 function CustomDrawerContent(props) {
+  const { resetOnboarding } = useOnboarding();
+
+  const handleResetOnboarding = useCallback(() => {
+    resetOnboarding();
+    props.navigation.closeDrawer();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetOnboarding]);
+
   return (
     <LinearGradient
       style={{ flex: 1 }}
@@ -114,6 +123,7 @@ function CustomDrawerContent(props) {
           </List.Accordion>
         </List.Section>
       </DrawerContentScrollView>
+      <DrawerItem label="Reset onboarding" onPress={handleResetOnboarding} />
       <LanguageSelector />
     </LinearGradient>
   );

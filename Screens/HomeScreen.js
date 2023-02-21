@@ -34,12 +34,12 @@ export default function HomeScreen({ navigation }) {
 
   const hiddenChips = [];
 
-  if (personalizationChips.length > 0) {
+  if (personalizationChips.length > 2) {
     hiddenChips.push(filterChips[1]);
     hiddenChips.push(filterChips[2]);
     hiddenChips.push(filterChips[3]);
     filterChips.splice(1, 3);
-  } else if (personalizationChips.length > 2) {
+  } else if (personalizationChips.length > 0) {
     hiddenChips.push(filterChips[3]);
     filterChips.splice(3, 1);
   }
