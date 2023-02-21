@@ -12,6 +12,8 @@ import RecommendedJobs from '../Components/home/RecommendedJobs';
 import SearchButton from '../Components/home/SearchButton';
 import News from '../Components/home/News';
 import { usePersonalizationChips } from '../hooks/usepersonalizationchips';
+// eslint-disable-next-line no-unused-vars
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();
   const theme = useTheme();
@@ -29,6 +31,18 @@ export default function HomeScreen({ navigation }) {
     { label: t('home.header.chips.summerJob'), query: 'Kesätyö' },
     { label: t('home.header.chips.training'), query: 'Harjoittelu' },
   ];
+
+  const hiddenChips = [];
+
+  if (personalizationChips.length > 0) {
+    hiddenChips.push(filterChips[1]);
+    hiddenChips.push(filterChips[2]);
+    hiddenChips.push(filterChips[3]);
+    filterChips.splice(1, 3);
+  } else if (personalizationChips.length > 2) {
+    hiddenChips.push(filterChips[3]);
+    filterChips.splice(3, 1);
+  }
 
   const onJobCountPress = () => navigation.navigate('Jobs');
 
@@ -107,6 +121,18 @@ export default function HomeScreen({ navigation }) {
             >
               {t('home.header.chips.regions')}
             </Chip>
+            {hiddenChips.map((chip) => (
+              <Chip
+                key={chip.query}
+                compact
+                style={styles.chip}
+                onPress={() =>
+                  navigation.navigate('Jobs', { buttonJobQuery: chip.query, filter: 'employment' })
+                }
+              >
+                {chip.label}
+              </Chip>
+            ))}
           </View>
         ) : null}
         <Searchbar

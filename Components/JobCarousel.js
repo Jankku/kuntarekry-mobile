@@ -43,97 +43,79 @@ export default function JobCarousel() {
   }, [locations, tasks, location, task]);
 
   const findLocationAndTaskName = (location, task) => {
-    if (location && task) {
-      const foundLocation = locations.find((l) => l.id === parseInt(location));
-      const locationName = foundLocation.name;
-      const foundTask = tasks.find((t) => t.id === parseInt(task));
-      const taskName = foundTask.name;
-      const jobsFromLocationAndTask = jobs.filter(
+    const locationName = location && locations.find((l) => l.id === parseInt(location))?.name;
+    const taskName = task && tasks.find((t) => t.id === parseInt(task))?.name;
+
+    const filterJobsByLocation = (jobsToFilter, locationNameToFilter) => {
+      return jobsToFilter.filter(
         (j) =>
           j.jobAdvertisement &&
           j.jobAdvertisement.location &&
-          j.jobAdvertisement.location.includes(locationName.trim()) &&
+          j.jobAdvertisement.location.includes(locationNameToFilter.trim())
+      );
+    };
+
+    const filterJobsByTask = (jobsToFilter, taskNameToFilter) => {
+      return jobsToFilter.filter(
+        (j) =>
+          j.jobAdvertisement &&
+          j.jobAdvertisement.taskArea &&
+          j.jobAdvertisement.taskArea.includes(taskNameToFilter.trim())
+      );
+    };
+
+    let jobsToDisplay = [];
+
+    if (location && task) {
+      let jobsFromLocationAndTask = filterJobsByLocation(jobs, locationName).filter(
+        (j) =>
+          j.jobAdvertisement &&
           j.jobAdvertisement.taskArea &&
           j.jobAdvertisement.taskArea.includes(taskName.trim())
       );
-      const jobsFromLocationAndTaskSlice = jobsFromLocationAndTask
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 3)
-        .map((j) => j.jobAdvertisement);
-      if (jobsFromLocationAndTaskSlice.length > 0) {
-        setCarouselJobs(jobsFromLocationAndTaskSlice);
+      if (jobsFromLocationAndTask.length > 0) {
+        jobsToDisplay = jobsFromLocationAndTask;
       } else {
-        //jobsfromRegionAndTask
-        const jobsFromRegionAndTask = jobs.filter(
+        let jobsFromRegionAndTask = filterJobsByLocation(jobs, locationName.split(' ')[0]).filter(
           (j) =>
             j.jobAdvertisement &&
-            j.jobAdvertisement.location &&
-            j.jobAdvertisement.location.includes(locationName.trim().split(' ')[0]) &&
             j.jobAdvertisement.taskArea &&
             j.jobAdvertisement.taskArea.includes(taskName.trim())
         );
-        const jobsFromRegionAndTaskSlice = jobsFromRegionAndTask
-          .sort(() => 0.5 - Math.random())
-          .slice(0, 3)
-          .map((j) => j.jobAdvertisement);
-        if (jobsFromRegionAndTaskSlice.length > 0) {
-          setCarouselJobs(jobsFromRegionAndTaskSlice);
+        if (jobsFromRegionAndTask.length > 0) {
+          jobsToDisplay = jobsFromRegionAndTask;
+        } else {
+          let jobsFromTask = filterJobsByTask(jobs, taskName);
+          if (jobsFromTask.length > 0) {
+            jobsToDisplay = jobsFromTask;
+          }
         }
       }
     } else if (location) {
-      const foundLocation = locations.find((l) => l.id === parseInt(location));
-      const locationName = foundLocation.name;
-      const jobsFromLocation = jobs.filter(
-        (j) =>
-          j.jobAdvertisement &&
-          j.jobAdvertisement.location &&
-          j.jobAdvertisement.location.includes(locationName.trim())
-      );
-      const jobsFromLocationSlice = jobsFromLocation
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 3)
-        .map((j) => j.jobAdvertisement);
-      if (jobsFromLocationSlice.length > 0) {
-        setCarouselJobs(jobsFromLocationSlice);
+      let jobsFromLocation = filterJobsByLocation(jobs, locationName);
+      if (jobsFromLocation.length > 0) {
+        jobsToDisplay = jobsFromLocation;
       } else {
-        //jobsfromRegion
-        const jobsFromRegion = jobs.filter(
-          (j) =>
-            j.jobAdvertisement &&
-            j.jobAdvertisement.location &&
-            j.jobAdvertisement.location.includes(locationName.trim().split(' ')[0])
-        );
-        const jobsFromRegionSlice = jobsFromRegion
-          .sort(() => 0.5 - Math.random())
-          .slice(0, 3)
-          .map((j) => j.jobAdvertisement);
-        if (jobsFromRegionSlice.length > 0) {
-          setCarouselJobs(jobsFromRegionSlice);
+        let jobsFromRegion = filterJobsByLocation(jobs, locationName.split(' ')[0]);
+        if (jobsFromRegion.length > 0) {
+          jobsToDisplay = jobsFromRegion;
         }
       }
     } else if (task) {
-      const foundTask = tasks.find((t) => t.id === parseInt(task));
-      const taskName = foundTask.name;
-      const jobsFromTask = jobs.filter(
-        (j) =>
-          j.jobAdvertisement &&
-          j.jobAdvertisement.taskArea &&
-          j.jobAdvertisement.taskArea.includes(taskName.trim())
-      );
-      const jobsFromTaskSlice = jobsFromTask
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 3)
-        .map((j) => j.jobAdvertisement);
-      if (jobsFromTaskSlice.length > 0) {
-        setCarouselJobs(jobsFromTaskSlice);
+      let jobsFromTask = filterJobsByTask(jobs, taskName);
+      if (jobsFromTask.length > 0) {
+        jobsToDisplay = jobsFromTask;
       }
     } else {
-      const jobsSlice = jobs
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 3)
-        .map((j) => j.jobAdvertisement);
-      setCarouselJobs(jobsSlice);
+      jobsToDisplay = jobs;
     }
+
+    let jobsToDisplaySlice = jobsToDisplay
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3)
+      .map((j) => j.jobAdvertisement);
+
+    setCarouselJobs(jobsToDisplaySlice);
   };
 
   return carouselJobs.length === 0 ? (
