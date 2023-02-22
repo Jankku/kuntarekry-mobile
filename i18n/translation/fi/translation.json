@@ -115,5 +115,8 @@
       "jobs": "Tyhjennä suosikki työpaikat",
       "employers": "Tyhjennä suosikki työnantajat"
     }
+  },
+  "drawer": {
+    "resetOnboardingModalText": "Oletko varma että haluat muuttaa toimialaa/sijaintia? Sovellus unohtaa tämänhetkiset valintasi."
   }
 }

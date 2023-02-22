@@ -9,7 +9,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import { List, Chip, Provider as PaperProvider } from 'react-native-paper';
+import { List, Provider as PaperProvider } from 'react-native-paper';
 import AppBar from './Components/AppBar';
 import JobListScreen from './Screens/JobListScreen';
 import JobScreen from './Screens/JobScreen';
@@ -37,8 +37,8 @@ import { FavoriteListProvider } from './hooks/usefavoritelist';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from './Components/LanguageSelector';
 import FavoritesScreen from './Screens/FavoritesScreen';
-import { Modal, View, Text } from 'react-native';
 import { useState } from 'react';
+import ResetOnboardingModal from './Components/ResetOnboardingModal';
 
 SplashScreen.preventAutoHideAsync().catch(console.warn);
 
@@ -96,39 +96,11 @@ function CustomDrawerContent(props) {
 
   return (
     <>
-      <Modal visible={isConfirmationModalVisible} transparent={true}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: 'white',
-              borderRadius: 10,
-              padding: 20,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Text>
-              Oletko varma että haluat muuttaa toimialaa/sijaintia? (Sovellus unohtaa tämänhetkiset
-              valintasi)
-            </Text>
-            <View style={{ flexDirection: 'row', marginTop: 10, padding: 5 }}>
-              <Chip onPress={handleConfirmationModalYes} style={{ padding: 5 }}>
-                Yes
-              </Chip>
-              <Chip onPress={handleConfirmationModalNo} style={{ marginLeft: 15, padding: 5 }}>
-                No
-              </Chip>
-            </View>
-          </View>
-        </View>
-      </Modal>
+      <ResetOnboardingModal
+        visible={isConfirmationModalVisible}
+        onYesPress={handleConfirmationModalYes}
+        onNoPress={handleConfirmationModalNo}
+      />
       <LinearGradient
         style={{ flex: 1 }}
         colors={['#0a8bc2', '#33cc80']}

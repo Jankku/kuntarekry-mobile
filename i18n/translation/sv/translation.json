@@ -115,5 +115,8 @@
       "jobs": "Tömma favoriter",
       "employers": "Tömma favoriter"
     }
+  },
+  "drawer": {
+    "resetOnboardingModalText": "Är du säker på att du vill ändra bransch/plats? Appen glömmer dina nuvarande val."
   }
 }

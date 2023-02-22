@@ -115,5 +115,8 @@
       "jobs": "Clear favorite jobs",
       "employers": "Clear favorite employers"
     }
+  },
+  "drawer": {
+    "resetOnboardingModalText": "Are you sure you want to change your location or task area? This will reset your personalisation settings."
   }
 }
