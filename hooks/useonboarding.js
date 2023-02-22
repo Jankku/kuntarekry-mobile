@@ -20,7 +20,21 @@ export function OnboardingProvider({ children }) {
     setOnboardingDone(true);
   };
 
-  const value = { onboardingDone, finishOnboarding };
+  const resetOnboarding = async () => {
+    await AsyncStorage.setItem(ONBOARDING_DONE_KEY, 'false');
+    setOnboardingDone(false);
+
+    const LOCATION_KEY = 'location';
+    await AsyncStorage.removeItem(LOCATION_KEY);
+
+    const TASK_KEY = 'task';
+    await AsyncStorage.removeItem(TASK_KEY);
+
+    const LANGUAGE_KEY = 'language';
+    await AsyncStorage.removeItem(LANGUAGE_KEY);
+  };
+
+  const value = { onboardingDone, finishOnboarding, resetOnboarding };
   return <OnboardingContext.Provider value={value}>{children}</OnboardingContext.Provider>;
 }
 

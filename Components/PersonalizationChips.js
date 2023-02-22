@@ -1,10 +1,10 @@
-import { useJobLocations } from './usejoblocations';
-import { useJobTasks } from './usejobtasks';
+import { useJobLocations } from '../hooks/usejoblocations';
+import { useJobTasks } from '../hooks/usejobtasks';
 import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LOCATION_KEY, TASK_KEY } from './usepersonalisation';
+import { LOCATION_KEY, TASK_KEY } from '../hooks/usepersonalisation';
 
-export default function usePersonalizationChips() {
+export default function PersonalizationChips() {
   const { tasks } = useJobTasks();
   const { locations } = useJobLocations();
   const [location, setLocation] = useState(null);

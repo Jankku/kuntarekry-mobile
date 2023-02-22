@@ -7,8 +7,9 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
+  DrawerItem,
 } from '@react-navigation/drawer';
-import { List, Provider as PaperProvider } from 'react-native-paper';
+import { List, Chip, Provider as PaperProvider } from 'react-native-paper';
 import AppBar from './Components/AppBar';
 import JobListScreen from './Screens/JobListScreen';
 import JobScreen from './Screens/JobScreen';
@@ -36,6 +37,9 @@ import { FavoriteListProvider } from './hooks/usefavoritelist';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from './Components/LanguageSelector';
 import FavoritesScreen from './Screens/FavoritesScreen';
+import { Modal, View, Text } from 'react-native';
+import { useState } from 'react';
+
 SplashScreen.preventAutoHideAsync().catch(console.warn);
 
 dayjs.extend(localizedFormat);
@@ -67,59 +71,123 @@ const regions = [
 ];
 
 function CustomDrawerContent(props) {
+  const { resetOnboarding } = useOnboarding();
+
+  const handleResetOnboarding = useCallback(() => {
+    resetOnboarding();
+    props.navigation.closeDrawer();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetOnboarding]);
+
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false);
+
+  const handleChangeLocationTaskArea = () => {
+    setIsConfirmationModalVisible(true);
+  };
+
+  const handleConfirmationModalYes = () => {
+    handleResetOnboarding();
+    setIsConfirmationModalVisible(false);
+  };
+
+  const handleConfirmationModalNo = () => {
+    setIsConfirmationModalVisible(false);
+  };
+
   return (
-    <LinearGradient
-      style={{ flex: 1 }}
-      colors={['#0a8bc2', '#33cc80']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0.0, y: 1.9 }}
-    >
-      <DrawerContentScrollView {...props}>
-        <DrawerItemList {...props} />
-        <List.Section>
-          <List.Accordion
-            theme={{
-              colors: {
-                background: 'transparent',
-              },
+    <>
+      <Modal visible={isConfirmationModalVisible} transparent={true}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: 'white',
+              borderRadius: 10,
+              padding: 20,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
-            right={(props) =>
-              props.isExpanded === false ? (
-                <List.Icon {...props} color={'white'} icon="plus" />
-              ) : (
-                <List.Icon {...props} color={'white'} icon="minus" />
-              )
-            }
-            titleStyle={{ color: 'white' }}
-            title="Työpaikat sijainnin mukaan"
           >
-            {regions.map((region) => (
-              <List.Item key={region} titleStyle={{ color: 'white' }} title={region} />
-            ))}
-          </List.Accordion>
-          <List.Accordion
-            theme={{ colors: { background: 'transparent' } }}
-            right={(props) =>
-              props.isExpanded === false ? (
-                <List.Icon {...props} color={'white'} icon="plus" />
-              ) : (
-                <List.Icon {...props} color={'white'} icon="minus" />
-              )
-            }
-            titleStyle={{ color: 'white' }}
-            title="Työpaikat tehtävän mukaan"
-          >
-            <List.Item titleStyle={{ color: 'white' }} title="Hallinto- ja toimistotyö" />
-            <List.Item titleStyle={{ color: 'white' }} title="Opetus- ja kulttuuriala" />
-            <List.Item titleStyle={{ color: 'white' }} title="Sosiaaliala" />
-            <List.Item titleStyle={{ color: 'white' }} title="Tekninen ala" />
-            <List.Item titleStyle={{ color: 'white' }} title="Terveydenhuoltoala" />
-            <List.Item titleStyle={{ color: 'white' }} title="Vapaaehtoistyö" />
-          </List.Accordion>
-        </List.Section>
-      </DrawerContentScrollView>
-      <LanguageSelector />
-    </LinearGradient>
+            <Text>
+              Oletko varma että haluat muuttaa toimialaa/sijaintia? (Sovellus unohtaa tämänhetkiset
+              valintasi)
+            </Text>
+            <View style={{ flexDirection: 'row', marginTop: 10, padding: 5 }}>
+              <Chip onPress={handleConfirmationModalYes} style={{ padding: 5 }}>
+                Yes
+              </Chip>
+              <Chip onPress={handleConfirmationModalNo} style={{ marginLeft: 15, padding: 5 }}>
+                No
+              </Chip>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <LinearGradient
+        style={{ flex: 1 }}
+        colors={['#0a8bc2', '#33cc80']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0.0, y: 1.9 }}
+      >
+        <DrawerContentScrollView {...props}>
+          <DrawerItemList {...props} />
+          <List.Section>
+            <List.Accordion
+              theme={{
+                colors: {
+                  background: 'transparent',
+                },
+              }}
+              right={(props) =>
+                props.isExpanded === false ? (
+                  <List.Icon {...props} color={'white'} icon="plus" />
+                ) : (
+                  <List.Icon {...props} color={'white'} icon="minus" />
+                )
+              }
+              titleStyle={{ color: 'white' }}
+              title="Työpaikat sijainnin mukaan"
+            >
+              {regions.map((region) => (
+                <List.Item key={region} titleStyle={{ color: 'white' }} title={region} />
+              ))}
+            </List.Accordion>
+
+            <List.Accordion
+              theme={{ colors: { background: 'transparent' } }}
+              right={(props) =>
+                props.isExpanded === false ? (
+                  <List.Icon {...props} color={'white'} icon="plus" />
+                ) : (
+                  <List.Icon {...props} color={'white'} icon="minus" />
+                )
+              }
+              titleStyle={{ color: 'white' }}
+              title="Työpaikat tehtävän mukaan"
+            >
+              <List.Item titleStyle={{ color: 'white' }} title="Hallinto- ja toimistotyö" />
+              <List.Item titleStyle={{ color: 'white' }} title="Opetus- ja kulttuuriala" />
+              <List.Item titleStyle={{ color: 'white' }} title="Sosiaaliala" />
+              <List.Item titleStyle={{ color: 'white' }} title="Tekninen ala" />
+              <List.Item titleStyle={{ color: 'white' }} title="Terveydenhuoltoala" />
+              <List.Item titleStyle={{ color: 'white' }} title="Vapaaehtoistyö" />
+            </List.Accordion>
+          </List.Section>
+        </DrawerContentScrollView>
+        <DrawerItem
+          label="Vaihda toimiala/sijainti"
+          onPress={handleChangeLocationTaskArea}
+          labelStyle={{ color: 'white' }}
+        />
+        <LanguageSelector />
+      </LinearGradient>
+    </>
   );
 }
 

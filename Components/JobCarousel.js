@@ -85,9 +85,20 @@ export default function JobCarousel() {
         if (jobsFromRegionAndTask.length > 0) {
           jobsToDisplay = jobsFromRegionAndTask;
         } else {
-          let jobsFromTask = filterJobsByTask(jobs, taskName);
-          if (jobsFromTask.length > 0) {
-            jobsToDisplay = jobsFromTask;
+          //jobs from location
+          let jobsFromLocation = filterJobsByLocation(jobs, locationName);
+          if (jobsFromLocation.length > 0) {
+            jobsToDisplay = jobsFromLocation;
+          } else {
+            let jobsFromRegion = filterJobsByLocation(jobs, locationName.split(' ')[0]);
+            if (jobsFromRegion.length > 0) {
+              jobsToDisplay = jobsFromRegion;
+            } else {
+              let jobsFromTask = filterJobsByTask(jobs, taskName);
+              if (jobsFromTask.length > 0) {
+                jobsToDisplay = jobsFromTask;
+              }
+            }
           }
         }
       }
@@ -99,12 +110,16 @@ export default function JobCarousel() {
         let jobsFromRegion = filterJobsByLocation(jobs, locationName.split(' ')[0]);
         if (jobsFromRegion.length > 0) {
           jobsToDisplay = jobsFromRegion;
+        } else {
+          jobsToDisplay = jobs;
         }
       }
     } else if (task) {
       let jobsFromTask = filterJobsByTask(jobs, taskName);
       if (jobsFromTask.length > 0) {
         jobsToDisplay = jobsFromTask;
+      } else {
+        jobsToDisplay = jobs;
       }
     } else {
       jobsToDisplay = jobs;

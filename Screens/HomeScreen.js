@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import RecommendedJobs from '../Components/home/RecommendedJobs';
 import SearchButton from '../Components/home/SearchButton';
 import News from '../Components/home/News';
-import usePersonalizationChips from '../hooks/usepersonalizationchips';
+import usePersonalizationChips from '../Components/PersonalizationChips';
 
 export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();
@@ -33,12 +33,12 @@ export default function HomeScreen({ navigation }) {
 
   const hiddenChips = [];
 
-  if (personalizationChips.length > 0) {
+  if (personalizationChips.length > 2) {
     hiddenChips.push(filterChips[1]);
     hiddenChips.push(filterChips[2]);
     hiddenChips.push(filterChips[3]);
     filterChips.splice(1, 3);
-  } else if (personalizationChips.length > 2) {
+  } else if (personalizationChips.length > 0) {
     hiddenChips.push(filterChips[3]);
     filterChips.splice(3, 1);
   }
