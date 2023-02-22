@@ -30,8 +30,8 @@ export default function AppBar({ navigation, back }) {
           icon="heart"
           onPress={() => navigation.navigate('Favorites')}
         />
-        <Badge size={18} style={styles.badge} visible={favorites.length > 0}>
-          {favorites.length}
+        <Badge size={18} style={styles.badge} visible={favorites.jobs.length > 0}>
+          {favorites.jobs.length}
         </Badge>
       </Appbar.Header>
     </LinearGradient>

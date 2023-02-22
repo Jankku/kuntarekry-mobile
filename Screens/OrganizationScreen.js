@@ -1,9 +1,11 @@
 import { ScrollView } from 'react-native-gesture-handler';
-import { Title, Text, Chip, useTheme } from 'react-native-paper';
+import { Title, Text, Chip, useTheme, IconButton } from 'react-native-paper';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { StyleSheet, View, Image } from 'react-native';
 import { API_URL } from '@env';
 import OrganizationJobItem from '../Components/OrganizationJobItem';
+import FavoriteButton from '../Components/FavoriteButton';
+import { colors } from '../styles/colors';
 
 export default function OrganizationScreen({ route, navigation }) {
   const theme = useTheme();
@@ -19,7 +21,21 @@ export default function OrganizationScreen({ route, navigation }) {
     <>
       <ScrollView style={styles.body}>
         <View style={styles.introduction}>
-          <Title style={styles.title}>{organization}</Title>
+          <View style={styles.titleContainer}>
+            <Title style={styles.title}>{organization}</Title>
+            <FavoriteButton
+              employer={organization}
+              size={24}
+              buttonStyle={styles.button}
+              buttonColor={colors.detailGreen}
+            />
+            <IconButton
+              style={styles.iconButton}
+              size={24}
+              iconColor={colors.detailGreen}
+              icon="share-variant"
+            />
+          </View>
           <View style={styles.chipContainer}>
             <Chip
               style={styles.chip}
@@ -84,5 +100,8 @@ const makeStyles = (theme) =>
       fontWeight: '600',
       paddingHorizontal: 16,
       paddingVertical: 8,
+    },
+    titleContainer: {
+      flexDirection: 'row',
     },
   });

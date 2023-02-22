@@ -111,6 +111,9 @@
   "favorites": {
     "title": "Suosikit",
     "listEmpty": "Sinulla ei ole tallennettuja suosikkeja. Napauta sydäntä ilmoituksen vierestä tallentaaksesi ilmoituksen suosikkeihin.",
-    "clear": "Tyhjennä suosikit"
+    "clear": {
+      "jobs": "Tyhjennä suosikki työpaikat",
+      "employers": "Tyhjennä suosikki työnantajat"  
+    }
   }
 }

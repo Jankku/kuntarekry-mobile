@@ -1,10 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useEffect, createContext, useContext } from 'react';
 const KEY = 'favoritelist';
-const FavoriteListContext = createContext({ favorites: [], updateFavorites: () => {} });
+const FavoriteListContext = createContext({
+  favorites: { jobs: [], employers: [] },
+  updateFavorites: () => {},
+});
 
 export function FavoriteListProvider({ children }) {
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState({ jobs: [], employers: [] });
 
   const updateFavorites = async () => {
     const list = await getStoredList();
@@ -17,12 +20,13 @@ export function FavoriteListProvider({ children }) {
       setFavorites(list);
     })();
   }, []);
-  const value = { favorites, updateFavorites };
+  const value = { favorites: favorites, updateFavorites };
   return <FavoriteListContext.Provider value={value}>{children}</FavoriteListContext.Provider>;
 }
 
 export function useFavoriteList() {
   const context = useContext(FavoriteListContext);
+
   if (context === undefined) {
     throw new Error('useFavoriteList must be used within a FavoriteListProvider');
   }
@@ -32,28 +36,45 @@ export function useFavoriteList() {
 export async function getStoredList() {
   try {
     const item = await AsyncStorage.getItem(KEY);
-    const list = item ? JSON.parse(item) : [];
+    const list = item ? JSON.parse(item) : { jobs: [], employers: [] };
     return list;
   } catch (e) {
-    return [];
+    return { jobs: [], employers: [] };
   }
 }
-export async function updateStoredList(job) {
+export async function updateStoredList(type, item) {
   const storedList = await getStoredList();
-  const newList = await mergeLists(storedList, job);
-  await AsyncStorage.setItem(KEY, JSON.stringify(newList));
+  const mergedList = await mergeLists(type, item, storedList);
+  await AsyncStorage.setItem(KEY, JSON.stringify(mergedList));
 }
 
-export async function clearStoredList() {
-  await AsyncStorage.removeItem(KEY);
-}
-
-function mergeLists(storedList, job) {
-  if (storedList.some((item) => item.id === job.id)) {
-    const newList = storedList.filter((item) => item.id !== job.id);
-    return newList;
-  } else {
-    const newList = [...storedList, job];
-    return newList;
+export async function clearStoredList(type) {
+  const storedList = await getStoredList();
+  if (type === 'job') {
+    const clearedList = { jobs: [], employers: storedList.employers };
+    await AsyncStorage.setItem(KEY, JSON.stringify(clearedList));
+  } else if (type === 'employer') {
+    const clearedList = { jobs: storedList.jobs, employers: [] };
+    await AsyncStorage.setItem(KEY, JSON.stringify(clearedList));
   }
+}
+
+async function mergeLists(type, item, storedList) {
+  const mergedList = { ...storedList };
+  if (type === 'job') {
+    const jobIndex = storedList.jobs.findIndex((job) => job.id === item.id);
+    if (jobIndex !== -1) {
+      mergedList.jobs.splice(jobIndex, 1);
+    } else {
+      mergedList.jobs.push(item);
+    }
+  } else if (type === 'employer') {
+    const employerIndex = storedList.employers.findIndex((employer) => employer === item);
+    if (employerIndex !== -1) {
+      mergedList.employers.splice(employerIndex, 1);
+    } else {
+      mergedList.employers.push(item);
+    }
+  }
+  return mergedList;
 }

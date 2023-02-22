@@ -27,7 +27,6 @@ import { StatusBar } from 'expo-status-bar';
 import PersonalisationScreen from './Screens/onboarding/PersonalisationScreen';
 import { JobLocationProvider } from './hooks/usejoblocations';
 import { JobTaskProvider } from './hooks/usejobtasks';
-import FavoritesScreen from './Screens/FavoritesScreen';
 import { lightTheme, navigationLightTheme } from './styles/theme';
 import { LinearGradient } from 'expo-linear-gradient';
 import { PersonalisationProvider, usePersonalisation } from './hooks/usepersonalisation';
@@ -36,13 +35,36 @@ import './i18n/config';
 import { FavoriteListProvider } from './hooks/usefavoritelist';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from './Components/LanguageSelector';
-
+import FavoritesScreen from './Screens/FavoritesScreen';
 SplashScreen.preventAutoHideAsync().catch(console.warn);
 
 dayjs.extend(localizedFormat);
 dayjs.extend(timezone);
 dayjs.locale('fi');
 dayjs.tz.setDefault('Europe/Helsinki');
+
+const regions = [
+  'Ahvenanmaa',
+  'Etelä-Karjala',
+  'Etelä-Pohjanmaa',
+  'Etelä-Savo',
+  'Kainuu',
+  'Kanta-Häme',
+  'Keski-Pohjanmaa',
+  'Keski-Suomi',
+  'Kymenlaakso',
+  'Lappi',
+  'Pirkanmaa',
+  'Pohjanmaa',
+  'Pohjois-Karjala',
+  'Pohjois-Pohjanmaa',
+  'Pohjois-Savo',
+  'Päijät-Häme',
+  'Satakunta',
+  'Uusimaa',
+  'Varsinais-Suomi',
+  'Ulkomaat',
+];
 
 function CustomDrawerContent(props) {
   return (
@@ -71,28 +93,10 @@ function CustomDrawerContent(props) {
             titleStyle={{ color: 'white' }}
             title="Työpaikat sijainnin mukaan"
           >
-            <List.Item titleStyle={{ color: 'white' }} title="Ahvenanmaa" />
-            <List.Item titleStyle={{ color: 'white' }} title="Etelä-Karjala" />
-            <List.Item titleStyle={{ color: 'white' }} title="Etelä-Pohjanmaa" />
-            <List.Item titleStyle={{ color: 'white' }} title="Etelä-Savo" />
-            <List.Item titleStyle={{ color: 'white' }} title="Kainuu" />
-            <List.Item titleStyle={{ color: 'white' }} title="Kanta-Häme" />
-            <List.Item titleStyle={{ color: 'white' }} title="Keski-Pohjanmaa" />
-            <List.Item titleStyle={{ color: 'white' }} title="Keski-Suomi" />
-            <List.Item titleStyle={{ color: 'white' }} title="Kymenlaakso" />
-            <List.Item titleStyle={{ color: 'white' }} title="Lappi" />
-            <List.Item titleStyle={{ color: 'white' }} title="Pirkanmaa" />
-            <List.Item titleStyle={{ color: 'white' }} title="Pohjanmaa" />
-            <List.Item titleStyle={{ color: 'white' }} title="Pohjois-Karjala" />
-            <List.Item titleStyle={{ color: 'white' }} title="Pohjois-Pohjanmaa" />
-            <List.Item titleStyle={{ color: 'white' }} title="Pohjois-Savo" />
-            <List.Item titleStyle={{ color: 'white' }} title="Päijät-Häme" />
-            <List.Item titleStyle={{ color: 'white' }} title="Satakunta" />
-            <List.Item titleStyle={{ color: 'white' }} title="Uusimaa" />
-            <List.Item titleStyle={{ color: 'white' }} title="Varsinais-Suomi" />
-            <List.Item titleStyle={{ color: 'white' }} title="Ulkomaat" />
+            {regions.map((region) => (
+              <List.Item key={region} titleStyle={{ color: 'white' }} title={region} />
+            ))}
           </List.Accordion>
-
           <List.Accordion
             theme={{ colors: { background: 'transparent' } }}
             right={(props) =>

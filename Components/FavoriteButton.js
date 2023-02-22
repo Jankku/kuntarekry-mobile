@@ -1,15 +1,22 @@
 import { IconButton } from 'react-native-paper';
 import { updateStoredList, useFavoriteList } from '../hooks/usefavoritelist';
 
-export default function FavoriteButton({ job, buttonStyle, buttonColor, size }) {
+export default function FavoriteButton({ job, employer, buttonStyle, buttonColor, size }) {
   const { favorites, updateFavorites } = useFavoriteList();
 
   const handlePress = async () => {
-    await updateStoredList(job);
+    if (job != null) {
+      await updateStoredList('job', job);
+    } else {
+      await updateStoredList('employer', employer);
+    }
     updateFavorites();
   };
 
-  const isFavorite = favorites.some((item) => item.id === job.id);
+  const isFavorite =
+    job != null
+      ? favorites.jobs.some((fav) => fav.id === job.id)
+      : favorites.employers.some((fav) => fav === employer);
 
   return (
     <IconButton
