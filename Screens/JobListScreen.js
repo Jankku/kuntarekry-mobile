@@ -1,13 +1,27 @@
 import { useMemo, useState } from 'react';
-import { Title, Chip, useTheme, IconButton, Button, Divider } from 'react-native-paper';
+import { Text, Chip, useTheme, IconButton, Button, Divider } from 'react-native-paper';
 import JobList from '../Components/joblist/JobList';
 import useFilterJobs from '../hooks/usefilterjobs';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../styles/colors';
 import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+const filterType = [
+  { label: 'Työsuhde', value: 'employment' },
+  { label: 'Työnantaja', value: 'profitCenter' },
+  { label: 'Sijainti', value: 'region' },
+  { label: 'Tehtäväalueet', value: 'taskArea' },
+];
+
+const sortType = [
+  { label: 'Uusin ensin', value: 'newest' },
+  { label: 'Hakuaika päättyy', value: 'endTime' },
+  { label: 'Työnantaja', value: 'employer' },
+  { label: 'Sijainti', value: 'location' },
+];
 
 export default function JobsListScreen({ route }) {
   const theme = useTheme();
@@ -28,20 +42,6 @@ export default function JobsListScreen({ route }) {
 
   const [showSortSelector, setShowSortSelector] = useState(false);
   const [activeSortType, setActiveSortType] = useState('newest');
-
-  const filterType = [
-    { label: 'Työsuhde', value: 'employment' },
-    { label: 'Työnantaja', value: 'profitCenter' },
-    { label: 'Sijainti', value: 'region' },
-    { label: 'Tehtäväalueet', value: 'taskArea' },
-  ];
-
-  const sortType = [
-    { label: 'Uusin ensin', value: 'newest' },
-    { label: 'Hakuaika päättyy', value: 'endTime' },
-    { label: 'Työnantaja', value: 'employer' },
-    { label: 'Sijainti', value: 'location' },
-  ];
 
   const addFilter = (newFilter) => {
     setUserFilters([...userFilters, newFilter]);
@@ -120,27 +120,28 @@ export default function JobsListScreen({ route }) {
     <>
       <View style={styles.topContainer}>
         <Icon name="magnify" size={24} color={theme.colors.primary} />
-        <Title style={{ paddingLeft: 8 }}>
-          {searchQuery
-            ? t('jobList.searchQueryFilterText', { searchQuery })
-            : buttonJobQuery
-            ? t('jobList.categoryFilterText', { category: buttonJobQuery })
-            : t('jobList.allApplicationsText')}{' '}
-          (
-          <Text style={styles.number}>
-            {userFilters.length > 0 ? filteredSearchJobs.length : filteredJobs.length}
+        <View style={styles.titleContainer}>
+          <Text variant="titleMedium" style={{ flexShrink: 1 }}>
+            {searchQuery
+              ? t('jobList.searchQueryFilterText', { searchQuery })
+              : buttonJobQuery
+              ? t('jobList.categoryFilterText', { category: buttonJobQuery })
+              : t('jobList.allApplicationsText')}{' '}
+            (
+            <Text style={styles.userFilters}>
+              {userFilters.length > 0 ? filteredSearchJobs.length : filteredJobs.length}
+            </Text>
+            )
           </Text>
-          )
-        </Title>
-        <IconButton
-          style={styles.arrow}
-          icon="swap-vertical"
-          mode="contained"
-          size={30}
-          containerColor={showSortSelector ? colors.detail : 'white'}
-          iconColor={showSortSelector ? 'white' : colors.detail}
-          onPress={() => setShowSortSelector(!showSortSelector)}
-        />
+          <IconButton
+            icon="swap-vertical"
+            mode="contained"
+            size={24}
+            containerColor={showSortSelector ? colors.detail : undefined}
+            iconColor={showSortSelector ? 'white' : colors.detail}
+            onPress={() => setShowSortSelector(!showSortSelector)}
+          />
+        </View>
         {showSortSelector && (
           <View style={styles.sortSelector}>
             {sortType.map((sortType) => (
@@ -182,12 +183,13 @@ export default function JobsListScreen({ route }) {
                 <Chip
                   key={filter.value}
                   style={styles.chipButton}
+                  textStyle={styles.chipButtonText}
                   onPress={() => {
                     setShowOptions(true);
                     setNewFilterKey(filter.value);
                   }}
                 >
-                  <Text>{filter.label}</Text>
+                  {filter.label}
                 </Chip>
               )
           )}
@@ -228,16 +230,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.detail,
     color: 'white',
   },
-  arrow: {
-    height: 36,
-    position: 'absolute',
-    right: 0,
-    width: 36,
-  },
   chipButton: {
     backgroundColor: colors.detailGreen,
     marginHorizontal: 5,
   },
+  chipButtonText: { color: 'white' },
   containerFilters: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -274,10 +271,15 @@ const styles = StyleSheet.create({
     width: 145,
     zIndex: 100,
   },
-  topContainer: {
-    alignItems: 'baseline',
+  titleContainer: {
+    flex: 1,
     flexDirection: 'row',
-    paddingLeft: 8,
+    paddingBottom: 16,
+  },
+  topContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 8,
     paddingTop: 8,
   },
+  userFilters: { color: colors.detail, flexGrow: 1 },
 });
