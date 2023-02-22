@@ -111,6 +111,9 @@
   "favorites": {
     "title": "Favoriter",
     "listEmpty": "Du har inga favoriter. Klicka på ditt hjärta bredvid annonsen om jobbet för att spara annonsen till dina favoriter.",
-    "clear": "Tömma favoriter"
+    "clear": {
+      "jobs": "Tömma favoriter",
+      "employers": "Tömma favoriter"
+    }
   }
 }

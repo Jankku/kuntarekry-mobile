@@ -111,6 +111,9 @@
   "favorites": {
     "title": "Favorites",
     "listEmpty": "You don't have any favorites yet. Click the heart icon on a job advertisement to add the job to your favorites.",
-    "clear": "Clear favorites"
+    "clear": {
+      "jobs": "Clear favorite jobs",
+      "employers": "Clear favorite employers"
+    }
   }
 }
