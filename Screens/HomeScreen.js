@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import RecommendedJobs from '../Components/home/RecommendedJobs';
 import SearchButton from '../Components/home/SearchButton';
 import News from '../Components/home/News';
-import usePersonalizationChips from '../hooks/usePersonalizationChips';
+import usePersonalizationChips from '../Components/PersonalizationChips';
 
 export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();

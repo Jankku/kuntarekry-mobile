@@ -9,7 +9,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import { List, Provider as PaperProvider } from 'react-native-paper';
+import { List, Chip, Provider as PaperProvider } from 'react-native-paper';
 import AppBar from './Components/AppBar';
 import JobListScreen from './Screens/JobListScreen';
 import JobScreen from './Screens/JobScreen';
@@ -37,6 +37,8 @@ import './i18n/config';
 import { FavoriteListProvider } from './hooks/usefavoritelist';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from './Components/LanguageSelector';
+import { Modal, View, Text } from 'react-native';
+import { useState } from 'react';
 
 SplashScreen.preventAutoHideAsync().catch(console.warn);
 
@@ -54,78 +56,132 @@ function CustomDrawerContent(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resetOnboarding]);
 
-  return (
-    <LinearGradient
-      style={{ flex: 1 }}
-      colors={['#0a8bc2', '#33cc80']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0.0, y: 1.9 }}
-    >
-      <DrawerContentScrollView {...props}>
-        <DrawerItemList {...props} />
-        <List.Section>
-          <List.Accordion
-            theme={{
-              colors: {
-                background: 'transparent',
-              },
-            }}
-            right={(props) =>
-              props.isExpanded === false ? (
-                <List.Icon {...props} color={'white'} icon="plus" />
-              ) : (
-                <List.Icon {...props} color={'white'} icon="minus" />
-              )
-            }
-            titleStyle={{ color: 'white' }}
-            title="Työpaikat sijainnin mukaan"
-          >
-            <List.Item titleStyle={{ color: 'white' }} title="Ahvenanmaa" />
-            <List.Item titleStyle={{ color: 'white' }} title="Etelä-Karjala" />
-            <List.Item titleStyle={{ color: 'white' }} title="Etelä-Pohjanmaa" />
-            <List.Item titleStyle={{ color: 'white' }} title="Etelä-Savo" />
-            <List.Item titleStyle={{ color: 'white' }} title="Kainuu" />
-            <List.Item titleStyle={{ color: 'white' }} title="Kanta-Häme" />
-            <List.Item titleStyle={{ color: 'white' }} title="Keski-Pohjanmaa" />
-            <List.Item titleStyle={{ color: 'white' }} title="Keski-Suomi" />
-            <List.Item titleStyle={{ color: 'white' }} title="Kymenlaakso" />
-            <List.Item titleStyle={{ color: 'white' }} title="Lappi" />
-            <List.Item titleStyle={{ color: 'white' }} title="Pirkanmaa" />
-            <List.Item titleStyle={{ color: 'white' }} title="Pohjanmaa" />
-            <List.Item titleStyle={{ color: 'white' }} title="Pohjois-Karjala" />
-            <List.Item titleStyle={{ color: 'white' }} title="Pohjois-Pohjanmaa" />
-            <List.Item titleStyle={{ color: 'white' }} title="Pohjois-Savo" />
-            <List.Item titleStyle={{ color: 'white' }} title="Päijät-Häme" />
-            <List.Item titleStyle={{ color: 'white' }} title="Satakunta" />
-            <List.Item titleStyle={{ color: 'white' }} title="Uusimaa" />
-            <List.Item titleStyle={{ color: 'white' }} title="Varsinais-Suomi" />
-            <List.Item titleStyle={{ color: 'white' }} title="Ulkomaat" />
-          </List.Accordion>
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false);
 
-          <List.Accordion
-            theme={{ colors: { background: 'transparent' } }}
-            right={(props) =>
-              props.isExpanded === false ? (
-                <List.Icon {...props} color={'white'} icon="plus" />
-              ) : (
-                <List.Icon {...props} color={'white'} icon="minus" />
-              )
-            }
-            titleStyle={{ color: 'white' }}
-            title="Työpaikat tehtävän mukaan"
+  const handleChangeLocationTaskArea = () => {
+    setIsConfirmationModalVisible(true);
+  };
+
+  const handleConfirmationModalYes = () => {
+    handleResetOnboarding();
+    setIsConfirmationModalVisible(false);
+  };
+
+  const handleConfirmationModalNo = () => {
+    setIsConfirmationModalVisible(false);
+  };
+
+  return (
+    <>
+      <Modal visible={isConfirmationModalVisible} transparent={true}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: 'white',
+              borderRadius: 10,
+              padding: 20,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
           >
-            <List.Item titleStyle={{ color: 'white' }} title="Hallinto- ja toimistotyö" />
-            <List.Item titleStyle={{ color: 'white' }} title="Opetus- ja kulttuuriala" />
-            <List.Item titleStyle={{ color: 'white' }} title="Sosiaaliala" />
-            <List.Item titleStyle={{ color: 'white' }} title="Tekninen ala" />
-            <List.Item titleStyle={{ color: 'white' }} title="Terveydenhuoltoala" />
-            <List.Item titleStyle={{ color: 'white' }} title="Vapaaehtoistyö" />
-          </List.Accordion>
-        </List.Section>
-      </DrawerContentScrollView>
-      <DrawerItem label="Reset onboarding" onPress={handleResetOnboarding} />
-      <LanguageSelector />
-    </LinearGradient>
+            <Text>
+              Oletko varma että haluat muuttaa toimialaa/sijaintia? (Sovellus unohtaa tämänhetkiset
+              valintasi)
+            </Text>
+            <View style={{ flexDirection: 'row', marginTop: 10, padding: 5 }}>
+              <Chip onPress={handleConfirmationModalYes} style={{ padding: 5 }}>
+                Yes
+              </Chip>
+              <Chip onPress={handleConfirmationModalNo} style={{ marginLeft: 15, padding: 5 }}>
+                No
+              </Chip>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <LinearGradient
+        style={{ flex: 1 }}
+        colors={['#0a8bc2', '#33cc80']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0.0, y: 1.9 }}
+      >
+        <DrawerContentScrollView {...props}>
+          <DrawerItemList {...props} />
+          <List.Section>
+            <List.Accordion
+              theme={{
+                colors: {
+                  background: 'transparent',
+                },
+              }}
+              right={(props) =>
+                props.isExpanded === false ? (
+                  <List.Icon {...props} color={'white'} icon="plus" />
+                ) : (
+                  <List.Icon {...props} color={'white'} icon="minus" />
+                )
+              }
+              titleStyle={{ color: 'white' }}
+              title="Työpaikat sijainnin mukaan"
+            >
+              <List.Item titleStyle={{ color: 'white' }} title="Ahvenanmaa" />
+              <List.Item titleStyle={{ color: 'white' }} title="Etelä-Karjala" />
+              <List.Item titleStyle={{ color: 'white' }} title="Etelä-Pohjanmaa" />
+              <List.Item titleStyle={{ color: 'white' }} title="Etelä-Savo" />
+              <List.Item titleStyle={{ color: 'white' }} title="Kainuu" />
+              <List.Item titleStyle={{ color: 'white' }} title="Kanta-Häme" />
+              <List.Item titleStyle={{ color: 'white' }} title="Keski-Pohjanmaa" />
+              <List.Item titleStyle={{ color: 'white' }} title="Keski-Suomi" />
+              <List.Item titleStyle={{ color: 'white' }} title="Kymenlaakso" />
+              <List.Item titleStyle={{ color: 'white' }} title="Lappi" />
+              <List.Item titleStyle={{ color: 'white' }} title="Pirkanmaa" />
+              <List.Item titleStyle={{ color: 'white' }} title="Pohjanmaa" />
+              <List.Item titleStyle={{ color: 'white' }} title="Pohjois-Karjala" />
+              <List.Item titleStyle={{ color: 'white' }} title="Pohjois-Pohjanmaa" />
+              <List.Item titleStyle={{ color: 'white' }} title="Pohjois-Savo" />
+              <List.Item titleStyle={{ color: 'white' }} title="Päijät-Häme" />
+              <List.Item titleStyle={{ color: 'white' }} title="Satakunta" />
+              <List.Item titleStyle={{ color: 'white' }} title="Uusimaa" />
+              <List.Item titleStyle={{ color: 'white' }} title="Varsinais-Suomi" />
+              <List.Item titleStyle={{ color: 'white' }} title="Ulkomaat" />
+            </List.Accordion>
+
+            <List.Accordion
+              theme={{ colors: { background: 'transparent' } }}
+              right={(props) =>
+                props.isExpanded === false ? (
+                  <List.Icon {...props} color={'white'} icon="plus" />
+                ) : (
+                  <List.Icon {...props} color={'white'} icon="minus" />
+                )
+              }
+              titleStyle={{ color: 'white' }}
+              title="Työpaikat tehtävän mukaan"
+            >
+              <List.Item titleStyle={{ color: 'white' }} title="Hallinto- ja toimistotyö" />
+              <List.Item titleStyle={{ color: 'white' }} title="Opetus- ja kulttuuriala" />
+              <List.Item titleStyle={{ color: 'white' }} title="Sosiaaliala" />
+              <List.Item titleStyle={{ color: 'white' }} title="Tekninen ala" />
+              <List.Item titleStyle={{ color: 'white' }} title="Terveydenhuoltoala" />
+              <List.Item titleStyle={{ color: 'white' }} title="Vapaaehtoistyö" />
+            </List.Accordion>
+          </List.Section>
+        </DrawerContentScrollView>
+        <DrawerItem
+          label="Vaihda toimiala/sijainti"
+          onPress={handleChangeLocationTaskArea}
+          labelStyle={{ color: 'white' }}
+        />
+        <LanguageSelector />
+      </LinearGradient>
+    </>
   );
 }
 
