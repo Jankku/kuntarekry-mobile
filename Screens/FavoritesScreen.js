@@ -1,114 +1,69 @@
-import { StyleSheet, FlatList, Text, View } from 'react-native';
-import { Title, FAB, Divider, Badge } from 'react-native-paper';
+// eslint-disable-next-line no-unused-vars
+import React, { useState } from 'react';
+import { Tab, Text, TabView } from '@rneui/themed';
+import { useTranslation } from 'react-i18next';
 import { clearStoredList, useFavoriteList } from '../hooks/usefavoritelist';
-import { colors } from '../styles/colors';
+import { FlatList, StyleSheet } from 'react-native';
+import { Divider, FAB } from 'react-native-paper';
 import JobListItem from '../Components/joblist/JobListItem';
 import OrganizationListItem from '../Components/OrganizationListItem';
-import { useTranslation } from 'react-i18next';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { useState } from 'react';
 
 export default function FavoritesScreen() {
   const { t } = useTranslation();
   const { favorites, updateFavorites } = useFavoriteList();
-  const [activeTab, setActiveTab] = useState('job');
+  const [activeTab, setActiveTab] = useState(0);
+
   const clearFavorites = async (type) => {
     await clearStoredList(type);
     updateFavorites();
   };
-  const Tab = createMaterialTopTabNavigator();
-
-  function JobsList() {
-    return (
-      <FlatList
-        style={styles.list}
-        data={favorites.jobs}
-        ItemSeparatorComponent={<Divider />}
-        ListEmptyComponent={<Text style={styles.text}>{t('favorites.listEmpty')}</Text>}
-        renderItem={({ item }) => <JobListItem job={item} />}
-        keyExtractor={(_, index) => index}
-        contentContainerStyle={{ paddingHorizontal: 8, paddingBottom: 16 }}
-      />
-    );
-  }
-
-  function EmployersList() {
-    return (
-      <FlatList
-        style={styles.list}
-        data={favorites.employers}
-        ItemSeparatorComponent={<Divider />}
-        ListEmptyComponent={<Text style={styles.text}>{t('favorites.listEmpty')}</Text>}
-        renderItem={({ item }) => <OrganizationListItem organization={item} />}
-        keyExtractor={(_, index) => index}
-        contentContainerStyle={{ paddingHorizontal: 8, paddingBottom: 16 }}
-      />
-    );
-  }
-
-  const renderTabLabel = (label, count) => (
-    <View style={{ flexDirection: 'row' }}>
-      <Text variant="titleMedium" style={{ marginHorizontal: 5 }}>
-        {label.toUpperCase()}
-      </Text>
-      <Badge size={18} style={styles.badge} visible={count > 0}>
-        {count}
-      </Badge>
-    </View>
-  );
 
   return (
     <>
-      <Title style={styles.title}>{t('favorites.title')}</Title>
-      <Tab.Navigator
-        screenOptions={{
-          tabBarIndicatorStyle: {
-            backgroundColor: colors.detailGreen,
-          },
-          tabBarStyle: {
-            backgroundColor: 'white',
-          },
+      <Tab
+        value={activeTab}
+        onChange={(e) => setActiveTab(e)}
+        indicatorStyle={{
+          backgroundColor: 'white',
+          height: 3,
         }}
+        variant="primary"
       >
-        <Tab.Screen
-          name="FavoriteJobs"
-          options={{
-            tabBarLabel: () => renderTabLabel(t('home.header.jobs'), favorites.jobs.length),
-          }}
-          component={JobsList}
-          listeners={() => ({
-            tabPress: () => {
-              setActiveTab('job');
-            },
-            swipeEnd: () => {
-              setActiveTab('job');
-            },
-          })}
-        />
-        <Tab.Screen
-          name="FavoriteEmployers"
-          options={{
-            tabBarLabel: () =>
-              renderTabLabel(t('home.header.chips.employers'), favorites.employers.length),
-          }}
-          component={EmployersList}
-          listeners={() => ({
-            tabPress: () => {
-              setActiveTab('employer');
-            },
-            swipeEnd: () => {
-              setActiveTab('employer');
-            },
-          })}
-        />
-      </Tab.Navigator>
+        <Tab.Item title={t('home.header.jobs')} titleStyle={{ fontSize: 12 }} />
+        <Tab.Item title={t('home.header.chips.employers')} titleStyle={{ fontSize: 12 }} />
+      </Tab>
+
+      <TabView value={activeTab} onChange={(e) => setActiveTab(e)} animationType="spring">
+        <TabView.Item style={{ backgroundColor: 'red', width: '100%' }}>
+          <FlatList
+            style={styles.list}
+            data={favorites.jobs}
+            ItemSeparatorComponent={<Divider />}
+            ListEmptyComponent={<Text style={styles.text}>{t('favorites.listEmpty')}</Text>}
+            renderItem={({ item }) => <JobListItem job={item} />}
+            keyExtractor={(_, index) => index}
+            contentContainerStyle={{ paddingHorizontal: 8, paddingBottom: 16 }}
+          />
+        </TabView.Item>
+        <TabView.Item style={{ backgroundColor: 'blue', width: '100%' }}>
+          <FlatList
+            style={styles.list}
+            data={favorites.employers}
+            ItemSeparatorComponent={<Divider />}
+            ListEmptyComponent={<Text style={styles.text}>{t('favorites.listEmpty')}</Text>}
+            renderItem={({ item }) => <OrganizationListItem organization={item} />}
+            keyExtractor={(_, index) => index}
+            contentContainerStyle={{ paddingHorizontal: 8, paddingBottom: 16 }}
+          />
+        </TabView.Item>
+      </TabView>
       <FAB
-        visible={favorites[`${activeTab}s`].length === 0 ? false : true}
+        visible={favorites[activeTab === 0 ? 'jobs' : 'employers'].length > 0}
         style={styles.button}
         onPress={() => {
-          clearFavorites(activeTab);
+          clearFavorites(activeTab === 0 ? 'job' : 'employer');
         }}
-        label={t('favorites.clear.' + `${activeTab}s`)}
+        label={activeTab === 0 ? t('favorites.clear.jobs') : t('favorites.clear.employers')}
         color="white"
         mode="flat"
         size="small"
@@ -118,26 +73,17 @@ export default function FavoritesScreen() {
 }
 
 const styles = StyleSheet.create({
-  badge: {
-    backgroundColor: colors.detailGreen,
-  },
   button: {
-    alignSelf: 'center',
-    backgroundColor: colors.detailGreen,
-    bottom: 10,
+    bottom: 16,
     position: 'absolute',
+    right: 16,
   },
   list: {
-    marginHorizontal: 3,
+    backgroundColor: 'white',
+    flex: 1,
   },
   text: {
-    fontSize: 16,
-    margin: 16,
-  },
-  title: {
-    alignSelf: 'center',
-    fontSize: 24,
-    fontWeight: '400',
-    marginVertical: 16,
+    paddingVertical: 16,
+    textAlign: 'center',
   },
 });
