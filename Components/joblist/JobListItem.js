@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     border: 'none',
   },
   container: {
+    backgroundColor: 'white',
     flexDirection: 'row',
     paddingVertical: 16,
   },
