@@ -1,10 +1,11 @@
 import dayjs from 'dayjs';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import FavoriteButton from './FavoriteButton';
 import { colors } from '../styles/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
+import { Text } from 'react-native-paper';
 
 export default function JobCarouselItem({ job, style, link, publication }) {
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ export default function JobCarouselItem({ job, style, link, publication }) {
         />
         <View style={styles.contentContainer}>
           <Text style={styles.text}>{job?.profitCenter}</Text>
-          <Text style={styles.title}>{job?.title}</Text>
+          <Text variant="titleMedium">{job?.title}</Text>
           <Text style={styles.text}>
             {t('jobItem.publicationEnds')}{' '}
             <Text style={styles.dateText}>
@@ -51,11 +52,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 8,
   },
-  text: {
-    color: '#8795a1',
-    fontSize: 14,
-  },
-  title: {
-    fontSize: 20,
-  },
+  text: { color: '#8795a1' },
 });

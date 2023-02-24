@@ -65,7 +65,6 @@ const makeStyles = (theme) =>
     imageBackground: {
       backgroundColor: theme.colors.background,
       height: 450,
-      marginTop: 8,
       width: '100%',
     },
     titleContainer: {
