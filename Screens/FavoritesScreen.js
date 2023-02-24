@@ -7,6 +7,7 @@ import { FlatList, StyleSheet } from 'react-native';
 import { Divider, FAB } from 'react-native-paper';
 import JobListItem from '../Components/joblist/JobListItem';
 import OrganizationListItem from '../Components/OrganizationListItem';
+import { colors } from '../styles/colors';
 
 export default function FavoritesScreen() {
   const { t } = useTranslation();
@@ -27,14 +28,16 @@ export default function FavoritesScreen() {
           backgroundColor: 'white',
           height: 3,
         }}
-        variant="primary"
+        style={{ backgroundColor: colors.detailGreen }}
       >
-        <Tab.Item title={t('home.header.jobs')} titleStyle={{ fontSize: 12 }} />
-        <Tab.Item title={t('home.header.chips.employers')} titleStyle={{ fontSize: 12 }} />
+        <Tab.Item title={t('home.header.jobs')} titleStyle={{ fontSize: 12, color: 'white' }} />
+        <Tab.Item
+          title={t('home.header.chips.employers')}
+          titleStyle={{ fontSize: 12, color: 'white' }}
+        />
       </Tab>
-
       <TabView value={activeTab} onChange={(e) => setActiveTab(e)} animationType="spring">
-        <TabView.Item style={{ backgroundColor: 'red', width: '100%' }}>
+        <TabView.Item style={{ width: '100%' }}>
           <FlatList
             style={styles.list}
             data={favorites.jobs}
@@ -45,7 +48,7 @@ export default function FavoritesScreen() {
             contentContainerStyle={{ paddingHorizontal: 8, paddingBottom: 16 }}
           />
         </TabView.Item>
-        <TabView.Item style={{ backgroundColor: 'blue', width: '100%' }}>
+        <TabView.Item style={{ width: '100%' }}>
           <FlatList
             style={styles.list}
             data={favorites.employers}
@@ -74,16 +77,20 @@ export default function FavoritesScreen() {
 
 const styles = StyleSheet.create({
   button: {
-    bottom: 16,
+    alignSelf: 'center',
+    backgroundColor: colors.detailGreen,
+    bottom: 10,
     position: 'absolute',
-    right: 16,
   },
   list: {
-    backgroundColor: 'white',
-    flex: 1,
+    marginHorizontal: 3,
   },
   text: {
-    paddingVertical: 16,
-    textAlign: 'center',
+    fontSize: 16,
+    marginHorizontal: 16,
+  },
+  title: {
+    marginHorizontal: 10,
+    marginVertical: 10,
   },
 });

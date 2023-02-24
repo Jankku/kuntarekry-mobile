@@ -274,6 +274,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingBottom: 16,
   },
   topContainer: {
