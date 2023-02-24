@@ -4,11 +4,13 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { colors } from '../styles/colors';
 import FavoriteButton from './FavoriteButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-export default function OrganizationJobItem({ job, style }) {
+export default function OrganizationJobItem({ job, link, publication, style }) {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('Job', { job: job })}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('Job', { job: job, link: link, publication: publication })}
+    >
       <View style={{ ...styles.itemContainer, ...style }}>
         <FavoriteButton
           job={job}

@@ -128,7 +128,11 @@ export default function JobCarousel() {
     let jobsToDisplaySlice = jobsToDisplay
       .sort(() => 0.5 - Math.random())
       .slice(0, 3)
-      .map((j) => j.jobAdvertisement);
+      .map((j) => ({
+        jobAdvertisement: j.jobAdvertisement,
+        publication: j.publication,
+        link: j.link,
+      }));
 
     setCarouselJobs(jobsToDisplaySlice);
   };
@@ -145,7 +149,12 @@ export default function JobCarousel() {
       width={width}
     >
       {carouselJobs.map((job, index) => (
-        <JobCarouselItem key={index} job={job} />
+        <JobCarouselItem
+          key={index}
+          job={job.jobAdvertisement}
+          publication={job.publication}
+          link={job.link}
+        />
       ))}
     </Carousel>
   );

@@ -6,15 +6,19 @@ import { colors } from '../styles/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 
-export default function JobCarouselItem({ job, style }) {
+export default function JobCarouselItem({ job, style, link, publication }) {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('Job', { job: job })}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('Job', { job: job, publication: publication, link: link })}
+    >
       <View style={{ ...styles.itemContainer, ...style }}>
         <FavoriteButton
           job={job}
+          publication={publication}
+          link={link}
           size={24}
           buttonStyle={styles.button}
           buttonColor={colors.detailGreen}

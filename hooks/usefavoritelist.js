@@ -42,9 +42,9 @@ export async function getStoredList() {
     return { jobs: [], employers: [] };
   }
 }
-export async function updateStoredList(type, item) {
+export async function updateStoredList(type, item, publication, link) {
   const storedList = await getStoredList();
-  const mergedList = await mergeLists(type, item, storedList);
+  const mergedList = await mergeLists(type, item, publication, link, storedList);
   await AsyncStorage.setItem(KEY, JSON.stringify(mergedList));
 }
 
@@ -59,14 +59,14 @@ export async function clearStoredList(type) {
   }
 }
 
-async function mergeLists(type, item, storedList) {
+async function mergeLists(type, item, publication, link, storedList) {
   const mergedList = { ...storedList };
   if (type === 'job') {
     const jobIndex = storedList.jobs.findIndex((job) => job.id === item.id);
     if (jobIndex !== -1) {
       mergedList.jobs.splice(jobIndex, 1);
     } else {
-      mergedList.jobs.push(item);
+      mergedList.jobs.push({ ...item, publication, link }); // add publication and link to the job object
     }
   } else if (type === 'employer') {
     const employerIndex = storedList.employers.findIndex((employer) => employer === item);

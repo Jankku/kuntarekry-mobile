@@ -38,6 +38,8 @@ function formatAddress(address, postalCode, postalArea) {
 export default function JobScreen({ route, navigation }) {
   const { t } = useTranslation();
   const job = route.params?.job ?? '';
+  const publication = route.params?.publication ?? '';
+  const link = route.params?.link ?? '';
   const address =
     formatAddress(job.address, job.postalCode, job.postalArea) || t('jobDetail.addressEmpty');
 
@@ -60,7 +62,12 @@ export default function JobScreen({ route, navigation }) {
               <Icon name="clock" size={16} /> {dayjs(job.publicationEnds).format('LT')}
             </Text>
           </View>
-          <PrimaryButton style={styles.button} buttonColor="white" textColor={colors.detailGreen}>
+          <PrimaryButton
+            style={styles.button}
+            buttonColor="white"
+            textColor={colors.detailGreen}
+            onPress={() => console.log(publication, link)}
+          >
             {t('jobDetail.applyToJob')}
           </PrimaryButton>
         </View>

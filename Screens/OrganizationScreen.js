@@ -62,7 +62,13 @@ export default function OrganizationScreen({ route, navigation }) {
         <Title style={styles.jobsOpenTitle}>Avoimet työpaikkamme</Title>
         <View>
           {filteredJobs?.slice(0, 4).map((job, index) => (
-            <OrganizationJobItem key={index} job={job.jobAdvertisement} style={styles.jobItem} />
+            <OrganizationJobItem
+              key={index}
+              job={job.jobAdvertisement}
+              publication={job.publication}
+              link={job.link}
+              style={styles.jobItem}
+            />
           ))}
         </View>
       </ScrollView>

@@ -53,7 +53,13 @@ export default function JobList({ data, sortType }) {
         data={currentItems}
         ItemSeparatorComponent={<Divider />}
         ListEmptyComponent={<ListEmpty />}
-        renderItem={({ item }) => <JobListItem job={item.jobAdvertisement} />}
+        renderItem={({ item }) => (
+          <JobListItem
+            job={item.jobAdvertisement}
+            publication={item.publication}
+            link={item.link}
+          />
+        )}
         keyExtractor={(_, index) => index}
         contentContainerStyle={{ paddingHorizontal: 8, paddingBottom: 16 }}
       />

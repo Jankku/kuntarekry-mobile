@@ -43,7 +43,9 @@ export default function FavoritesScreen() {
             data={favorites.jobs}
             ItemSeparatorComponent={<Divider />}
             ListEmptyComponent={<Text style={styles.text}>{t('favorites.listEmpty')}</Text>}
-            renderItem={({ item }) => <JobListItem job={item} />}
+            renderItem={({ item }) => (
+              <JobListItem job={item} publication={item.publication} link={item.link} />
+            )}
             keyExtractor={(_, index) => index}
             contentContainerStyle={{ paddingHorizontal: 8, paddingBottom: 16 }}
           />

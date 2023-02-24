@@ -7,7 +7,7 @@ import FavoriteButton from '../FavoriteButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 
-export default function JobListItem({ job }) {
+export default function JobListItem({ job, publication, link }) {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
@@ -15,10 +15,12 @@ export default function JobListItem({ job }) {
     <Pressable
       android_ripple={{ borderless: false }}
       style={styles.container}
-      onPress={() => navigation.navigate('Job', { job })}
+      onPress={() => navigation.navigate('Job', { job, publication, link })}
     >
       <FavoriteButton
         job={job}
+        publication={publication}
+        link={link}
         size={24}
         buttonStyle={styles.button}
         buttonColor={colors.detailGreen}
