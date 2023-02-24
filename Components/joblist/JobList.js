@@ -5,6 +5,7 @@ import { Button, Divider, Text } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import usePagination from '../../hooks/usepagination';
 import ListEmpty from './ListEmpty';
+import SwipeableRow from './SwipeableRow.js';
 
 export default function JobList({ data, sortType }) {
   const { t } = useTranslation('common');
@@ -54,11 +55,13 @@ export default function JobList({ data, sortType }) {
         ItemSeparatorComponent={<Divider />}
         ListEmptyComponent={<ListEmpty />}
         renderItem={({ item }) => (
-          <JobListItem
-            job={item.jobAdvertisement}
-            publication={item.publication}
-            link={item.link}
-          />
+          <SwipeableRow job={item.jobAdvertisement} publication={item.publication} link={item.link}>
+            <JobListItem
+              job={item.jobAdvertisement}
+              publication={item.publication}
+              link={item.link}
+            />
+          </SwipeableRow>
         )}
         keyExtractor={(_, index) => index}
         contentContainerStyle={{ paddingHorizontal: 8, paddingBottom: 16 }}
