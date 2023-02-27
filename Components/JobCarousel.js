@@ -1,4 +1,4 @@
-import Carousel from 'simple-carousel-react-native';
+import Carousel from 'react-native-reanimated-carousel';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import { colors } from '../styles/colors';
 import JobCarouselItem from './JobCarouselItem';
@@ -127,7 +127,7 @@ export default function JobCarousel() {
 
     let jobsToDisplaySlice = jobsToDisplay
       .sort(() => 0.5 - Math.random())
-      .slice(0, 3)
+      .slice(0, 10)
       .map((j) => ({
         jobAdvertisement: j.jobAdvertisement,
         publication: j.publication,
@@ -143,20 +143,22 @@ export default function JobCarousel() {
     </Text>
   ) : (
     <Carousel
-      backgroundColor={colors.background}
-      color={colors.detailGreen}
-      height={100}
+      autoPlay
+      autoPlayInterval={5000}
+      style={{ backgroundColor: colors.background }}
       width={width}
-    >
-      {carouselJobs.map((job, index) => (
+      height={100}
+      data={carouselJobs}
+      renderItem={({ item, index }) => (
         <JobCarouselItem
           key={index}
-          job={job.jobAdvertisement}
-          publication={job.publication}
-          link={job.link}
+          job={item.jobAdvertisement}
+          publication={item.publication}
+          link={item.link}
+          style={{ marginBottom: 16 }}
         />
-      ))}
-    </Carousel>
+      )}
+    />
   );
 }
 
