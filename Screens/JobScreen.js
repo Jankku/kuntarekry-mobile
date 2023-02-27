@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Linking } from 'react-native';
 import { List, Divider, Chip, IconButton } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import dayjs from 'dayjs';
@@ -38,6 +38,7 @@ function formatAddress(address, postalCode, postalArea) {
 export default function JobScreen({ route, navigation }) {
   const { t } = useTranslation();
   const job = route.params?.job ?? '';
+  // eslint-disable-next-line no-unused-vars
   const publication = route.params?.publication ?? '';
   const link = route.params?.link ?? '';
   const address =
@@ -62,14 +63,16 @@ export default function JobScreen({ route, navigation }) {
               <Icon name="clock" size={16} /> {dayjs(job.publicationEnds).format('LT')}
             </Text>
           </View>
-          <PrimaryButton
-            style={styles.button}
-            buttonColor="white"
-            textColor={colors.detailGreen}
-            onPress={() => console.log(publication, link)}
-          >
-            {t('jobDetail.applyToJob')}
-          </PrimaryButton>
+          {link && (
+            <PrimaryButton
+              style={styles.button}
+              buttonColor="white"
+              textColor={colors.detailGreen}
+              onPress={() => Linking.openURL('https://www.kuntarekrytointi.fi' + link.url)}
+            >
+              {t('jobDetail.applyToJob')}
+            </PrimaryButton>
+          )}
         </View>
         <View style={styles.buttons}>
           <FavoriteButton
