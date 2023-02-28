@@ -9,7 +9,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import { List, Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider } from 'react-native-paper';
 import AppBar from './Components/AppBar';
 import JobListScreen from './Screens/JobListScreen';
 import JobScreen from './Screens/JobScreen';
@@ -47,37 +47,14 @@ dayjs.extend(timezone);
 dayjs.locale('fi');
 dayjs.tz.setDefault('Europe/Helsinki');
 
-const regions = [
-  'Ahvenanmaa',
-  'Etelä-Karjala',
-  'Etelä-Pohjanmaa',
-  'Etelä-Savo',
-  'Kainuu',
-  'Kanta-Häme',
-  'Keski-Pohjanmaa',
-  'Keski-Suomi',
-  'Kymenlaakso',
-  'Lappi',
-  'Pirkanmaa',
-  'Pohjanmaa',
-  'Pohjois-Karjala',
-  'Pohjois-Pohjanmaa',
-  'Pohjois-Savo',
-  'Päijät-Häme',
-  'Satakunta',
-  'Uusimaa',
-  'Varsinais-Suomi',
-  'Ulkomaat',
-];
-
 function CustomDrawerContent(props) {
+  const { t } = useTranslation();
   const { resetOnboarding } = useOnboarding();
 
   const handleResetOnboarding = useCallback(() => {
     resetOnboarding();
     props.navigation.closeDrawer();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resetOnboarding]);
+  }, [props.navigation, resetOnboarding]);
 
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false);
 
@@ -109,51 +86,9 @@ function CustomDrawerContent(props) {
       >
         <DrawerContentScrollView {...props}>
           <DrawerItemList {...props} />
-          <List.Section>
-            <List.Accordion
-              theme={{
-                colors: {
-                  background: 'transparent',
-                },
-              }}
-              right={(props) =>
-                props.isExpanded === false ? (
-                  <List.Icon {...props} color={'white'} icon="plus" />
-                ) : (
-                  <List.Icon {...props} color={'white'} icon="minus" />
-                )
-              }
-              titleStyle={{ color: 'white' }}
-              title="Työpaikat sijainnin mukaan"
-            >
-              {regions.map((region) => (
-                <List.Item key={region} titleStyle={{ color: 'white' }} title={region} />
-              ))}
-            </List.Accordion>
-
-            <List.Accordion
-              theme={{ colors: { background: 'transparent' } }}
-              right={(props) =>
-                props.isExpanded === false ? (
-                  <List.Icon {...props} color={'white'} icon="plus" />
-                ) : (
-                  <List.Icon {...props} color={'white'} icon="minus" />
-                )
-              }
-              titleStyle={{ color: 'white' }}
-              title="Työpaikat tehtävän mukaan"
-            >
-              <List.Item titleStyle={{ color: 'white' }} title="Hallinto- ja toimistotyö" />
-              <List.Item titleStyle={{ color: 'white' }} title="Opetus- ja kulttuuriala" />
-              <List.Item titleStyle={{ color: 'white' }} title="Sosiaaliala" />
-              <List.Item titleStyle={{ color: 'white' }} title="Tekninen ala" />
-              <List.Item titleStyle={{ color: 'white' }} title="Terveydenhuoltoala" />
-              <List.Item titleStyle={{ color: 'white' }} title="Vapaaehtoistyö" />
-            </List.Accordion>
-          </List.Section>
         </DrawerContentScrollView>
         <DrawerItem
-          label="Vaihda toimiala/sijainti"
+          label={t('drawer.changeLocationTaskArea')}
           onPress={handleChangeLocationTaskArea}
           labelStyle={{ color: 'white' }}
         />
@@ -195,6 +130,7 @@ function StackScreen() {
 }
 
 function AppWrapper() {
+  const { t } = useTranslation();
   const { onboardingDone } = useOnboarding();
   const { i18n } = useTranslation();
   const { lang } = usePersonalisation();
@@ -241,8 +177,28 @@ function AppWrapper() {
                         component={StackScreen}
                         options={{ headerShown: false, drawerItemStyle: { height: 0 } }}
                       />
-                      <Drawer.Screen name="Työpaikat" component={JobListScreen} />
-                      <Drawer.Screen name="Uusimmat työpaikat" component={JobListScreen} />
+                      <Drawer.Screen
+                        name="Home"
+                        component={HomeScreen}
+                        options={{ drawerLabel: t('drawer.home') }}
+                      />
+                      <Drawer.Screen
+                        name="Jobs"
+                        component={JobListScreen}
+                        options={{ drawerLabel: t('drawer.jobs') }}
+                      />
+                      <Drawer.Screen
+                        name="Employers"
+                        component={JobFilterScreen}
+                        options={{ drawerLabel: t('drawer.employers') }}
+                        initialParams={{ list: 'organizations' }}
+                      />
+                      <Drawer.Screen
+                        name="regions"
+                        component={JobFilterScreen}
+                        options={{ drawerLabel: t('drawer.regions') }}
+                        initialParams={{ list: 'regions' }}
+                      />
                     </>
                   ) : (
                     <>

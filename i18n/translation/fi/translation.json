@@ -117,6 +117,17 @@
     }
   },
   "drawer": {
-    "resetOnboardingModalText": "Oletko varma että haluat muuttaa toimialaa/sijaintia? Sovellus unohtaa tämänhetkiset valintasi."
+    "resetOnboardingModalText": "Oletko varma että haluat muuttaa toimialaa/sijaintia? Sovellus unohtaa tämänhetkiset valintasi.",
+    "changeLocationTaskArea": "Vaihda toimiala/sijainti",
+    "home": "Etusivu",
+    "jobs": "Työpaikat",
+    "employers": "Työnantajat",
+    "regions": "Maakunnat"
+  },
+  "jobFilterScreen": {
+    "regions": "Maakunnat",
+    "taskAreas": "Tehtäväalueet",
+    "organizations": "Työnantajat",
+    "locations": "Kunnat"
   }
 }

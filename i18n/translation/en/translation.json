@@ -117,6 +117,17 @@
     }
   },
   "drawer": {
-    "resetOnboardingModalText": "Are you sure you want to change your location or task area? This will reset your personalisation settings."
+    "resetOnboardingModalText": "Are you sure you want to change your location or task area? This will reset your personalisation settings.",
+    "changeLocationTaskArea": "Change location/task area",
+    "home": "Home",
+    "jobs": "Jobs",
+    "employers": "Employers",
+    "regions": "Regions"
+  },
+  "jobFilterScreen": {
+    "regions": "Regions",
+    "taskAreas": "Task areas",
+    "organizations": "Employers",
+    "locations": "Municipalities"
   }
 }
