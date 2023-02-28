@@ -1,5 +1,5 @@
 import Carousel from 'react-native-reanimated-carousel';
-import { StyleSheet, useWindowDimensions } from 'react-native';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { colors } from '../styles/colors';
 import JobCarouselItem from './JobCarouselItem';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
@@ -17,6 +17,7 @@ export default function JobCarousel() {
   const styles = makeStyles(theme);
   const { width } = useWindowDimensions();
   const { jobs } = useJobAdvertisements();
+
   const [carouselJobs, setCarouselJobs] = useState(
     jobs ? jobs.slice(0, 3).map((j) => j.jobAdvertisement) : []
   );
@@ -25,6 +26,7 @@ export default function JobCarousel() {
   const [task, setTask] = useState(null);
   const { tasks } = useJobTasks();
   const { locations } = useJobLocations();
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -142,31 +144,63 @@ export default function JobCarousel() {
       {t('noResults')}
     </Text>
   ) : (
-    <Carousel
-      autoPlay
-      autoPlayInterval={5000}
-      style={{ backgroundColor: colors.background }}
-      width={width}
-      height={100}
-      data={carouselJobs}
-      renderItem={({ item, index }) => (
-        <JobCarouselItem
-          key={index}
-          job={item.jobAdvertisement}
-          publication={item.publication}
-          link={item.link}
-          style={{ marginBottom: 16 }}
-        />
-      )}
-    />
+    <>
+      <Carousel
+        autoPlay
+        autoPlayInterval={5000}
+        style={{ backgroundColor: colors.background }}
+        width={width}
+        height={100}
+        data={carouselJobs}
+        onSnapToItem={(index) => setCurrentSlide(index)}
+        renderItem={({ item, index }) => (
+          <JobCarouselItem
+            key={index}
+            job={item.jobAdvertisement}
+            publication={item.publication}
+            link={item.link}
+            style={{ marginBottom: 16 }}
+          />
+        )}
+        inactiveSlideScale={1}
+      />
+      <View style={styles.pagination}>
+        {carouselJobs.map((_, index) => (
+          <View
+            key={index}
+            style={[
+              styles.paginationIndicator,
+              index === currentSlide && styles.activePaginationIndicator,
+            ]}
+          />
+        ))}
+      </View>
+    </>
   );
 }
 
 const makeStyles = (theme) =>
   StyleSheet.create({
+    activePaginationIndicator: {
+      backgroundColor: colors.detailGreen,
+    },
     noJobs: {
       backgroundColor: theme.colors.background,
       paddingBottom: 8,
       textAlign: 'center',
+    },
+    pagination: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      marginBottom: 16,
+      marginTop: 8,
+    },
+    paginationIndicator: {
+      backgroundColor: '#ccc',
+      borderRadius: 4,
+      height: 8,
+      marginHorizontal: 4,
+      width: 8,
     },
   });
