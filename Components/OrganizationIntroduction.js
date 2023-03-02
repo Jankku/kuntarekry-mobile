@@ -20,7 +20,7 @@ export default function OrganizationIntroduction() {
     <View style={styles.bgColor}>
       <View style={styles.container}>
         {randomJob ? (
-          <View>
+          <View style={{ width: '100%' }}>
             <Image source={kuvaPng} resizeMode="cover" style={{ width: '100%' }} />
             <Text style={styles.intro}>Tutustu työnantajiin</Text>
             <Text style={styles.title}>
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   bold: {
+    color: '#35ABE4',
     fontWeight: 'bold',
   },
   container: {
@@ -67,16 +68,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   description: {
+    fontSize: 15,
     paddingBottom: 16,
     paddingTop: 8,
   },
   intro: {
+    color: 'rgba(0, 0, 0, 0.51)',
     fontSize: 14,
     paddingBottom: 8,
     textTransform: 'uppercase',
   },
   title: {
-    fontSize: 22,
+    color: '#35ABE4',
+    fontSize: 21,
     fontWeight: 'normal',
   },
 });

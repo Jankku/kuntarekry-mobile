@@ -12,6 +12,7 @@ import RecommendedJobs from '../Components/home/RecommendedJobs';
 import SearchButton from '../Components/home/SearchButton';
 import News from '../Components/home/News';
 import usePersonalizationChips from '../Components/PersonalizationChips';
+import { ImageBackground } from 'react-native';
 
 export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();
@@ -55,72 +56,34 @@ export default function HomeScreen({ navigation }) {
         end={{ x: 0.0, y: 1.3 }}
         style={styles.container}
       >
-        <Text style={styles.headertext}>{t('home.header.open')}</Text>
-        <Text style={styles.headertext2}>{t('home.header.jobs')}</Text>
-        <Text style={styles.headerCount} onPress={onJobCountPress}>
-          <Text style={{ fontWeight: '700' }}>{jobCount}</Text> {t('home.header.jobsAvailable')}
-        </Text>
+        <ImageBackground source={require('../assets/Subtract.png')} style={{alignItems: 'center'}}>
+          <Text style={styles.headertext}>{t('home.header.open')}</Text>
+          <Text style={styles.headertext2}>{t('home.header.jobs')}</Text>
+          <Text style={styles.headerCount} onPress={onJobCountPress}>
+            <Text style={{ fontWeight: '700' }}>{jobCount}</Text> {t('home.header.jobsAvailable')}
+          </Text>
 
-        <View style={styles.buttonrow}>
-          {personalizationChips.map((chip, index) => (
-            <Chip
-              key={index}
-              compact
-              style={styles.chipPersonalisation}
-              onPress={() =>
-                navigation.navigate('Jobs', {
-                  buttonJobQuery: chip.query,
-                  filter: chip.filter,
-                  ...(chip.query2 && { buttonJobQuery2: chip.query2 }),
-                  ...(chip.filter2 && { filter2: chip.filter2 }),
-                })
-              }
-            >
-              {chip.label}
-            </Chip>
-          ))}
-        </View>
-        <View style={styles.buttonrow}>
-          {filterChips.map((chip) => (
-            <Chip
-              key={chip.query}
-              compact
-              style={styles.chip}
-              onPress={() =>
-                navigation.navigate('Jobs', { buttonJobQuery: chip.query, filter: 'employment' })
-              }
-            >
-              {chip.label}
-            </Chip>
-          ))}
-          <Button
-            textColor="white"
-            compact
-            contentStyle={{ flexDirection: 'row-reverse' }}
-            icon="filter"
-            style={styles.chip}
-            onPress={toggleFilters}
-          >
-            {t('home.header.chips.moreFilters')}
-          </Button>
-        </View>
-        {!filtersHidden ? (
           <View style={styles.buttonrow}>
-            <Chip
-              onPress={() => navigation.navigate('Filter', { list: 'organizations' })}
-              compact
-              style={styles.chip}
-            >
-              {t('home.header.chips.employers')}
-            </Chip>
-            <Chip
-              onPress={() => navigation.navigate('Filter', { list: 'regions' })}
-              compact
-              style={styles.chip}
-            >
-              {t('home.header.chips.regions')}
-            </Chip>
-            {hiddenChips.map((chip) => (
+            {personalizationChips.map((chip, index) => (
+              <Chip
+                key={index}
+                compact
+                style={styles.chipPersonalisation}
+                onPress={() =>
+                  navigation.navigate('Jobs', {
+                    buttonJobQuery: chip.query,
+                    filter: chip.filter,
+                    ...(chip.query2 && { buttonJobQuery2: chip.query2 }),
+                    ...(chip.filter2 && { filter2: chip.filter2 }),
+                  })
+                }
+              >
+                {chip.label}
+              </Chip>
+            ))}
+          </View>
+          <View style={styles.buttonrow}>
+            {filterChips.map((chip) => (
               <Chip
                 key={chip.query}
                 compact
@@ -132,17 +95,60 @@ export default function HomeScreen({ navigation }) {
                 {chip.label}
               </Chip>
             ))}
+            <Button
+              textColor="white"
+              compact
+              contentStyle={{ flexDirection: 'row-reverse' }}
+              icon="filter"
+              style={styles.chip}
+              onPress={toggleFilters}
+            >
+              {t('home.header.chips.moreFilters')}
+            </Button>
           </View>
-        ) : null}
-        <Searchbar
-          style={styles.searchBar}
-          onChangeText={setSearchQuery}
-          onSubmitEditing={onSubmitSearch}
-          onIconPress={onSubmitSearch}
-          value={searchQuery}
-          placeholder={t('home.header.searchPlaceholder')}
-        />
-        <SearchButton onPress={() => onSubmitSearch()} />
+          {!filtersHidden ? (
+            <View style={styles.buttonrow}>
+              <Chip
+                onPress={() => navigation.navigate('Filter', { list: 'organizations' })}
+                compact
+                style={styles.chip}
+              >
+                {t('home.header.chips.employers')}
+              </Chip>
+              <Chip
+                onPress={() => navigation.navigate('Filter', { list: 'regions' })}
+                compact
+                style={styles.chip}
+              >
+                {t('home.header.chips.regions')}
+              </Chip>
+              {hiddenChips.map((chip) => (
+                <Chip
+                  key={chip.query}
+                  compact
+                  style={styles.chip}
+                  onPress={() =>
+                    navigation.navigate('Jobs', {
+                      buttonJobQuery: chip.query,
+                      filter: 'employment',
+                    })
+                  }
+                >
+                  {chip.label}
+                </Chip>
+              ))}
+            </View>
+          ) : null}
+          <Searchbar
+            style={styles.searchBar}
+            onChangeText={setSearchQuery}
+            onSubmitEditing={onSubmitSearch}
+            onIconPress={onSubmitSearch}
+            value={searchQuery}
+            placeholder={t('home.header.searchPlaceholder')}
+          />
+          <SearchButton onPress={() => onSubmitSearch()} />
+        </ImageBackground>
       </LinearGradient>
 
       <RecommendedJobs />
@@ -168,19 +174,19 @@ const makeStyles = (theme) =>
     chip: {
       backgroundColor: theme.colors.chip,
       borderRadius: 8,
-      marginHorizontal: '2%',
-      margin: 5,
+      marginBottom: 5,
+      marginHorizontal: 5,
     },
     chipPersonalisation: {
       backgroundColor: theme.colors.chip,
       borderRadius: 8,
       marginBottom: 5,
-      marginHorizontal: '2%',
+      marginHorizontal: 5,
       marginTop: 0,
     },
     container: {
       alignItems: 'center',
-      backgroundColor: 'lightblue',
+      backgroundColor: theme.colors.primary, // use a color from the theme
       justifyContent: 'center',
       paddingVertical: 16,
     },
