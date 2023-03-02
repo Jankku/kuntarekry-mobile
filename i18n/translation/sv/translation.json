@@ -117,6 +117,17 @@
     }
   },
   "drawer": {
-    "resetOnboardingModalText": "Är du säker på att du vill ändra bransch/plats? Appen glömmer dina nuvarande val."
+    "resetOnboardingModalText": "Är du säker på att du vill ändra bransch/plats? Appen glömmer dina nuvarande val.",
+    "changeLocationTaskArea": "Ändra bransch/plats",
+    "home": "Hem",
+    "jobs": "Arbetsplatser",
+    "employers": "Arbetsgivare",
+    "regions": "Landskap"
+  },
+  "jobFilterScreen": {
+    "regions": "Landskap",
+    "taskAreas": "Uppgiftsområden",
+    "organizations": "Arbetsgivare",
+    "locations": "Kommuner"
   }
 }

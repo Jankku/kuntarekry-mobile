@@ -4,6 +4,7 @@ import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import { colors } from '../styles/colors';
 import ListEmpty from '../Components/joblist/ListEmpty';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 const routeParamToField = {
   organizations: 'profitCenter',
@@ -13,6 +14,7 @@ const routeParamToField = {
 };
 
 export default function JobFilterScreen({ route }) {
+  const { t } = useTranslation();
   const { jobs } = useJobAdvertisements();
   const list = jobs
     .filter((jobAd) => {
@@ -45,12 +47,12 @@ export default function JobFilterScreen({ route }) {
     <>
       <Title style={styles.title}>
         {route.params.list === 'regions'
-          ? 'Kaikki maakunnat'
+          ? t('jobFilterScreen.regions')
           : route.params.list === 'organizations'
-          ? 'Kaikki työnantajat'
+          ? t('jobFilterScreen.organizations')
           : route.params.list === 'taskAreas'
-          ? 'Kaikki tehtäväalueet'
-          : 'Kaikki kunnat'}
+          ? t('jobFilterScreen.taskAreas')
+          : t('jobFilterScreen.locations')}
       </Title>
       <FlatList
         data={list}
