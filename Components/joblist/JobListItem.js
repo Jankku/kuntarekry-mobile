@@ -26,7 +26,7 @@ export default function JobListItem({ job, publication, link }) {
         buttonColor={colors.detailGreen}
       />
       <View style={{ flex: 1, flexWrap: 'nowrap' }}>
-        <Text variant="bodySmall">{job.organization}</Text>
+        <Text variant="bodySmall">{job.profitCenter}</Text>
         <Text variant="titleMedium">{job.title}</Text>
         <Text variant="bodyMedium">
           {t('jobItem.publicationEnds')}{' '}
