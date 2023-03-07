@@ -46,7 +46,7 @@ export default function HomeScreen({ navigation }) {
 
   const onJobCountPress = () => navigation.navigate('Jobs');
 
-  const onSubmitSearch = () => navigation.navigate('Jobs', { searchQuery });
+  const onSubmitSearch = () => navigation.navigate('JobCards', { searchQuery });
 
   return (
     <ScrollView>
@@ -56,7 +56,10 @@ export default function HomeScreen({ navigation }) {
         end={{ x: 0.0, y: 1.3 }}
         style={styles.container}
       >
-        <ImageBackground source={require('../assets/Subtract.png')} style={{alignItems: 'center'}}>
+        <ImageBackground
+          source={require('../assets/Subtract.png')}
+          style={{ alignItems: 'center' }}
+        >
           <Text style={styles.headertext}>{t('home.header.open')}</Text>
           <Text style={styles.headertext2}>{t('home.header.jobs')}</Text>
           <Text style={styles.headerCount} onPress={onJobCountPress}>

@@ -30,8 +30,8 @@ export default function JobCarouselItem({ job, style, link, publication }) {
           <Text style={styles.text}>
             {t('jobItem.publicationEnds')}{' '}
             <Text style={styles.dateText}>
-              <Icon name="calendar" size={14} /> {dayjs(job.publicationEnds).format('l')}{' '}
-              <Icon name="clock" size={14} /> {dayjs(job.publicationEnds).format('LT')}{' '}
+              <Icon name="calendar" size={14} /> {dayjs(job?.publicationEnds).format('l')}{' '}
+              <Icon name="clock" size={14} /> {dayjs(job?.publicationEnds).format('LT')}{' '}
             </Text>
           </Text>
         </View>

@@ -1,9 +1,14 @@
+import { useRemovedJobs } from './useremovedjobs';
+
 export default function useFilterJobs(jobs, searchQuery) {
+  const { removedJobs } = useRemovedJobs();
   const searchQueryArray = searchQuery
     .trim()
     .split(' ')
     .map((query) => query.toLowerCase());
-  const jobsWithRanks = initRanks(jobs);
+
+  const notRemovedJobs = jobs.filter((j) => !removedJobs.has(j.jobAdvertisement.id));
+  const jobsWithRanks = initRanks(notRemovedJobs);
 
   jobsWithRanks.map((job) => {
     searchQueryArray.forEach((queryPart) => calculateRank(job, queryPart));

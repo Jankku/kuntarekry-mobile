@@ -39,6 +39,8 @@ import LanguageSelector from './Components/LanguageSelector';
 import FavoritesScreen from './Screens/FavoritesScreen';
 import { useState } from 'react';
 import ResetOnboardingModal from './Components/ResetOnboardingModal';
+import JobCardScreen from './Screens/JobCardScreen';
+import { RemovedJobsProvider } from './hooks/useremovedjobs';
 
 SplashScreen.preventAutoHideAsync().catch(console.warn);
 
@@ -122,6 +124,7 @@ function StackScreen() {
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Jobs" component={JobListScreen} />
       <Stack.Screen name="Job" component={JobScreen} />
+      <Stack.Screen name="JobCards" component={JobCardScreen} />
       <Stack.Screen name="Filter" component={JobFilterScreen} />
       <Stack.Screen name="Organization" component={OrganizationScreen} />
       <Stack.Screen name="Favorites" component={FavoritesScreen} />
@@ -151,67 +154,69 @@ function AppWrapper() {
 
   return (
     <JobAdvertisementProvider>
-      <JobLocationProvider>
-        <JobTaskProvider>
-          <FavoriteListProvider>
-            <PaperProvider theme={lightTheme}>
-              <StatusBar style="inverted" />
-              <NavigationContainer theme={navigationLightTheme} onReady={onReady}>
-                <Drawer.Navigator
-                  useLegacyImplementation
-                  drawerContent={(props) => <CustomDrawerContent {...props} />}
-                  screenOptions={{
-                    header: (props) => <AppBar {...props} />,
-                    headerShown: onboardingDone,
-                    drawerContentContainerStyle: {
-                      backgroundColor: '#c6cbef',
-                    },
-                    drawerActiveTintColor: 'white',
-                    drawerInactiveTintColor: 'white',
-                  }}
-                >
-                  {onboardingDone === true ? (
-                    <>
-                      <Drawer.Screen
-                        name="Stack"
-                        component={StackScreen}
-                        options={{ headerShown: false, drawerItemStyle: { height: 0 } }}
-                      />
-                      <Drawer.Screen
-                        name="Home"
-                        component={HomeScreen}
-                        options={{ drawerLabel: t('drawer.home') }}
-                      />
-                      <Drawer.Screen
-                        name="Jobs"
-                        component={JobListScreen}
-                        options={{ drawerLabel: t('drawer.jobs') }}
-                      />
-                      <Drawer.Screen
-                        name="Employers"
-                        component={JobFilterScreen}
-                        options={{ drawerLabel: t('drawer.employers') }}
-                        initialParams={{ list: 'organizations' }}
-                      />
-                      <Drawer.Screen
-                        name="regions"
-                        component={JobFilterScreen}
-                        options={{ drawerLabel: t('drawer.regions') }}
-                        initialParams={{ list: 'regions' }}
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <Drawer.Screen name="Welcome" component={WelcomeScreen} />
-                      <Drawer.Screen name="Personalisation" component={PersonalisationScreen} />
-                    </>
-                  )}
-                </Drawer.Navigator>
-              </NavigationContainer>
-            </PaperProvider>
-          </FavoriteListProvider>
-        </JobTaskProvider>
-      </JobLocationProvider>
+      <RemovedJobsProvider>
+        <JobLocationProvider>
+          <JobTaskProvider>
+            <FavoriteListProvider>
+              <PaperProvider theme={lightTheme}>
+                <StatusBar style="inverted" />
+                <NavigationContainer theme={navigationLightTheme} onReady={onReady}>
+                  <Drawer.Navigator
+                    useLegacyImplementation
+                    drawerContent={(props) => <CustomDrawerContent {...props} />}
+                    screenOptions={{
+                      header: (props) => <AppBar {...props} />,
+                      headerShown: onboardingDone,
+                      drawerContentContainerStyle: {
+                        backgroundColor: '#c6cbef',
+                      },
+                      drawerActiveTintColor: 'white',
+                      drawerInactiveTintColor: 'white',
+                    }}
+                  >
+                    {onboardingDone === true ? (
+                      <>
+                        <Drawer.Screen
+                          name="Stack"
+                          component={StackScreen}
+                          options={{ headerShown: false, drawerItemStyle: { height: 0 } }}
+                        />
+                        <Drawer.Screen
+                          name="Home"
+                          component={HomeScreen}
+                          options={{ drawerLabel: t('drawer.home') }}
+                        />
+                        <Drawer.Screen
+                          name="Jobs"
+                          component={JobListScreen}
+                          options={{ drawerLabel: t('drawer.jobs') }}
+                        />
+                        <Drawer.Screen
+                          name="Employers"
+                          component={JobFilterScreen}
+                          options={{ drawerLabel: t('drawer.employers') }}
+                          initialParams={{ list: 'organizations' }}
+                        />
+                        <Drawer.Screen
+                          name="regions"
+                          component={JobFilterScreen}
+                          options={{ drawerLabel: t('drawer.regions') }}
+                          initialParams={{ list: 'regions' }}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <Drawer.Screen name="Welcome" component={WelcomeScreen} />
+                        <Drawer.Screen name="Personalisation" component={PersonalisationScreen} />
+                      </>
+                    )}
+                  </Drawer.Navigator>
+                </NavigationContainer>
+              </PaperProvider>
+            </FavoriteListProvider>
+          </JobTaskProvider>
+        </JobLocationProvider>
+      </RemovedJobsProvider>
     </JobAdvertisementProvider>
   );
 }

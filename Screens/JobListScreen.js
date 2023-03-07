@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Text, Chip, useTheme, IconButton, Button, Divider } from 'react-native-paper';
+import { Text, Chip, useTheme, IconButton, Button, Divider, FAB } from 'react-native-paper';
 import JobList from '../Components/joblist/JobList';
 import useFilterJobs from '../hooks/usefilterjobs';
 import { useJobAdvertisements } from '../hooks/usejobadvertisements';
@@ -23,7 +23,7 @@ const sortType = [
   { label: 'Sijainti', value: 'location' },
 ];
 
-export default function JobsListScreen({ route }) {
+export default function JobsListScreen({ navigation, route }) {
   const theme = useTheme();
   const { t } = useTranslation();
   const searchQuery = route.params?.searchQuery ?? '';
@@ -42,6 +42,8 @@ export default function JobsListScreen({ route }) {
 
   const [showSortSelector, setShowSortSelector] = useState(false);
   const [activeSortType, setActiveSortType] = useState('newest');
+
+  const onViewCardsPress = () => navigation.replace('JobCards', { searchQuery });
 
   const addFilter = (newFilter) => {
     setUserFilters([...userFilters, newFilter]);
@@ -221,6 +223,19 @@ export default function JobsListScreen({ route }) {
       <JobList
         data={userFilters.length > 0 ? filteredSearchJobs : filteredJobs}
         sortType={activeSortType}
+      />
+
+      <FAB
+        icon="view-carousel"
+        color="white"
+        mode="flat"
+        onPress={onViewCardsPress}
+        style={{
+          position: 'absolute',
+          margin: 16,
+          right: 0,
+          bottom: 64,
+        }}
       />
     </>
   );
