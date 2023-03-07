@@ -5,6 +5,7 @@ import { useJobAdvertisements } from '../hooks/usejobadvertisements';
 import useFilterJobs from '../hooks/usefilterjobs';
 import JobCardItem from '../Components/joblist/JobCardItem';
 import { useTranslation } from 'react-i18next';
+import { View } from 'react-native';
 
 export default function JobCardScreen({ navigation, route }) {
   const searchQuery = route.params?.searchQuery ?? '';
@@ -20,15 +21,19 @@ export default function JobCardScreen({ navigation, route }) {
   return (
     <>
       {filteredJobs.length > 0 ? (
-        <Carousel
-          windowSize={5}
-          width={PAGE_WIDTH}
-          height={PAGE_HEIGHT}
-          data={filteredJobs}
-          renderItem={({ index, item, animationValue }) => (
-            <JobCardItem key={index} jobItem={item} animationValue={animationValue} />
-          )}
-        />
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <Carousel
+            windowSize={5}
+            width={PAGE_WIDTH}
+            height={PAGE_HEIGHT}
+            data={filteredJobs}
+            mode="parallax"
+            modeConfig={{ parallaxAdjacentItemScale: 0.5, parallaxScrollingScale: 0.95 }}
+            renderItem={({ index, item, animationValue }) => (
+              <JobCardItem key={index} jobItem={item} animationValue={animationValue} />
+            )}
+          />
+        </View>
       ) : (
         <Text variant="titleLarge" style={styles.noResults}>
           {t('noResults', { ns: 'common' })}
