@@ -39,7 +39,16 @@ export function RemovedJobsProvider({ children }) {
     }
   };
 
-  const value = { removedJobs, removeJob };
+  const clearJobs = async () => {
+    try {
+      await AsyncStorage.removeItem(REMOVED_JOBS_KEY);
+      setRemovedJobs(new Set());
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const value = { removedJobs, removeJob, clearJobs };
   return <RemovedJobsContext.Provider value={value}>{children}</RemovedJobsContext.Provider>;
 }
 

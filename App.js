@@ -40,7 +40,7 @@ import FavoritesScreen from './Screens/FavoritesScreen';
 import { useState } from 'react';
 import ResetOnboardingModal from './Components/ResetOnboardingModal';
 import JobCardScreen from './Screens/JobCardScreen';
-import { RemovedJobsProvider } from './hooks/useremovedjobs';
+import { RemovedJobsProvider, useRemovedJobs } from './hooks/useremovedjobs';
 
 SplashScreen.preventAutoHideAsync().catch(console.warn);
 
@@ -52,11 +52,13 @@ dayjs.tz.setDefault('Europe/Helsinki');
 function CustomDrawerContent(props) {
   const { t } = useTranslation();
   const { resetOnboarding } = useOnboarding();
+  const { clearJobs } = useRemovedJobs();
 
   const handleResetOnboarding = useCallback(() => {
     resetOnboarding();
+    clearJobs();
     props.navigation.closeDrawer();
-  }, [props.navigation, resetOnboarding]);
+  }, [clearJobs, props.navigation, resetOnboarding]);
 
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false);
 
